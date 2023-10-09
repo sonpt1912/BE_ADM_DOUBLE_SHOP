@@ -228,20 +228,23 @@ CREATE TABLE `double_shop`.`brand` (
 
 
 CREATE TABLE `double_shop`.`detail_material` (
-  `id_product` BIGINT NOT NULL,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
+  `id_detail_product` BIGINT NOT NULL,
   `id_material` BIGINT NOT NULL,
-  PRIMARY KEY (`id_product`, `id_material`),
+  PRIMARY KEY (`id`),
+  INDEX `FK_DM_DP_idx` (`id_detail_product` ASC) VISIBLE,
   INDEX `FK_DM_M_idx` (`id_material` ASC) VISIBLE,
-  CONSTRAINT `FK_DM_DP`
-    FOREIGN KEY (`id_product`)
-    REFERENCES `double_shop`.`detail_product` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
   CONSTRAINT `FK_DM_M`
     FOREIGN KEY (`id_material`)
     REFERENCES `double_shop`.`material` (`id`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_DM_DP`
+    FOREIGN KEY (`id_detail_product`)
+    REFERENCES `double_shop`.`detail_product` (`id`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+
     
     
 CREATE TABLE `double_shop`.`employee` (
@@ -255,7 +258,7 @@ CREATE TABLE `double_shop`.`employee` (
   `provice` VARCHAR(45) NOT NULL,
   `city` VARCHAR(45) NOT NULL,
   `gender` INT NOT NULL,
-  `birth_date` DATE NOT NULL,
+  `birth_day` DATE NOT NULL,
   `role` VARCHAR(45) NOT NULL,
   `status` INT NOT NULL,
   `created_by` BIGINT NOT NULL,
@@ -279,7 +282,7 @@ CREATE TABLE `double_shop`.`promotion` (
 
 CREATE TABLE `double_shop`.`cart` (
   `id` INT NOT NULL,
-  `id_product` BIGINT NOT NULL,
+  `id_detail_product` BIGINT NOT NULL,
   `id_customer` BIGINT NOT NULL,
   `quantity` VARCHAR(45) NULL,
   PRIMARY KEY (`id`),
@@ -287,7 +290,7 @@ CREATE TABLE `double_shop`.`cart` (
   INDEX `FK_CART_P_idx` (`id_product` ASC) VISIBLE,
   CONSTRAINT `FK_CART_P`
     FOREIGN KEY (`id_product`)
-    REFERENCES `double_shop`.`product` (`id`)
+    REFERENCES `double_shop`.`detail_product` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `FK_CART_C`
@@ -305,8 +308,6 @@ CREATE TABLE `double_shop`.`cart` (
   `discount_amout` BIGINT NULL,
   `discount_percentage` INT NULL,
   `quantity` BIGINT NOT NULL,
-  `start_date` DATETIME NOT NULL,
-  `end_date` DATETIME NOT NULL,
   `created_by` BIGINT NOT NULL,
   `updated_by` BIGINT NOT NULL,
   `created_time` DATETIME NULL,

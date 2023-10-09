@@ -6,30 +6,24 @@ import lombok.*;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "collar")
+@Table(name = "product")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-public class collar {
+public class Product {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "code")
-    private String code;
-
     @Column(name = "name")
     private String name;
 
-    @Column(name = "description")
-    private String description;
-
     @Column(name = "status")
-    private Integer status;
+    private Integer stats;
 
     @Column(name = "created_by")
     private Long createdBy;
@@ -42,5 +36,4 @@ public class collar {
 
     @Column(name = "updated_time")
     private Timestamp updatedTime;
-
 }

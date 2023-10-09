@@ -3,16 +3,17 @@ package com.example.be_adm_double_shop.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "product")
+@Table(name = "promotion")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-public class product {
+public class Promotion {
 
     @Id
     @Column(name = "id")
@@ -22,8 +23,11 @@ public class product {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "status")
-    private Integer stats;
+    @Column(name = "start_date")
+    private Date StartDate;
+
+    @Column(name = "end_date")
+    private Date endDate;
 
     @Column(name = "created_by")
     private Long createdBy;
@@ -36,4 +40,5 @@ public class product {
 
     @Column(name = "updated_time")
     private Timestamp updatedTime;
+
 }
