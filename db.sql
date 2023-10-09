@@ -281,23 +281,24 @@ CREATE TABLE `double_shop`.`promotion` (
 
 
 CREATE TABLE `double_shop`.`cart` (
-  `id` INT NOT NULL,
+  `id` BIGINT NOT NULL AUTO_INCREMENT,
   `id_detail_product` BIGINT NOT NULL,
   `id_customer` BIGINT NOT NULL,
-  `quantity` VARCHAR(45) NULL,
+  `quantity` BIGINT NOT NULL,
   PRIMARY KEY (`id`),
   INDEX `FK_CART_C_idx` (`id_customer` ASC) VISIBLE,
-  INDEX `FK_CART_P_idx` (`id_product` ASC) VISIBLE,
-  CONSTRAINT `FK_CART_P`
-    FOREIGN KEY (`id_product`)
-    REFERENCES `double_shop`.`detail_product` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
+  INDEX `FK_CART_DP_idx` (`id_detail_product` ASC) VISIBLE,
   CONSTRAINT `FK_CART_C`
     FOREIGN KEY (`id_customer`)
     REFERENCES `double_shop`.`customer` (`id`)
     ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `FK_CART_DP`
+    FOREIGN KEY (`id_detail_product`)
+    REFERENCES `double_shop`.`detail_product` (`id`)
+    ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+
 
 
   CREATE TABLE `double_shop`.`voucher` (
