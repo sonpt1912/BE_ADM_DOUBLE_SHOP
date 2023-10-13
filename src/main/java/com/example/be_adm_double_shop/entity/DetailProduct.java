@@ -25,7 +25,7 @@ public class DetailProduct {
     private Color color;
 
     @ManyToOne
-    @JoinColumn(name = "id_color")
+    @JoinColumn(name = "id_product")
     private Product product;
 
     @ManyToOne
