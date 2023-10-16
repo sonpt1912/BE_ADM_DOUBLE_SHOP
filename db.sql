@@ -21,6 +21,7 @@ CREATE TABLE `double_shop`.`customer` (
   `name` VARCHAR(45) NOT NULL,
   `gender` INT NOT NULL,
   `phone` VARCHAR(45) NOT NULL,
+  `birth_day` DATE,
   `email` VARCHAR(45) NULL,
   `password` VARCHAR(45) NOT NULL,
   `status` INT NOT NULL,
@@ -250,6 +251,7 @@ CREATE TABLE `double_shop`.`detail_material` (
 CREATE TABLE `double_shop`.`employee` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `code` VARCHAR(45) NOT NULL,
+  `password` VARCHAR(45) NOT NULL,
   `name` VARCHAR(45) NOT NULL,
   `email` VARCHAR(45) NULL,
   `phone` VARCHAR(45) NOT NULL,

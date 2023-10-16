@@ -3,6 +3,7 @@ package com.example.be_adm_double_shop.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 @Entity
@@ -41,6 +42,9 @@ public class Customer {
 
     @Column(name = "password")
     private String password;
+
+    @Column(name = "birth_day")
+    private Date birtDay;
 
     @Column(name = "status")
     private Integer status;

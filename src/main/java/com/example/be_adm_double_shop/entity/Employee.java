@@ -45,6 +45,9 @@ public class Employee {
     @Column(name = "city")
     private String city;
 
+    @Column(name = "password")
+    private String password;
+
     @Column(name = "gender")
     private Integer gender;
 
