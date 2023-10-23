@@ -1,70 +1,71 @@
 package com.example.be_adm_double_shop.service;
 
 import com.example.be_adm_double_shop.entity.Customer;
-import com.example.be_adm_double_shop.repository.NhanVienRepository;
+import com.example.be_adm_double_shop.repository.CustomerRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
-@Transactional
-public class NhanVienService {
-
-    private final NhanVienRepository nhanVienRepository;
+public class CustomerService {
 
     @Autowired
-    public NhanVienService(NhanVienRepository nhanVienRepository) {
-        this.nhanVienRepository = nhanVienRepository;
-    }
+    private CustomerRepository customerRepository;
 
-    public List<Customer> sapXep() {
-        return nhanVienRepository.findAllByOrderBySomeField(); // Replace with the actual field to sort by
-    }
-
-    public List<Customer> searchNhanVien(String keyword) {
-        return nhanVienRepository.findByTenContainingIgnoreCase(keyword);
+    public List<Customer> getAll() {
+        return customerRepository.findAll();
     }
 
     public Page<Customer> findAll(Pageable pageable) {
-        return nhanVienRepository.findAll(pageable);
+        return customerRepository.findAll(pageable);
     }
 
-    public List<Customer> getAll() {
-        return nhanVienRepository.findAll();
+    public Customer save(Customer customer) {
+        return customerRepository.save(customer);
     }
-
-    public Customer save(Customer nhanVien) {
-        return nhanVienRepository.save(nhanVien);
+    public Customer findById(UUID id) {
+        Optional<Customer> optionalCustomer = customerRepository.findById(id);
+        return optionalCustomer.orElse(null); // Returns null if customer is not found
     }
+    public Customer updateCustomer(UUID id, Customer customer) {
+        Optional<Customer> optionalCustomer = customerRepository.findById(id);
+        if (optionalCustomer.isPresent()) {
+            Customer existingCustomer = optionalCustomer.get();
+            existingCustomer.setUsername(customer.getUsername());
+            existingCustomer.setName(customer.getName());
+            existingCustomer.setGender(customer.getGender());
+            existingCustomer.setPhone(customer.getPhone());
+            existingCustomer.setEmail(customer.getEmail());
+            existingCustomer.setPassword(customer.getPassword());
+            existingCustomer.setBirtDay(customer.getBirtDay());
+            existingCustomer.setStatus(customer.getStatus());
+            existingCustomer.setCreatedBy(customer.getCreatedBy());
+            existingCustomer.setUpdated_by(customer.getUpdated_by());
+            existingCustomer.setCreatedTime(customer.getCreatedTime());
+            // Set other properties of Customer as needed
 
-    public Customer updateNhanVien(UUID id, Customer nhanVien) throws ResourceNotFoundException {
-        Optional<Customer> optionalNhanVien = nhanVienRepository.findById(id);
-        if (optionalNhanVien.isPresent()) {
-            Customer existingNhanVien = optionalNhanVien.get();
-            existingNhanVien.setTen(nhanVien.getTen());
-            existingNhanVien.setChucVu(nhanVien.getChucVu());
-            existingNhanVien.setNgaySinh(nhanVien.getNgaySinh());
-            existingNhanVien.setUpdateAt(LocalDateTime.now());
-            // Cập nhật các thuộc tính khác của NhanVien
-
-            return nhanVienRepository.save(existingNhanVien);
+            return customerRepository.save(existingCustomer);
         }
-        throw new ResourceNotFoundException("NhanVien not found with id: " + id);
+        // Handle not found case if needed, such as throwing an exception
+        return null;
     }
 
     public void deleteById(UUID id) {
-        nhanVienRepository.deleteById(id);
+        customerRepository.deleteById(id);
     }
 
-    public Customer findById(UUID id) throws ResourceNotFoundException {
-        Optional<Customer> optionalNhanVien = nhanVienRepository.findById(id);
-        if (optionalNhanVien.isPresent()) {
-            return optionalNhanVien.get();
-        }
-        throw new ResourceNotFoundException("NhanVien not found with id: " + id);
+    public List<Customer> searchCustomer(String keyword) {
+        return customerRepository.findByUsernameContainingIgnoreCase(keyword);
+    }
+
+    public List<Customer> sapXep() {
+        return customerRepository.findAllByOrderByUsername();
     }
 }

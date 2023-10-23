@@ -1,72 +1,71 @@
 package com.example.be_adm_double_shop.controller;
 
+import com.example.be_adm_double_shop.entity.Customer;
+import com.example.be_adm_double_shop.service.CustomerService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/doubleshop/nhanvien")
-public class NhanVienController {
+@RequestMapping("/cinema/customer")
+public class CustomerController {
 
     @Autowired
-    private NhanVienService nhanVienService;
+    private CustomerService customerService;
 
     @GetMapping("/index")
-    public ResponseEntity<Page<NhanVien>> getAll(@RequestParam(defaultValue = "1") int page,
-                                                 @RequestParam(defaultValue = "5") int size) {
+    public ResponseEntity<Page<Customer>> getAllCustomers(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "5") int size) {
         if (page < 1) page = 1;
-        Pageable pageable = PageRequest.of(page - 1, size);
-        Page<NhanVien> nhanVienPage = nhanVienService.findAll(pageable);
-        return ResponseEntity.ok().body(nhanVienPage);
+        PageRequest pageable = PageRequest.of(page - 1, size);
+        Page<Customer> customerPage = customerService.findAll(pageable);
+        return ResponseEntity.ok().body(customerPage);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<NhanVien> getById(@PathVariable("id") UUID id) throws ResourceNotFoundException {
-        NhanVien nhanVien = nhanVienService.findById(id);
-        return ResponseEntity.ok().body(nhanVien);
+    public ResponseEntity<Customer> getCustomerById(@PathVariable("id") UUID id) {
+        Customer customer = customerService.findById(id);
+        return ResponseEntity.ok().body(customer);
     }
 
     @PostMapping("/add")
-    public ResponseEntity<NhanVien> addNhanVien(@RequestBody @Valid NhanVien nhanVien) {
-        NhanVien savedNhanVien = nhanVienService.save(nhanVien);
-        return ResponseEntity.ok().body(savedNhanVien);
+    public ResponseEntity<Customer> addCustomer(@RequestBody @Valid Customer customer) {
+        Customer savedCustomer = customerService.save(customer);
+        return ResponseEntity.ok().body(savedCustomer);
     }
 
     @PutMapping("/update/{id}")
-    public ResponseEntity<NhanVien> updateNhanVien(@PathVariable("id") UUID id, @RequestBody @Valid NhanVien nhanVien) throws ResourceNotFoundException {
-        NhanVien existingNhanVien = nhanVienService.findById(id);
-        existingNhanVien.setTen(nhanVien.getTen());
-        existingNhanVien.setChucVu(nhanVien.getChucVu());
-        existingNhanVien.setNgaySinh(nhanVien.getNgaySinh());
-        // Set other properties of NhanVien as needed
-
-        NhanVien updatedNhanVien = nhanVienService.updateNhanVien(id, existingNhanVien);
-        return ResponseEntity.ok().body(updatedNhanVien);
+    public ResponseEntity<Customer> updateCustomer(
+            @PathVariable("id") UUID id,
+            @RequestBody @Valid Customer customer) {
+        Customer updatedCustomer = customerService.updateCustomer(id, customer);
+        return ResponseEntity.ok().body(updatedCustomer);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<?> deleteNhanVien(@PathVariable("id") UUID id) {
-        nhanVienService.deleteById(id);
+    public ResponseEntity<?> deleteCustomer(@PathVariable("id") UUID id) {
+        customerService.deleteById(id);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<NhanVien>> searchNhanVien(@RequestParam("keyword") String keyword) {
-        List<NhanVien> nhanVienList = nhanVienService.searchNhanVien(keyword);
-        return ResponseEntity.ok().body(nhanVienList);
+    public ResponseEntity<List<Customer>> searchCustomers(@RequestParam("keyword") String keyword) {
+        List<Customer> customerList = customerService.searchCustomer(keyword);
+        return ResponseEntity.ok().body(customerList);
     }
 
     @GetMapping("/sorted")
-    public ResponseEntity<List<NhanVien>> getSortedNhanVienList() {
-        List<NhanVien> sortedNhanVienList = nhanVienService.sapXep();
-        return ResponseEntity.ok().body(sortedNhanVienList);
-    }
-
-    @GetMapping
-    public ResponseEntity<List<NhanVien>> getAll() {
-        return ResponseEntity.ok().body(nhanVienService.getAll());
+    public ResponseEntity<List<Customer>> getSortedCustomerList() {
+        List<Customer> sortedCustomerList = customerService.sapXep();
+        return ResponseEntity.ok().body(sortedCustomerList);
     }
 }
-
