@@ -3,21 +3,23 @@ package com.example.be_adm_double_shop.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.sql.Date;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "collar")
+@Table(name = "employee")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-public class collar {
+public class Employee {
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
+
 
     @Column(name = "code")
     private String code;
@@ -25,11 +27,36 @@ public class collar {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "email")
+    private String email;
+
+    @Column(name = "phone")
+    private String phone;
+
     @Column(name = "description")
     private String description;
 
-    @Column(name = "status")
-    private Integer status;
+    @Column(name = "district")
+    private String district;
+
+    @Column(name = "provice")
+    private String provice;
+
+    @Column(name = "city")
+    private String city;
+
+    @Column(name = "password")
+    private String password;
+
+    @Column(name = "gender")
+    private Integer gender;
+
+    @Column(name = "birth_day")
+    private Date birtDay;
+
+    @Column(name = "role")
+    private String role;
+
 
     @Column(name = "created_by")
     private Long createdBy;
@@ -42,5 +69,6 @@ public class collar {
 
     @Column(name = "updated_time")
     private Timestamp updatedTime;
+
 
 }

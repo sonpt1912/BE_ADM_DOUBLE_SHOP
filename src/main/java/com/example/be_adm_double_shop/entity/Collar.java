@@ -3,48 +3,30 @@ package com.example.be_adm_double_shop.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "customer")
+@Table(name = "collar")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-public class Customer {
+public class Collar {
 
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "id_rank", referencedColumnName = "id")
-    private Rank rank;
-
-
-    @Column(name = "username")
-    private String username;
+    @Column(name = "code")
+    private String code;
 
     @Column(name = "name")
     private String name;
 
-    @Column(name = "gender")
-    private Integer gender;
-
-    @Column(name = "phone")
-    private String phone;
-
-    @Column(name = "email")
-    private String email;
-
-    @Column(name = "password")
-    private String password;
-
-    @Column(name = "birth_day")
-    private Date birtDay;
+    @Column(name = "description")
+    private String description;
 
     @Column(name = "status")
     private Integer status;
@@ -60,6 +42,5 @@ public class Customer {
 
     @Column(name = "updated_time")
     private Timestamp updatedTime;
-
 
 }

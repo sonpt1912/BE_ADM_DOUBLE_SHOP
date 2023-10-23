@@ -3,17 +3,16 @@ package com.example.be_adm_double_shop.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 
 @Entity
-@Table(name = "customer")
+@Table(name = "voucher")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-public class Customer {
+public class Voucher {
 
     @Id
     @Column(name = "id")
@@ -21,33 +20,20 @@ public class Customer {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "id_rank", referencedColumnName = "id")
-    private Rank rank;
+    @JoinColumn(name = "id_promotion")
+    private Promotion promotion;
 
-
-    @Column(name = "username")
-    private String username;
+    @Column(name = "code")
+    private String code;
 
     @Column(name = "name")
     private String name;
 
-    @Column(name = "gender")
-    private Integer gender;
+    @Column(name = "discountAmout")
+    private Long discountAmout;
 
-    @Column(name = "phone")
-    private String phone;
-
-    @Column(name = "email")
-    private String email;
-
-    @Column(name = "password")
-    private String password;
-
-    @Column(name = "birth_day")
-    private Date birtDay;
-
-    @Column(name = "status")
-    private Integer status;
+    @Column(name = "discountPercentage")
+    private Integer discountPercentage;
 
     @Column(name = "created_by")
     private Long createdBy;
@@ -60,6 +46,5 @@ public class Customer {
 
     @Column(name = "updated_time")
     private Timestamp updatedTime;
-
 
 }
