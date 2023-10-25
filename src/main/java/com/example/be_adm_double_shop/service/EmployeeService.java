@@ -53,11 +53,6 @@ public class EmployeeService {
             existingEmployee.setBirthDay(employee.getBirthDay());
             existingEmployee.setRole(employee.getRole());
             existingEmployee.setStatus(employee.getStatus());
-            existingEmployee.setCreatedBy(employee.getCreatedBy());
-            existingEmployee.setUpdatedBy(employee.getUpdatedBy());
-            existingEmployee.setCreatedTime(employee.getCreatedTime());
-            existingEmployee.setUpdatedTime(employee.getUpdatedTime());
-
             return employeeRepository.save(existingEmployee);
         }
         return null;
