@@ -40,9 +40,15 @@ public class EmployeeService {
     }
     private void sendNewEmployeeNotification(Employee employee) {
         SimpleMailMessage message = new SimpleMailMessage();
-        message.setTo(employee.getEmail()); // Gửi email thông báo tới địa chỉ email của nhân viên
+        message.setTo(employee.getEmail());
         message.setSubject("Chào mừng bạn đến với công ty chúng tôi!");
-        message.setText("Chúc mừng! Bạn đã trở thành một phần của đội ngũ nhân viên của chúng tôi.");
+
+        // Sửa nội dung email để chứa thông tin tài khoản và mật khẩu
+        String emailContent = "Chúc mừng " + employee.getName() + "! Bạn đã trở thành một phần của đội ngũ nhân viên của chúng tôi.\n\n"
+                + "Dưới đây là thông tin tài khoản của bạn để phục vụ việc bán hàng:\n"
+                + "Tài khoản: " + employee.getEmail() + "\n"
+                + "Mật khẩu: " + employee.getPhone() + employee.getCode(); // Giả sử employee.getPhone() trả về số điện thoại, và employee.getCode() trả về mã nhân viên
+        message.setText(emailContent);
 
         javaMailSender.send(message);
     }
@@ -71,10 +77,6 @@ public class EmployeeService {
             return employeeRepository.save(existingEmployee);
         }
         return null;
-    }
-
-    public void deleteEmployeeById(Long id) {
-        employeeRepository.deleteById(id);
     }
 
     public List<Employee> searchEmployees(String keyword) {
