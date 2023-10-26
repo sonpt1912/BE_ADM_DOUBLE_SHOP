@@ -5,6 +5,8 @@ import com.example.be_adm_double_shop.repository.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,10 +16,12 @@ import java.util.Optional;
 public class EmployeeService {
 
     private final EmployeeRepository employeeRepository;
+    private final JavaMailSender javaMailSender;
 
     @Autowired
-    public EmployeeService(EmployeeRepository employeeRepository) {
+    public EmployeeService(EmployeeRepository employeeRepository, JavaMailSender javaMailSender) {
         this.employeeRepository = employeeRepository;
+        this.javaMailSender = javaMailSender;
     }
 
     public List<Employee> getAllEmployees() {
@@ -29,7 +33,18 @@ public class EmployeeService {
     }
 
     public Employee saveEmployee(Employee employee) {
-        return employeeRepository.save(employee);
+        Employee savedEmployee = employeeRepository.save(employee);
+        // Gửi email thông báo sau khi thêm nhân viên mới
+        sendNewEmployeeNotification(savedEmployee);
+        return savedEmployee;
+    }
+    private void sendNewEmployeeNotification(Employee employee) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(employee.getEmail()); // Gửi email thông báo tới địa chỉ email của nhân viên
+        message.setSubject("Chào mừng bạn đến với công ty chúng tôi!");
+        message.setText("Chúc mừng! Bạn đã trở thành một phần của đội ngũ nhân viên của chúng tôi.");
+
+        javaMailSender.send(message);
     }
 
     public Employee getEmployeeById(Long id) {

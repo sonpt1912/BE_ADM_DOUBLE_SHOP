@@ -10,3 +10,16 @@ spring:
     hibernate:
       ddl-auto: none
     show-sql: false
+
+
+spring.mail:
+  host: smtp.gmail.com
+  port: 587
+  username: hiepga1105@gmail.com
+  password: tojcgwbekohalcyg
+  properties:
+    mail:
+      smtp:
+        auth: true
+        starttls:
+          enable: true
