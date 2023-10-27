@@ -21,10 +21,44 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @GetMapping("/index")
-    public ResponseEntity<Page<Employee>> getAllEmployees(
+    public ResponseEntity<Page<Employee>> getEmployeesByPage(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "100") int size) {
+        if (page < 1) {
+            page = 1;
+        }
+        PageRequest pageable = PageRequest.of(page - 1, size);
+        Page<Employee> employeePage = employeeService.getAllEmployees(pageable);
+
+        // Kiểm tra nếu không có trang tiếp theo thì giữ nguyên trang hiện tại
+        if (page > employeePage.getTotalPages()) {
+            pageable = PageRequest.of(employeePage.getTotalPages() - 1, size);
+            employeePage = employeeService.getAllEmployees(pageable);
+        }
+
+        return ResponseEntity.ok().body(employeePage);
+    }
+
+    @GetMapping("/index/next")
+    public ResponseEntity<Page<Employee>> getNextEmployeesPage(
             @RequestParam(defaultValue = "1") int page,
             @RequestParam(defaultValue = "5") int size) {
-        if (page < 1) page = 1;
+        // Tăng giá trị của tham số page để di chuyển đến trang tiếp theo
+        page++;
+        PageRequest pageable = PageRequest.of(page - 1, size);
+        Page<Employee> employeePage = employeeService.getAllEmployees(pageable);
+        return ResponseEntity.ok().body(employeePage);
+    }
+
+    @GetMapping("/index/previous")
+    public ResponseEntity<Page<Employee>> getPreviousEmployeesPage(
+            @RequestParam(defaultValue = "1") int page,
+            @RequestParam(defaultValue = "5") int size) {
+        // Giảm giá trị của tham số page để quay lại trang trước đó
+        page--;
+        if (page < 1) {
+            page = 1;
+        }
         PageRequest pageable = PageRequest.of(page - 1, size);
         Page<Employee> employeePage = employeeService.getAllEmployees(pageable);
         return ResponseEntity.ok().body(employeePage);
