@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class CustomerService {
@@ -30,11 +29,11 @@ public class CustomerService {
     public Customer save(Customer customer) {
         return customerRepository.save(customer);
     }
-    public Customer findById(UUID id) {
+    public Customer findById(Long id) {
         Optional<Customer> optionalCustomer = customerRepository.findById(id);
         return optionalCustomer.orElse(null); // Returns null if customer is not found
     }
-    public Customer updateCustomer(UUID id, Customer customer) {
+    public Customer updateCustomer(Long id, Customer customer) {
         Optional<Customer> optionalCustomer = customerRepository.findById(id);
         if (optionalCustomer.isPresent()) {
             Customer existingCustomer = optionalCustomer.get();
@@ -57,7 +56,7 @@ public class CustomerService {
         return null;
     }
 
-    public void deleteById(UUID id) {
+    public void deleteById(Long id) {
         customerRepository.deleteById(id);
     }
 
