@@ -33,7 +33,7 @@ public class RankService {
 
     public Rank findById(Long id) {
         Optional<Rank> optionalRank = rankRepository.findById(id);
-        return optionalRank.orElse(null); // Returns null if rank is not found
+        return optionalRank.orElse(null);
     }
 
     public Rank updateRank(Long id, Rank rank) {

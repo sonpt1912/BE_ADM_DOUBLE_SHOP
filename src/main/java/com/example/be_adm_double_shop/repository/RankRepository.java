@@ -8,5 +8,6 @@ import java.util.List;
 public interface RankRepository  extends JpaRepository<Rank,Long> {
     List<Rank> findByNameContainingIgnoreCase(String name);
     List<Rank> findAllByOrderByName();
+    Rank findFirstByOrderBySinceAsc();
 
 }
