@@ -55,7 +55,7 @@ public class RankService {
         // Handle not found case if needed, such as throwing an exception
         return null;
     }
-    
+
 
     public List<Rank> searchRanks(String keyword) {
         return rankRepository.findByNameContainingIgnoreCase(keyword);
