@@ -4,9 +4,10 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "rank")
+@Table(name = "user_rank")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -25,11 +26,11 @@ public class Rank {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "from")
-    private Long from;
+    @Column(name = "since")
+    private Long since;
 
-    @Column(name = "to")
-    private Long to;
+    @Column(name = "until")
+    private Long until;
 
     @Column(name = "created_by")
     private Long createdBy;
@@ -38,8 +39,8 @@ public class Rank {
     private Long updated_by;
 
     @Column(name = "created_time")
-    private Timestamp createdTime;
+    private LocalDateTime createdTime;
 
     @Column(name = "updated_time")
-    private Timestamp updatedTime;
+    private LocalDateTime updatedTime;
 }
