@@ -5,6 +5,7 @@ import com.example.be_adm_double_shop.repository.EmployeeRepository;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -75,6 +76,11 @@ public class EmployeeService {
 
         javaMailSender.send(message);
     }
+    public Page getAllByPage(int page, int pageSize) {
+        Pageable p = PageRequest.of(page, pageSize);
+        return employeeRepository.findAll(p);
+    }
+
 
     public Employee getEmployeeById(Long id) {
         return employeeRepository.findById(id).orElse(null);
