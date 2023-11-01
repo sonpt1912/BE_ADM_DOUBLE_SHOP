@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "employee")
@@ -66,8 +67,15 @@ public class Employee {
     private Long updatedBy;
 
     @Column(name = "created_time", nullable = false)
-    private Timestamp createdTime;
+    private LocalDateTime createdTime;
 
     @Column(name = "updated_time")
-    private Timestamp updatedTime;
+    private LocalDateTime updatedTime;
+
+    @PrePersist
+    public void prePersist() {
+        this.createdTime = LocalDateTime.now();
+        // Đặt giá trị cho created_by, ví dụ, lấy giá trị từ hệ thống hoặc constant
+        this.createdBy = 1L;
+    }
 }

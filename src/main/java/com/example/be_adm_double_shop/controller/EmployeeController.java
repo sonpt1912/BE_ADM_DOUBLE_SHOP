@@ -5,7 +5,6 @@ import com.example.be_adm_double_shop.service.EmployeeService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,14 +19,10 @@ public class EmployeeController {
     @Autowired
     private EmployeeService employeeService;
 
-    @GetMapping("/index")
-    public ResponseEntity<Page<Employee>> getAllEmployees(
-            @RequestParam(defaultValue = "1") int page,
-            @RequestParam(defaultValue = "5") int size) {
-        if (page < 1) page = 1;
-        PageRequest pageable = PageRequest.of(page - 1, size);
-        Page<Employee> employeePage = employeeService.getAllEmployees(pageable);
-        return ResponseEntity.ok().body(employeePage);
+    @GetMapping("/get-by-page")
+    public ResponseEntity<Page<Employee>> getAllPage(@RequestParam("page") int page, @RequestParam("pageSize") int pageSize) {
+        Page<Employee> employeePage = employeeService.getAllByPage(page, pageSize);
+        return ResponseEntity.ok(employeePage);
     }
 
     @GetMapping("/{id}")

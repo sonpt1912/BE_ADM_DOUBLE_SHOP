@@ -1,6 +1,6 @@
 CREATE SCHEMA `double_shop` ;
 
-CREATE TABLE `double_shop`.`rank` (
+CREATE TABLE `double_shop`.`user_rank` (
   `id` BIGINT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
   `description` VARCHAR(145) NULL,
@@ -33,7 +33,7 @@ CREATE TABLE `double_shop`.`customer` (
   INDEX `FK_R_C_idx` (`id_rank` ASC) VISIBLE,
   CONSTRAINT `FK_R_C`
     FOREIGN KEY (`id_rank`)
-    REFERENCES `double_shop`.`rank` (`id`)
+    REFERENCES `double_shop`.`user_rank` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
     
