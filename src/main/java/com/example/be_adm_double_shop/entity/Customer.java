@@ -20,9 +20,9 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "id_rank", referencedColumnName = "id")
-    private Rank rank;
+//    @ManyToOne
+//    @JoinColumn(name = "id_rank", referencedColumnName = "id")
+//    private Rank rank;
 
 
     @Column(name = "username")

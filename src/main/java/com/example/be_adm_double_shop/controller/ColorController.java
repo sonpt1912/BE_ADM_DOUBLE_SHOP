@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/color")
-@CrossOrigin(origins = {"*"})
-public class ColorController {
+@CrossOrigin(origins = { "http://localhost:3000"}, allowCredentials = "true")
+    public class ColorController {
 
     @Autowired
     private ColorService colorService;
