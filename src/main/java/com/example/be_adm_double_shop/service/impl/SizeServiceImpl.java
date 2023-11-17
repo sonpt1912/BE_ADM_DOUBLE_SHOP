@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SizeServiceImpl implements SizeService {
@@ -36,5 +37,21 @@ public class SizeServiceImpl implements SizeService {
     @Override
     public Size save(Size size) {
         return sizeRepository.save(size);
+    }
+
+    @Override
+    public Size update(Size size, Long id) {
+        Optional<Size> optional = sizeRepository.findById(id);
+        return optional.map(o->{
+            o.setCode(size.getCode());
+            o.setName(size.getName());
+            o.setDescription(size.getDescription());
+            o.setStatus(size.getStatus());
+            o.setCreatedBy(size.getCreatedBy());
+            o.setUpdatedBy(size.getUpdatedBy());
+            o.setCreatedTime(size.getCreatedTime());
+            o.setUpdatedTime(size.getUpdatedTime());
+            return  sizeRepository.save(size);
+        }).orElse(null);
     }
 }

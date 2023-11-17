@@ -15,4 +15,6 @@ public interface CollarService {
 
     Collar save(Collar collar);
 
+    Collar update(Collar collar, Long id);
+
 }

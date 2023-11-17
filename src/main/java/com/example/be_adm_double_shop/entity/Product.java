@@ -23,13 +23,13 @@ public class Product {
     private String name;
 
     @Column(name = "status")
-    private Integer stats;
+    private Integer status;
 
     @Column(name = "created_by")
     private Long createdBy;
 
     @Column(name = "updated_by")
-    private Long updated_by;
+    private Long updatedBy;
 
     @Column(name = "created_time")
     private Timestamp createdTime;

@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MaterialServiceImpl implements MaterialService {
@@ -24,7 +25,8 @@ public class MaterialServiceImpl implements MaterialService {
 
     @Override
     public Material getOneById(Long id) {
-        return materialRepository.findById(id).get();
+        Optional<Material> optionalMaterial = materialRepository.findById(id);
+        return optionalMaterial.orElse(null);
     }
 
     @Override
@@ -36,5 +38,20 @@ public class MaterialServiceImpl implements MaterialService {
     @Override
     public Material save(Material material) {
         return materialRepository.save(material);
+    }
+
+    @Override
+    public Material update(Material material, Long id) {
+        Optional<Material> optionalMaterial = materialRepository.findById(id);
+        return optionalMaterial.map(o->{
+            o.setCode(material.getCode());
+            o.setName(material.getName());
+            o.setDescription(material.getDescription());
+            o.setCreatedBy(material.getCreatedBy());
+            o.setUpdatedBy(material.getUpdatedBy());
+            o.setCreatedTime(material.getCreatedTime());
+            o.setUpdatedTime(material.getUpdatedTime());
+            return materialRepository.save(material);
+        }).orElse(null);
     }
 }

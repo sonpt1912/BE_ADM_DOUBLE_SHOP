@@ -35,7 +35,7 @@ public class Material {
     private Long createdBy;
 
     @Column(name = "updated_by")
-    private Long updated_by;
+    private Long updatedBy;
 
     @Column(name = "created_time")
     private Timestamp createdTime;

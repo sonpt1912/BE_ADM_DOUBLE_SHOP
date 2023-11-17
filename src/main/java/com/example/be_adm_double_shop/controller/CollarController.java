@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -40,6 +41,11 @@ public class CollarController {
     @PostMapping("/save")
     public ResponseEntity save(@RequestBody Collar collar) {
         return ResponseEntity.ok(collarService.save(collar));
+    }
+
+    @PutMapping("/update/{id}")
+    public ResponseEntity update(@PathVariable Long id, @RequestBody Collar collar){
+        return ResponseEntity.ok(collarService.update(collar, id));
     }
 
 }

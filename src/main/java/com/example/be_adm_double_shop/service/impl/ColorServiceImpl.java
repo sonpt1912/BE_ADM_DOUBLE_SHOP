@@ -19,49 +19,42 @@ import java.util.Optional;
 public class ColorServiceImpl implements ColorService {
 
     @Autowired
-    private ColorRepository repository;
-
+    private ColorRepository colorRepository;
 
     @Override
-    public List<ColorCustom> list() {
-        return repository.getAll();
+    public List<Color> getAll() {
+        return colorRepository.findAll();
     }
 
     @Override
     public Color getOneById(Long id) {
-        return repository.findById(id).orElse(null);
+        return colorRepository.findById(id).get();
     }
 
     @Override
     public Page getAllByPage(int page) {
-        Pageable p = PageRequest.of(page, 5);
-        return repository.findAll(p);
+        Pageable pageable = PageRequest.of(page, 5);
+        return colorRepository.findAll(pageable);
     }
 
     @Override
-    public Color save(ColorRequest colorRequest) {
-        Color color = colorRequest.map(new Color());
-        return repository.save(color);
+    public Color save(Color color) {
+        return colorRepository.save(color);
     }
 
     @Override
-    public Color delete(Long id) {
-        Optional<Color> colorOptional = repository.findById(id);
-        return colorOptional.map(o ->{
-            repository.delete(o);
-            return o;
-        }).orElse(null);
-    }
-
-    @Override
-    public Color update(ColorRequest colorRequest, Long id) {
-        Optional<Color> colorOptional = repository.findById(id);
-        return colorOptional.map(o ->{
-            o.setCode(colorRequest.getCode());
-            o.setName(colorRequest.getName());
-            o.setDescription(colorRequest.getDescription());
-            o.setStatus(colorRequest.getStatus());
-            return repository.save(o);
+    public Color update(Color color, Long id) {
+        Optional<Color> optional = colorRepository.findById(id);
+        return optional.map(o->{
+            o.setCode(color.getCode());
+            o.setName(color.getName());
+            o.setDescription(color.getDescription());
+            o.setStatus(color.getStatus());
+            o.setCreatedBy(color.getCreatedBy());
+            o.setUpdatedBy(color.getUpdatedBy());
+            o.setCreatedTime(color.getCreatedTime());
+            o.setUpdatedTime(color.getUpdatedTime());
+            return colorRepository.save(color);
         }).orElse(null);
     }
 }

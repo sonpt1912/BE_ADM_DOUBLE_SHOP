@@ -10,6 +10,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
+
 @Service
 public class ProductServiceImpl implements ProductService {
 
@@ -35,5 +37,19 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product save(Product product) {
         return productRepository.save(product);
+    }
+
+    @Override
+    public Product update(Product product, Long id) {
+        Optional<Product> optional = productRepository.findById(id);
+        return optional.map(o -> {
+            o.setName(product.getName());
+            o.setStatus(product.getStatus());
+            o.setCreatedBy(product.getCreatedBy());
+            o.setUpdatedBy(product.getUpdatedBy());
+            o.setCreatedTime(product.getCreatedTime());
+            o.setUpdatedTime(product.getUpdatedTime());
+            return productRepository.save(product);
+        }).orElse(null);
     }
 }

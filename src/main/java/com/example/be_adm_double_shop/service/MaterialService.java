@@ -15,5 +15,7 @@ public interface MaterialService {
 
     Material save(Material material);
 
+    Material update(Material material, Long id);
+
 
 }

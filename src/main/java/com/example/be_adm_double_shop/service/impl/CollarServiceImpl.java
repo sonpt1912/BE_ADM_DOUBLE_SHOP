@@ -10,6 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CollarServiceImpl implements CollarService {
@@ -36,5 +37,21 @@ public class CollarServiceImpl implements CollarService {
     @Override
     public Collar save(Collar collar) {
         return collarRepository.save(collar);
+    }
+
+    @Override
+    public Collar update(Collar collar, Long id) {
+        Optional<Collar> optional = collarRepository.findById(id);
+        return optional.map(o->{
+            o.setCode(collar.getCode());
+            o.setName(collar.getName());
+            o.setDescription(collar.getDescription());
+            o.setStatus(collar.getStatus());
+            o.setCreatedBy(collar.getCreatedBy());
+            o.setUpdatedBy(collar.getUpdatedBy());
+            o.setCreatedTime(collar.getCreatedTime());
+            o.setUpdatedTime(collar.getUpdatedTime());
+            return collarRepository.save(collar);
+        }).orElse(null);
     }
 }
