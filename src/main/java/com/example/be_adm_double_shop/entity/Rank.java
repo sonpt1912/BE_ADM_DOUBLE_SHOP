@@ -26,11 +26,14 @@ public class Rank {
     @Column(name = "description")
     private String description;
 
-    @Column(name = "since")
-    private Long since;
+    @Column(name = "from")
+    private Long from;
 
-    @Column(name = "until")
-    private Long until;
+    @Column(name = "to")
+    private Long to;
+
+    @Column(name= "percent")
+    private Integer percent;
 
     @Column(name = "created_by")
     private Long createdBy;
