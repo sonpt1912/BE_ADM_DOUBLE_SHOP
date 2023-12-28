@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/color")
-@CrossOrigin(origins = {"*"})
+@CrossOrigin(origins = { "http://localhost:3000"}, allowCredentials = "true")
 public class ColorController {
 
     @Autowired
@@ -33,5 +33,4 @@ public class ColorController {
     public ResponseEntity save(@RequestBody Color color) {
         return ResponseEntity.ok(colorService.save(color));
     }
-
 }
