@@ -6,7 +6,6 @@ spring:
     # admin only
     username: admin
     password: KlNvbjE5MTIwMw==
-
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:

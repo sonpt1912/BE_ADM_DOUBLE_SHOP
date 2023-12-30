@@ -23,7 +23,7 @@ public class Product {
     private String name;
 
     @Column(name = "status")
-    private Integer stats;
+    private Integer status;
 
     @Column(name = "created_by")
     private String createdBy;
