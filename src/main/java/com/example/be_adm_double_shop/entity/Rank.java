@@ -36,10 +36,10 @@ public class Rank {
     private Integer percent;
 
     @Column(name = "created_by")
-    private Long createdBy;
+    private String createdBy;
 
     @Column(name = "updated_by")
-    private Long updated_by;
+    private String updated_by;
 
     @Column(name = "created_time")
     private LocalDateTime createdTime;

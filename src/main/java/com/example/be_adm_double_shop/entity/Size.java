@@ -3,6 +3,7 @@ package com.example.be_adm_double_shop.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.Date;
 import java.sql.Timestamp;
 
 @Entity
@@ -32,10 +33,10 @@ public class Size {
     private Integer status;
 
     @Column(name = "created_by")
-    private Long createdBy;
+    private String createdBy;
 
     @Column(name = "updated_by")
-    private Long updated_by;
+    private String updated_by;
 
     @Column(name = "created_time")
     private Timestamp createdTime;

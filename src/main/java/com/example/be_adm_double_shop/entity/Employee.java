@@ -61,10 +61,10 @@ public class Employee {
     private Integer status;
 
     @Column(name = "created_by", nullable = false)
-    private Long createdBy;
+    private String createdBy;
 
     @Column(name = "updated_by")
-    private Long updatedBy;
+    private String updatedBy;
 
     @Column(name = "created_time", nullable = false)
     private LocalDateTime createdTime;
@@ -72,10 +72,4 @@ public class Employee {
     @Column(name = "updated_time")
     private LocalDateTime updatedTime;
 
-    @PrePersist
-    public void prePersist() {
-        this.createdTime = LocalDateTime.now();
-        // Đặt giá trị cho created_by, ví dụ, lấy giá trị từ hệ thống hoặc constant
-        this.createdBy = 1L;
-    }
 }
