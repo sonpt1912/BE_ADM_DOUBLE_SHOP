@@ -51,21 +51,16 @@ public class Customer {
     private Integer status;
 
     @Column(name = "created_by")
-    private Long createdBy;
+    private String createdBy;
 
     @Column(name = "updated_by")
-    private Long updated_by;
+    private String updated_by;
 
     @Column(name = "created_time")
     private LocalDateTime createdTime;
 
     @Column(name = "updated_time")
     private LocalDateTime updatedTime;
-    @PrePersist
-    public void prePersist() {
-        this.createdTime = LocalDateTime.now();
-        // Đặt giá trị cho created_by, ví dụ, lấy giá trị từ hệ thống hoặc constant
-        this.createdBy = 1L;
-    }
+
 
 }
