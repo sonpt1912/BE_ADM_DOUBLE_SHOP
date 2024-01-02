@@ -9,6 +9,6 @@ import java.util.List;
 
 public interface SizeService {
 
-    ListResponse<Size> getAllbByConditon(SizeRequest request);
+    ListResponse<Size> getAllByConditon(SizeRequest request);
 
 }

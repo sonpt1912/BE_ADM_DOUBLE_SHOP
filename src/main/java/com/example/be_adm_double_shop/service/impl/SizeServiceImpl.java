@@ -28,7 +28,7 @@ public class SizeServiceImpl implements SizeService {
 
 
     @Override
-    public ListResponse<Size> getAllbByConditon(SizeRequest request) {
+    public ListResponse<Size> getAllByConditon(SizeRequest request) {
 
 
         ListResponse listResponse = new ListResponse();
@@ -39,12 +39,12 @@ public class SizeServiceImpl implements SizeService {
         sql.append(" SELECT * FROM size WHERE 1 = 1 ");
 
         if (!StringUtil.stringIsNullOrEmty(request.getCode())) {
-            sql.append(" AND CODE LIKE CONCAT(%, :code ,%) ");
+            sql.append(" AND CODE LIKE CONCAT('%', :code ,'%') ");
             params.put("code", request.getCode());
         }
 
         if (!StringUtil.stringIsNullOrEmty(request.getName())) {
-            sql.append(" AND NAME LIKE CONCAT(%, :name ,%) ");
+            sql.append(" AND NAME LIKE CONCAT('%', :name ,'%') ");
             params.put("name", request.getName());
         }
 
@@ -77,12 +77,12 @@ public class SizeServiceImpl implements SizeService {
         sql.append(" SELECT COUNT(*) FROM size WHERE 1 = 1 ");
 
         if (!StringUtil.stringIsNullOrEmty(request.getCode())) {
-            sql.append(" AND CODE LIKE CONCAT(%, :code ,%) ");
+            sql.append(" AND CODE LIKE CONCAT('%', :code ,'%') ");
             params.put("code", request.getCode());
         }
 
         if (!StringUtil.stringIsNullOrEmty(request.getName())) {
-            sql.append(" AND NAME LIKE CONCAT(%, :name ,%) ");
+            sql.append(" AND NAME LIKE CONCAT('%', :name ,'%') ");
             params.put("name", request.getName());
         }
 

@@ -19,7 +19,7 @@ public class SizeController {
 
     @PostMapping("/get-size-by-condition")
     private ResponseEntity getAllSize(@RequestBody SizeRequest request) {
-        return new ResponseEntity(sizeService.getAllbByConditon(request), HttpStatus.OK);
+        return new ResponseEntity(sizeService.getAllByConditon(request), HttpStatus.OK);
     }
 
 }
