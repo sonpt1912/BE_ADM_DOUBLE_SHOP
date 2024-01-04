@@ -1,4 +1,4 @@
-package com.example.be_adm_double_shop.dto;
+package com.example.be_adm_double_shop.dto.response;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
