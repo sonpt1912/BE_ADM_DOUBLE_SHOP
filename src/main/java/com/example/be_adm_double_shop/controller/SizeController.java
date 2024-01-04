@@ -23,10 +23,10 @@ public class SizeController {
         return new ResponseEntity(sizeService.getAllByConditon(request), HttpStatus.OK);
     }
 
-    @PostMapping("/save")
-    public ResponseEntity save(@RequestBody Size size)
-    {
-        return new ResponseEntity(sizeService)
-    }
+//    @PostMapping("/save")
+//    public ResponseEntity save(@RequestBody Size size)
+//    {
+//        return new ResponseEntity(sizeService)
+//    }
 
 }
