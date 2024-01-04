@@ -1,12 +1,13 @@
 package com.example.be_adm_double_shop.service.impl;
 
 
-import com.example.be_adm_double_shop.dto.ListResponse;
+import com.example.be_adm_double_shop.dto.response.ListResponse;
 import com.example.be_adm_double_shop.dto.request.SizeRequest;
 import com.example.be_adm_double_shop.entity.Size;
 import com.example.be_adm_double_shop.repository.SizeRepository;
 import com.example.be_adm_double_shop.service.SizeService;
 import com.example.be_adm_double_shop.util.Constant;
+import com.example.be_adm_double_shop.util.DateUtil;
 import com.example.be_adm_double_shop.util.StringUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -14,6 +15,7 @@ import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -103,11 +105,35 @@ public class SizeServiceImpl implements SizeService {
 
     @Override
     public String save(Size size) {
-        return null;
+
+        if (StringUtil.stringIsNullOrEmty(size.getCode())) {
+            String codeGen = new String();
+            while (true) {
+                if (StringUtil.stringIsNullOrEmty(sizeRepository.findSizeByCode(codeGen))) {
+                    size.setCode(codeGen);
+                    break;
+                }
+            }
+        }
+        size.setStatus(Constant.ACTIVE);
+        size.setCreatedBy("");
+        size.setCreatedTime(DateUtil.dateToString(new Date()));
+
+        try {
+            sizeRepository.save(size);
+
+            return Constant.SUCCESS;
+        } catch (Exception e) {
+            return e.getMessage();
+        }
+
     }
 
     @Override
     public Object update(Size size) {
+        size.setUpdated_by("");
+        size.setUpdatedTime(DateUtil.dateToString(new Date()));
+        sizeRepository.save(size);
         return null;
     }
 }
