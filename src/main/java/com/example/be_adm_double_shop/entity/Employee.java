@@ -67,9 +67,9 @@ public class Employee {
     private String updatedBy;
 
     @Column(name = "created_time", nullable = false)
-    private LocalDateTime createdTime;
+    private String createdTime;
 
     @Column(name = "updated_time")
-    private LocalDateTime updatedTime;
+    private String updatedTime;
 
 }
