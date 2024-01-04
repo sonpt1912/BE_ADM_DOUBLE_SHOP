@@ -11,4 +11,8 @@ public interface SizeService {
 
     ListResponse<Size> getAllByConditon(SizeRequest request);
 
+    String save(Size size);
+
+    Object update(Size size);
+
 }
