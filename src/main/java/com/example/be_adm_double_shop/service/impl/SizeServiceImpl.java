@@ -105,23 +105,22 @@ public class SizeServiceImpl implements SizeService {
 
     @Override
     public String save(Size size) {
-
         if (StringUtil.stringIsNullOrEmty(size.getCode())) {
-            String codeGen = new String();
+            int i = 1;
             while (true) {
+                String codeGen = Constant.DETAIL_PRODUCT.SIZE + i;
                 if (StringUtil.stringIsNullOrEmty(sizeRepository.findSizeByCode(codeGen))) {
                     size.setCode(codeGen);
                     break;
                 }
+                i++;
             }
         }
         size.setStatus(Constant.ACTIVE);
         size.setCreatedBy("");
         size.setCreatedTime(DateUtil.dateToString(new Date()));
-
         try {
             sizeRepository.save(size);
-
             return Constant.SUCCESS;
         } catch (Exception e) {
             return e.getMessage();
