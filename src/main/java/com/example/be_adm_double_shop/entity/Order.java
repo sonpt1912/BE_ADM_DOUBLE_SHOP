@@ -73,10 +73,10 @@ public class Order {
     private String updatedBy;
 
     @Column(name = "created_time")
-    private Timestamp createdTime;
+    private String createdTime;
 
     @Column(name = "updated_time")
-    private Timestamp updatedTime;
+    private String updatedTime;
 
 
 }

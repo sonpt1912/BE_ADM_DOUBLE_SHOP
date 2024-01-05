@@ -57,10 +57,10 @@ public class Customer {
     private String updated_by;
 
     @Column(name = "created_time")
-    private LocalDateTime createdTime;
+    private String createdTime;
 
     @Column(name = "updated_time")
-    private LocalDateTime updatedTime;
+    private String updatedTime;
 
 
 }

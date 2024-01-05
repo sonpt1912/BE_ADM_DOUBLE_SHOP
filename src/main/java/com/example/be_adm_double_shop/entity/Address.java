@@ -35,10 +35,10 @@ public class Address {
     private String updated_by;
 
     @Column(name = "created_time")
-    private Timestamp createdTime;
+    private String createdTime;
 
     @Column(name = "updated_time")
-    private Timestamp updatedTime;
+    private String updatedTime;
 
 
     @ManyToOne
