@@ -55,7 +55,7 @@ public class SizeServiceImpl implements SizeService {
             params.put("status", request.getStatus());
         }
 
-        sql.append("order by createdTime desc");
+        sql.append("order by created_time desc");
 
         if (!StringUtil.stringIsNullOrEmty(request.getPage())) {
             sql.append(" LIMIT  :page, :size  ");
@@ -134,7 +134,8 @@ public class SizeServiceImpl implements SizeService {
     public Object update(Size size) {
         size.setUpdated_by("");
         size.setUpdatedTime(DateUtil.dateToString(new Date()));
-        sizeRepository.save(size);
+
+        Size sizeUpdate = sizeRepository.findSizeByCode(size.getCode());
         try {
             sizeRepository.save(size);
             return Constant.SUCCESS;
