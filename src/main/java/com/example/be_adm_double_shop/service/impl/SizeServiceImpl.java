@@ -133,6 +133,11 @@ public class SizeServiceImpl implements SizeService {
         size.setUpdated_by("");
         size.setUpdatedTime(DateUtil.dateToString(new Date()));
         sizeRepository.save(size);
-        return null;
+        try {
+            sizeRepository.save(size);
+            return Constant.SUCCESS;
+        } catch (Exception e) {
+            return e.getMessage();
+        }
     }
 }
