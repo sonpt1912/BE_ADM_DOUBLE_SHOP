@@ -55,6 +55,8 @@ public class SizeServiceImpl implements SizeService {
             params.put("status", request.getStatus());
         }
 
+        sql.append("order by createdTime desc");
+
         if (!StringUtil.stringIsNullOrEmty(request.getPage())) {
             sql.append(" LIMIT  :page, :size  ");
             if (request.getPage() == 0) {
