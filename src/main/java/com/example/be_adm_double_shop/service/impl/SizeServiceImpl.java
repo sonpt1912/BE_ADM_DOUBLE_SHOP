@@ -111,7 +111,7 @@ public class SizeServiceImpl implements SizeService {
             int i = 1;
             while (true) {
                 String codeGen = Constant.DETAIL_PRODUCT.SIZE + i;
-                if (StringUtil.stringIsNullOrEmty(sizeRepository.findSizeByCode(codeGen))) {
+                if (StringUtil.stringIsNullOrEmty(sizeRepository.checkCodeExits(codeGen))) {
                     size.setCode(codeGen);
                     break;
                 }
@@ -120,7 +120,7 @@ public class SizeServiceImpl implements SizeService {
         }
         size.setStatus(Constant.ACTIVE);
         size.setCreatedBy("");
-        size.setCreatedTime(DateUtil.dateToString(new Date()));
+        size.setCreatedTime(DateUtil.dateToString4(new Date()));
         try {
             sizeRepository.save(size);
             return Constant.SUCCESS;
@@ -131,16 +131,23 @@ public class SizeServiceImpl implements SizeService {
     }
 
     @Override
-    public Object update(Size size) {
-        size.setUpdated_by("");
-        size.setUpdatedTime(DateUtil.dateToString(new Date()));
+    public Object update(Size sizeRequest) {
+        Size size = sizeRepository.getSizeByCode(sizeRequest.getCode());
+        if (!StringUtil.stringIsNullOrEmty(size)) {
+            size.setName(sizeRequest.getName());
+            size.setDescription(sizeRequest.getDescription());
+            size.setStatus(sizeRequest.getStatus());
+            size.setUpdatedBy("sonpt03");
+            size.setUpdatedTime(DateUtil.dateToString4(new Date()));
+            try{
 
-        Size sizeUpdate = sizeRepository.findSizeByCode(size.getCode());
-        try {
+            }catch (Exception e){
+                return e.getMessage();
+            }
             sizeRepository.save(size);
             return Constant.SUCCESS;
-        } catch (Exception e) {
-            return e.getMessage();
+        } else {
+            return "khong tim thay size";
         }
     }
 }
