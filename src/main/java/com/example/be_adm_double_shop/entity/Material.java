@@ -2,8 +2,10 @@ package com.example.be_adm_double_shop.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import java.sql.Timestamp;
+import java.util.Random;
 
 @Entity
 @Table(name = "material")
@@ -29,16 +31,16 @@ public class Material {
     private String description;
 
     @Column(name = "status")
-    private Integer status;
+    private Integer status = 1;
 
     @Column(name = "created_by")
-    private String createdBy;
+    private String createdBy = "null";
 
     @Column(name = "updated_by")
-    private String updated_by;
+    private String updated_by ;
 
     @Column(name = "created_time")
-    private String createdTime;
+    private String createdTime = "null";
 
     @Column(name = "updated_time")
     private String updatedTime;

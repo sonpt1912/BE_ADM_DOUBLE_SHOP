@@ -1,19 +1,104 @@
-package com.example.be_adm_double_shop.service;
+package com.example.be_adm_double_shop.service.impl;
 
+import com.example.be_adm_double_shop.dto.request.MaterialRequest;
+import com.example.be_adm_double_shop.dto.response.ListResponse;
 import com.example.be_adm_double_shop.entity.Material;
+import com.example.be_adm_double_shop.entity.Size;
 import com.example.be_adm_double_shop.repository.MaterialRepository;
+import com.example.be_adm_double_shop.util.StringUtil;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 @Service
 public class MaterialSer {
     @Autowired
     private MaterialRepository materialRepository;
+
+
+    @PersistenceContext
+    private EntityManager entityManager;
+
+    public ListResponse<Material> getAllByCondition(MaterialRequest request) {
+        ListResponse listResponse = new ListResponse();
+
+        StringBuilder sql = new StringBuilder();
+        Map<String, Object> params = new HashMap<>();
+
+        sql.append("select * from material where 1 = 1");
+
+        if(!StringUtil.stringIsNullOrEmty(request.getCode())) {
+            sql.append((" and code like concat('%', :code, '%')"));
+            params.put("code", request.getCode());
+        }
+
+        if(!StringUtil.stringIsNullOrEmty(request.getName())) {
+            sql.append((" and name like concat('%', :name, '%')"));
+            params.put("name", request.getName());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getStatus())) {
+            sql.append(" and status = :status ");
+            params.put("status", request.getStatus());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getPage())) {
+            sql.append(" LIMIT  :page, :size  ");
+            if (request.getPage() == 0) {
+                params.put("page", 0);
+            } else {
+                params.put("page", (request.getPage() * request.getPageSize()));
+            }
+            params.put("size", request.getPageSize());
+        }
+
+        Query query = entityManager.createNativeQuery(sql.toString(), Material.class);
+        params.forEach(query::setParameter);
+
+        listResponse.setListData(query.getResultList());
+
+//
+        sql = new StringBuilder();
+        params = new HashMap<>();
+
+
+        sql.append(" select count(*) from material where 1 = 1 ");
+
+        if (!StringUtil.stringIsNullOrEmty(request.getCode())) {
+            sql.append((" and code like concat('%', :code, '%')"));
+            params.put("code", request.getCode());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getName())) {
+            sql.append((" and name like concat('%', :name, '%')"));
+            params.put("name", request.getName());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getStatus())) {
+            sql.append(" and status = :status ");
+            params.put("status", request.getStatus());
+        }
+
+
+        Query queryCount = entityManager.createNativeQuery(sql.toString());
+        params.forEach(queryCount::setParameter);
+
+        Integer countData = ((Long) queryCount.getSingleResult()).intValue();
+
+        listResponse.setTotalRecord(countData);
+
+        return listResponse;
+    }
 
     public List<Material> getAll() {
         return materialRepository.findAll();
@@ -28,7 +113,9 @@ public class MaterialSer {
         return materialRepository.save(m);
     }
 
-    public void delete(Long id) {
-        materialRepository.deleteById(id);
+    public Material delete(Long id) {
+        Material material = materialRepository.findById(id).get();
+        material.setStatus(0);
+        return materialRepository.save(material);
     }
 }

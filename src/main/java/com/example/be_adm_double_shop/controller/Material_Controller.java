@@ -1,8 +1,11 @@
 package com.example.be_adm_double_shop.controller;
 
+import com.example.be_adm_double_shop.dto.request.MaterialRequest;
 import com.example.be_adm_double_shop.entity.Material;
-import com.example.be_adm_double_shop.service.MaterialSer;
+import com.example.be_adm_double_shop.service.impl.MaterialSer;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,6 +17,11 @@ import java.util.List;
 public class Material_Controller {
     @Autowired
     private MaterialSer materialSer;
+
+    @RequestMapping("/Material/hien-thi/condition")
+    private ResponseEntity show(@RequestBody MaterialRequest request) {
+        return new ResponseEntity(materialSer.getAllByCondition(request), HttpStatus.OK);
+    }
 
     @RequestMapping("/Material/hien-thi")
     private List<Material> hienThi() {
@@ -36,7 +44,7 @@ public class Material_Controller {
     }
 
     @RequestMapping("/Material/delete/{id}")
-    private void delete(@PathVariable Long id) {
-        materialSer.delete(id);
+    private Material delete(@PathVariable Long id) {
+        return materialSer.delete(id);
     }
 }
