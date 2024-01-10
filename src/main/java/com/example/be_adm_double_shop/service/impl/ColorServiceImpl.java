@@ -109,11 +109,6 @@ public class ColorServiceImpl implements ColorService {
     }
 
 
-//    @Override
-//    public Color getById(Long id) {
-//
-//        return repository.findById(id).get();
-//    }
 
     @Override
     public Page getAllByPage(int page, int pageSize) {
@@ -122,10 +117,10 @@ public class ColorServiceImpl implements ColorService {
     }
     public Color delete(Long code) {
         // Thực hiện logic xóa ở đây
-        Color f = repository.findById(code).get();
-        f.setStatus(0);
-        System.out.println("aaaa" + code);
-        return repository.save(f);
+        Color cl1 = repository.findById(code).get();
+
+        cl1.setStatus(0);
+        return repository.save(cl1);
     }
     @Override
     public Color save(Color color) {
@@ -137,7 +132,5 @@ public class ColorServiceImpl implements ColorService {
         return repository.save(color);
     }
 
-//    public static void main(String[] args) {
-//        System.out.println("sss" + Long.parseLong("8888888"));
-//    }
+
 }

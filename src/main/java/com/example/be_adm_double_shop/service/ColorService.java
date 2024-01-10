@@ -14,7 +14,7 @@ public interface ColorService {
     ListResponse<Color> getAll(ColorRequest request);
 
     Color getOneId(Long id);
-Color delete(Long id);
+Color delete(Long id );
     Page getAllByPage(int page, int pageSize);
 
     Color save(Color color);
