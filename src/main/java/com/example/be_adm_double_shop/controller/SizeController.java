@@ -28,4 +28,9 @@ public class SizeController {
         return new ResponseEntity(sizeService.save(size), HttpStatus.OK);
     }
 
+    @PostMapping("/update")
+    public ResponseEntity update(@RequestBody Size size) {
+        return ResponseEntity.ok(sizeService.update(size));
+    }
+
 }

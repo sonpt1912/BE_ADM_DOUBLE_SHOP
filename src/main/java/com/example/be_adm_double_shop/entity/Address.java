@@ -32,7 +32,7 @@ public class Address {
     private String createdBy;
 
     @Column(name = "updated_by")
-    private String updated_by;
+    private String updatedBy;
 
     @Column(name = "created_time")
     private String createdTime;
