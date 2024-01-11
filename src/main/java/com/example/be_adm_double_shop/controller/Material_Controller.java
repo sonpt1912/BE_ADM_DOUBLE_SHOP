@@ -28,6 +28,11 @@ public class Material_Controller {
         return materialSer.getAll();
     }
 
+    @GetMapping("/Material/hien-thi/{id}")
+    public ResponseEntity getOneById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(materialSer.chiTiet(id));
+    }
+
     @RequestMapping("/Material/hien-thi/{viTri}")
     private List<Material> phanTrang(@PathVariable("viTri") Integer viTri ) {
         return materialSer.phanTrang(viTri);
@@ -38,9 +43,10 @@ public class Material_Controller {
         return materialSer.add_update(m);
     }
 
-    @RequestMapping("/Material/update/{id}")
-    private Material update(@RequestBody Material m) {
-        return materialSer.add_update(m);
+    @PutMapping("/Material/update/{id}")
+    private Material update(@RequestBody Material m, @PathVariable("id") Long id) {
+        System.out.println(id);
+        return materialSer.update(m,id);
     }
 
     @RequestMapping("/Material/delete/{id}")

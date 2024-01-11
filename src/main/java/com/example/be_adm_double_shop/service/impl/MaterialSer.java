@@ -109,7 +109,16 @@ public class MaterialSer {
         return materialRepository.findAll(p).toList();
     }
 
+    public Material chiTiet(Long id) {
+        return materialRepository.findById(id).get();
+
+    }
+
     public Material add_update(Material m){
+        return materialRepository.save(m);
+    }
+
+    public Material update(Material m, Long id) {
         return materialRepository.save(m);
     }
 
