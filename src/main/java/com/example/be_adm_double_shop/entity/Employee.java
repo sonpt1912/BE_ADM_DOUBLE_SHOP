@@ -21,8 +21,8 @@ public class Employee {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "code", nullable = false)
-    private String code;
+    @Column(name = "username", nullable = false)
+    private String username;
 
     @Column(name = "password", nullable = false)
     private String password;
@@ -52,7 +52,7 @@ public class Employee {
     private Integer gender;
 
     @Column(name = "birth_day", nullable = false)
-    private Date birthDay;
+    private String birthDay;
 
     @Column(name = "role", nullable = false)
     private String role;

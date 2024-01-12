@@ -24,10 +24,10 @@ public class Promotion {
     private String name;
 
     @Column(name = "start_date")
-    private Date StartDate;
+    private String StartDate;
 
     @Column(name = "end_date")
-    private Date endDate;
+    private String endDate;
 
     @Column(name = "created_by")
     private String createdBy;
