@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/size")
-@CrossOrigin(origins = {"*"})
 public class SizeController {
 
     @Autowired
