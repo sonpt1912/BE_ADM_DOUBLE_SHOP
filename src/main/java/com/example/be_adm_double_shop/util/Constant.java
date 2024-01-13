@@ -10,6 +10,7 @@ public class Constant {
 
     public interface DETAIL_PRODUCT {
         String SIZE = "SIZE";
+        String COLLAR="COLLAR";
     }
 
 }
