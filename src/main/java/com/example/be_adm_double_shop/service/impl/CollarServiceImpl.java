@@ -14,6 +14,9 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
@@ -22,15 +25,14 @@ import java.util.Map;
 @Service
 public class CollarServiceImpl implements CollarService {
     @Autowired
-    private CollarRepository collarRepository;
+    private CollarRepository repository;
 
     @PersistenceContext
     private EntityManager entityManager;
 
 
     @Override
-    public ListResponse<Collar> getAllByConditon(SizeRequest request) {
-
+    public ListResponse<Collar> getAll(SizeRequest request) {
 
         ListResponse listResponse = new ListResponse();
 
@@ -53,8 +55,6 @@ public class CollarServiceImpl implements CollarService {
             sql.append(" AND STATUS = :status ");
             params.put("status", request.getStatus());
         }
-
-        sql.append("order by created_time desc");
 
         if (!StringUtil.stringIsNullOrEmty(request.getPage())) {
             sql.append(" LIMIT  :page, :size  ");
@@ -105,12 +105,32 @@ public class CollarServiceImpl implements CollarService {
     }
 
     @Override
+    public Collar getOneId(Long id) {
+        return repository.findById(id).get();
+    }
+
+
+
+    @Override
+    public Page getAllByPage(int page, int pageSize) {
+        Pageable p = PageRequest.of(page, pageSize);
+        return repository.findAll(p);
+    }
+    public Collar delete(Long code) {
+        // Thực hiện logic xóa ở đây
+        Collar cl1 = repository.findById(code).get();
+
+        cl1.setStatus(0);
+        return repository.save(cl1);
+    }
+    @Override
     public String save(Collar collar) {
+
         if (StringUtil.stringIsNullOrEmty(collar.getCode())) {
             int i = 1;
             while (true) {
                 String codeGen = Constant.DETAIL_PRODUCT.COLLAR + i;
-                if (StringUtil.stringIsNullOrEmty(collarRepository.checkCodeExits(codeGen))) {
+                if (StringUtil.stringIsNullOrEmty(repository.checkCodeExits(codeGen))) {
                     collar.setCode(codeGen);
                     break;
                 }
@@ -121,7 +141,7 @@ public class CollarServiceImpl implements CollarService {
         collar.setCreatedBy("");
         collar.setCreatedTime(DateUtil.dateToString4(new Date()));
         try {
-           collarRepository.save(collar);
+            repository.save(collar);
             return Constant.SUCCESS;
         } catch (Exception e) {
             return e.getMessage();
@@ -130,12 +150,12 @@ public class CollarServiceImpl implements CollarService {
     }
 
     @Override
-    public Object update(Collar sizeRequest) {
-        Collar collar = collarRepository.getCollarByCode(sizeRequest.getCode());
+    public Object update(Collar collarRequest) {
+        Collar collar = repository.getCollarByCode(collarRequest.getCode());
         if (!StringUtil.stringIsNullOrEmty(collar)) {
-            collar.setName(sizeRequest.getName());
-            collar.setDescription(sizeRequest.getDescription());
-            collar.setStatus(sizeRequest.getStatus());
+            collar.setName(collarRequest.getName());
+            collar.setDescription(collarRequest.getDescription());
+            collar.setStatus(collarRequest.getStatus());
             collar.setUpdatedBy("sonpt03");
             collar.setUpdatedTime(DateUtil.dateToString4(new Date()));
             try{
@@ -143,10 +163,11 @@ public class CollarServiceImpl implements CollarService {
             }catch (Exception e){
                 return e.getMessage();
             }
-            collarRepository.save(collar);
+            repository.save(collar);
             return Constant.SUCCESS;
         } else {
             return "khong tim thay collar";
         }
     }
+
 }

@@ -4,11 +4,17 @@ import com.example.be_adm_double_shop.dto.request.SizeRequest;
 import com.example.be_adm_double_shop.dto.response.ListResponse;
 import com.example.be_adm_double_shop.entity.Collar;
 import com.example.be_adm_double_shop.entity.Size;
+import org.springframework.data.domain.Page;
+
+import javax.management.ObjectName;
 
 public interface CollarService {
-    ListResponse<Collar> getAllByConditon(SizeRequest request);
+    ListResponse<Collar> getAll(SizeRequest request);
 
-    String save(Collar collar);
+    Collar getOneId(Long id);
+    Collar delete(Long id );
+    Page getAllByPage(int page, int pageSize);
 
-    Object update(Collar collar);
+   String save(Collar collar);
+    Object update(Collar collarRequest);
 }
