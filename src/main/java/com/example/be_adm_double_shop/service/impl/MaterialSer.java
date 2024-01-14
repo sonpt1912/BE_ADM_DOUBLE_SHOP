@@ -35,7 +35,7 @@ public class MaterialSer {
         StringBuilder sql = new StringBuilder();
         Map<String, Object> params = new HashMap<>();
 
-        sql.append("select * from material where 1 = 1 order by id desc");
+        sql.append("select * from material where 1 = 1");
 
         if(!StringUtil.stringIsNullOrEmty(request.getCode())) {
             sql.append((" and code like concat('%', :code, '%')"));
@@ -52,8 +52,10 @@ public class MaterialSer {
             params.put("status", request.getStatus());
         }
 
+        sql.append(" ORDER BY id DESC");
+
         if (!StringUtil.stringIsNullOrEmty(request.getPage())) {
-            sql.append(" LIMIT  :page, :size  ");
+            sql.append(" LIMIT  :page, :size ");
             if (request.getPage() == 0) {
                 params.put("page", 0);
             } else {
