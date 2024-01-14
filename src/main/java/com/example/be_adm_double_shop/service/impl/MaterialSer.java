@@ -35,7 +35,7 @@ public class MaterialSer {
         StringBuilder sql = new StringBuilder();
         Map<String, Object> params = new HashMap<>();
 
-        sql.append("select * from material where 1 = 1");
+        sql.append("select * from material where 1 = 1 order by id desc");
 
         if(!StringUtil.stringIsNullOrEmty(request.getCode())) {
             sql.append((" and code like concat('%', :code, '%')"));
