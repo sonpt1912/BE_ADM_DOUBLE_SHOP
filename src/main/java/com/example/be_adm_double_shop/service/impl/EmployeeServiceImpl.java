@@ -18,13 +18,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Autowired
     private EmployeeRepository userRepository;
 
-    public List<Employee> getUser() {
-        return userRepository.findAll();
-    }
-
     public Employee createUser(Employee user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
+    }
+
+    @Override
+    public Employee findUserbyUsername(String username) {
+        return userRepository.findEmployeeByUsername(username);
     }
 
 }

@@ -50,22 +50,19 @@ public class AuthController {
 
     @PostMapping("/login")
     public ResponseEntity<JwtResponse> login(@RequestBody JwtRequest request) {
-
-        UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
-        String token = jwtProvider.generateToken(userDetails);
+        Employee user = userService.findUserbyUsername(request.getUsername());
+        String token = jwtProvider.generateToken(user);
         JwtResponse response = JwtResponse.builder()
-                .jwtToken(token)
-                .username(userDetails.getUsername()).build();
+                .access_token(token).build();
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     @PostMapping("/google")
     public Object loginGoogle(@RequestBody TokenRequest crenditial) throws NoSuchAlgorithmException, InvalidKeySpecException {
         UserInfo user = (UserInfo) jwtProvider.getAllClaimsFromToken(crenditial.getCrenditial());
-        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
+        Employee employee = userService.findUserbyUsername(user.getEmail());
         JwtResponse response = JwtResponse.builder()
-                .jwtToken(jwtProvider.generateToken(userDetails))
-                .username(userDetails.getUsername()).build();
+                .access_token(jwtProvider.generateToken(employee)).build();
         return response;
     }
 

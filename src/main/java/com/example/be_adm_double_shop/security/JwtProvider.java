@@ -1,5 +1,6 @@
 package com.example.be_adm_double_shop.security;
 
+import com.example.be_adm_double_shop.entity.Employee;
 import com.example.be_adm_double_shop.entity.google.UserInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.Claims;
@@ -49,23 +50,17 @@ public class JwtProvider {
     }
 
     public Object getAllClaimsFromToken(String token) throws NoSuchAlgorithmException, InvalidKeySpecException {
-
         Base64.Decoder decoder = Base64.getUrlDecoder();
         String[] chunks = token.split("\\.");
-
         String header = new String(decoder.decode(chunks[0]));
         String payload = new String(decoder.decode(chunks[1]));
-
-
         ObjectMapper objectMapper = new ObjectMapper();
-
         try {
             UserInfo payloadObject = objectMapper.readValue(payload, UserInfo.class);
             return payloadObject;
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         return null;
     }
 
@@ -76,17 +71,31 @@ public class JwtProvider {
     }
 
     //generate token for user
-    public String generateToken(UserDetails userDetails) {
+    public String generateToken(Employee employee) {
         Map<String, Object> claims = new HashMap<>();
-        return doGenerateToken(claims, userDetails.getUsername());
+        claims.put("username", employee.getUsername());
+        claims.put("name", employee.getName());
+        claims.put("email", employee.getEmail());
+        claims.put("phone", employee.getPhone());
+        claims.put("district", employee.getDistrict());
+        claims.put("provice", employee.getProvice());
+        claims.put("city", employee.getCity());
+        claims.put("gender", employee.getGender());
+        claims.put("birth_day", employee.getBirthDay());
+        claims.put("role", employee.getRole());
+        claims.put("status", employee.getStatus());
+        claims.put("created_by", employee.getCreatedBy());
+        claims.put("updated_by", employee.getUpdatedBy());
+        claims.put("created_time", employee.getCreatedTime());
+        claims.put("updated_time", employee.getUpdatedTime());
+        return doGenerateToken(claims);
     }
 
-    private String doGenerateToken(Map<String, Object> claims, String subject) {
+    private String doGenerateToken(Map<String, Object> claims) {
         return Jwts.builder()
                 .setClaims(claims)
-                .setSubject(subject)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 5 * 60000000))
+                .setExpiration(new Date(System.currentTimeMillis() + 5 * 60))
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY).compact();
     }
 

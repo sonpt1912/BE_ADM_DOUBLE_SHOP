@@ -4,6 +4,8 @@ import com.example.be_adm_double_shop.entity.Employee;
 
 public interface EmployeeService {
 
-    public Employee createUser(Employee user);
+    Employee createUser(Employee user);
+
+    Employee findUserbyUsername(String username);
 
 }

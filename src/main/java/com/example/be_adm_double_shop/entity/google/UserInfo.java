@@ -17,6 +17,8 @@ public class UserInfo {
 
     private String sub;
 
+    private String hd;
+
     private String email;
 
     private Boolean email_verified;
