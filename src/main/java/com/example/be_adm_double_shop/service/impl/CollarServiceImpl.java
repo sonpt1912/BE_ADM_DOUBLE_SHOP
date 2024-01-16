@@ -66,16 +66,13 @@ public class CollarServiceImpl implements CollarService {
             params.put("size", request.getPageSize());
         }
 
-
         Query query = entityManager.createNativeQuery(sql.toString(), Collar.class);
         params.forEach(query::setParameter);
 
         listResponse.setListData(query.getResultList());
 
-//
         sql = new StringBuilder();
         params = new HashMap<>();
-
 
         sql.append(" SELECT COUNT(*) FROM collar WHERE 1 = 1 ");
 
@@ -94,7 +91,6 @@ public class CollarServiceImpl implements CollarService {
             params.put("status", request.getStatus());
         }
 
-
         Query queryCount = entityManager.createNativeQuery(sql.toString());
         params.forEach(queryCount::setParameter);
 
@@ -103,7 +99,6 @@ public class CollarServiceImpl implements CollarService {
         listResponse.setTotalRecord(countData);
         return listResponse;
     }
-
 
     @Override
     public String save(Collar collar) {
@@ -156,7 +151,6 @@ public class CollarServiceImpl implements CollarService {
     public Collar getOneId(Long id) {
         return repository.findById(id).get();
     }
-
 
     @Override
     public Collar delete(Long code) {
