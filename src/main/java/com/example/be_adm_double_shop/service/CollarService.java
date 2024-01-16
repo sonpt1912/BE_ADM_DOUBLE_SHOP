@@ -13,7 +13,7 @@ public interface CollarService {
 
     Collar getOneId(Long id);
     Collar delete(Long id );
-    Page getAllByPage(int page, int pageSize);
+
 
    String save(Collar collar);
     Object update(Collar collarRequest);

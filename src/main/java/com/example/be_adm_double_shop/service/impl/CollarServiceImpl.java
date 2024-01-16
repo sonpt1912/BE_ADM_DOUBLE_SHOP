@@ -104,25 +104,7 @@ public class CollarServiceImpl implements CollarService {
         return listResponse;
     }
 
-    @Override
-    public Collar getOneId(Long id) {
-        return repository.findById(id).get();
-    }
 
-
-
-    @Override
-    public Page getAllByPage(int page, int pageSize) {
-        Pageable p = PageRequest.of(page, pageSize);
-        return repository.findAll(p);
-    }
-    public Collar delete(Long code) {
-        // Thực hiện logic xóa ở đây
-        Collar cl1 = repository.findById(code).get();
-
-        cl1.setStatus(0);
-        return repository.save(cl1);
-    }
     @Override
     public String save(Collar collar) {
 
@@ -168,6 +150,21 @@ public class CollarServiceImpl implements CollarService {
         } else {
             return "khong tim thay collar";
         }
+    }
+
+    @Override
+    public Collar getOneId(Long id) {
+        return repository.findById(id).get();
+    }
+
+
+    @Override
+    public Collar delete(Long code) {
+
+        Collar cl1 = repository.findById(code).get();
+
+        cl1.setStatus(2);
+        return repository.save(cl1);
     }
 
 }

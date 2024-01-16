@@ -23,7 +23,6 @@ public class CollarController {
     private CollarService collarService;
 
 
-
     @PostMapping("/get-collar-by-condition")
     public ResponseEntity getAllCollar(@RequestBody SizeRequest request) {
         return new ResponseEntity(collarService.getAll(request), HttpStatus.OK);
@@ -38,4 +37,14 @@ public class CollarController {
     public ResponseEntity update(@RequestBody Collar collar) {
         return ResponseEntity.ok(collarService.update(collar));
     }
+
+    @GetMapping("/get-collar-by-id/{id}")
+    public ResponseEntity getOneById(@PathVariable("id") Long id) {
+        return ResponseEntity.ok(collarService.getOneId(id));
+    }
+    @PostMapping("/delete/{code}")
+    public Collar delete(@PathVariable("code") Long code){
+        return  collarService.delete(code);
+    }
+
 }
