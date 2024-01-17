@@ -5,6 +5,7 @@ import com.example.be_adm_double_shop.dto.response.ListResponse;
 import com.example.be_adm_double_shop.dto.request.SizeRequest;
 import com.example.be_adm_double_shop.entity.Size;
 import com.example.be_adm_double_shop.repository.SizeRepository;
+import com.example.be_adm_double_shop.security.JwtProvider;
 import com.example.be_adm_double_shop.service.SizeService;
 import com.example.be_adm_double_shop.util.Constant;
 import com.example.be_adm_double_shop.util.DateUtil;
@@ -27,6 +28,9 @@ public class SizeServiceImpl implements SizeService {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Autowired
+    private JwtProvider jwtProvider;
 
 
     @Override

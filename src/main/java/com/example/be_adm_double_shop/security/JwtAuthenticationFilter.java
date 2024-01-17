@@ -1,5 +1,7 @@
 package com.example.be_adm_double_shop.security;
 
+import com.example.be_adm_double_shop.entity.Employee;
+import com.example.be_adm_double_shop.repository.EmployeeRepository;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
 import jakarta.servlet.FilterChain;
@@ -24,18 +26,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
 
     private Logger logger = LoggerFactory.getLogger(OncePerRequestFilter.class);
+
     @Autowired
     private JwtProvider jwtHelper;
 
 
     @Autowired
-    private UserDetailsService userDetailsService;
+    private EmployeeRepository userDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         String requestHeader = request.getHeader("Authorization");
         //Bearer 2352345235sdfrsfgsdfsdf
-        logger.info(" Header :  {}", requestHeader);
+//        logger.info(" Header :  {}", requestHeader);
         String username = null;
         String token = null;
         if (requestHeader != null && requestHeader.startsWith("Bearer")) {
@@ -58,11 +61,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 e.printStackTrace();
             }
         } else {
-            logger.info("Invalid Header Value !! ");
+//            logger.info("Invalid Header Value !! ");
         }
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             //fetch user detail from username
-            UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+            UserDetails userDetails = this.userDetailsService.findEmployeeByUsername(username);
             Boolean validateToken = this.jwtHelper.validateToken(token, userDetails);
             if (validateToken) {
                 //set the authentication
@@ -70,7 +73,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } else {
-                logger.info("Validation fails !!");
+//                logger.info("Validation fails !!");
             }
         }
         filterChain.doFilter(request, response);

@@ -73,7 +73,6 @@ public class JwtProvider {
     //generate token for user
     public String generateToken(Employee employee) {
         Map<String, Object> claims = new HashMap<>();
-        claims.put("username", employee.getUsername());
         claims.put("name", employee.getName());
         claims.put("email", employee.getEmail());
         claims.put("phone", employee.getPhone());
@@ -88,14 +87,15 @@ public class JwtProvider {
         claims.put("updated_by", employee.getUpdatedBy());
         claims.put("created_time", employee.getCreatedTime());
         claims.put("updated_time", employee.getUpdatedTime());
-        return doGenerateToken(claims);
+        return doGenerateToken(claims, employee.getUsername());
     }
 
-    private String doGenerateToken(Map<String, Object> claims) {
+    private String doGenerateToken(Map<String, Object> claims, String username) {
         return Jwts.builder()
                 .setClaims(claims)
+                .setSubject(username)
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 5 * 60))
+                .setExpiration(new Date(System.currentTimeMillis() + 5 * 60000000))
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY).compact();
     }
 
