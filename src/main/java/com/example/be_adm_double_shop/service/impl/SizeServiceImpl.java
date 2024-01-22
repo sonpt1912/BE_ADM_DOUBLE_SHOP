@@ -110,7 +110,7 @@ public class SizeServiceImpl implements SizeService {
     }
 
     @Override
-    public String save(Size size) {
+    public String save(Size size, String username) {
         if (StringUtil.stringIsNullOrEmty(size.getCode())) {
             int i = 1;
             while (true) {
@@ -123,7 +123,7 @@ public class SizeServiceImpl implements SizeService {
             }
         }
         size.setStatus(Constant.ACTIVE);
-        size.setCreatedBy("");
+        size.setCreatedBy(username);
         size.setCreatedTime(DateUtil.dateToString4(new Date()));
         try {
             sizeRepository.save(size);
@@ -135,19 +135,14 @@ public class SizeServiceImpl implements SizeService {
     }
 
     @Override
-    public Object update(Size sizeRequest) {
+    public Object update(Size sizeRequest, String username) {
         Size size = sizeRepository.getSizeByCode(sizeRequest.getCode());
         if (!StringUtil.stringIsNullOrEmty(size)) {
             size.setName(sizeRequest.getName());
             size.setDescription(sizeRequest.getDescription());
             size.setStatus(sizeRequest.getStatus());
-            size.setUpdatedBy("sonpt03");
+            size.setUpdatedBy(username);
             size.setUpdatedTime(DateUtil.dateToString4(new Date()));
-            try{
-
-            }catch (Exception e){
-                return e.getMessage();
-            }
             sizeRepository.save(size);
             return Constant.SUCCESS;
         } else {

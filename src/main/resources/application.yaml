@@ -29,18 +29,18 @@ spring:
 #      time-to-live: 3000
 #  data:
 #    redis:
-#      host: redis-15051.c1.ap-southeast-1-1.ec2.cloud.redislabs.com
-#      port: 15051
+#      host: redis-14442.c1.ap-southeast-1-1.ec2.cloud.redislabs.com
+#      port: 14442
 #      username: default
-#      password: AfIEmkGHR5fGdSj2kDTtdwDgMDJfQgVL
-#  mail:
-#    username: sonptph25875@fpt.edu.vn
-#    password: bkcl gwfc ompy kdcm
-#    port: 587
-#    host: smtp.gmail.com
-#    properties:
-#      mail:
-#        smtp:
-#          auth: true
-#          starttls:
-#            enable: true
+#      password: N7YhN4jXP6ASKBHRR9iLYJun9bXCRfAL
+  mail:
+    username: sonptph25875@fpt.edu.vn
+    password: bkcl gwfc ompy kdcm
+    port: 587
+    host: smtp.gmail.com
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
