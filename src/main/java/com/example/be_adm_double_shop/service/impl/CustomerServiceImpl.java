@@ -1,16 +1,17 @@
 package com.example.be_adm_double_shop.service.impl;
 
 import com.example.be_adm_double_shop.dto.request.ColorRequest;
+import com.example.be_adm_double_shop.dto.request.CustomerRequest;
 import com.example.be_adm_double_shop.dto.response.ListResponse;
 import com.example.be_adm_double_shop.entity.Color;
-import com.example.be_adm_double_shop.entity.Size;
+import com.example.be_adm_double_shop.entity.Customer;
 import com.example.be_adm_double_shop.repository.ColorRepository;
-import com.example.be_adm_double_shop.service.ColorService;
+import com.example.be_adm_double_shop.repository.CustomerRepository;
+import com.example.be_adm_double_shop.service.CustomerService;
 import com.example.be_adm_double_shop.util.StringUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,32 +19,29 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-
 @Service
-public class ColorServiceImpl implements ColorService {
-
+public class CustomerServiceImpl implements CustomerService {
     @Autowired
-    private ColorRepository repository;
+    private CustomerRepository repository;
 
     @PersistenceContext
     private EntityManager entityManager;
 
 
     @Override
-    public ListResponse<Color> getAll(ColorRequest request) {
+    public ListResponse<Customer> getAll(CustomerRequest request) {
 
         ListResponse listResponse = new ListResponse();
 
         StringBuilder sql = new StringBuilder();
         Map<String, Object> params = new HashMap<>();
 
-        sql.append(" SELECT * FROM color WHERE 1 = 1 ");
+        sql.append(" SELECT * FROM customer WHERE 1 = 1 ");
 
-        if (!StringUtil.stringIsNullOrEmty(request.getCode())) {
-            sql.append(" AND CODE LIKE CONCAT('%', :code ,'%') ");
-            params.put("code", request.getCode());
+        if (!StringUtil.stringIsNullOrEmty(request.getEmail())) {
+            sql.append(" AND EMAIL LIKE CONCAT('%', :email ,'%') ");
+            params.put("email", request.getEmail());
         }
 
         if (!StringUtil.stringIsNullOrEmty(request.getName())) {
@@ -51,23 +49,23 @@ public class ColorServiceImpl implements ColorService {
             params.put("name", request.getName());
         }
 
-        if (!StringUtil.stringIsNullOrEmty(request.getStatus())) {
-            sql.append(" AND STATUS = :status ");
-            params.put("status", request.getStatus());
+        if (!StringUtil.stringIsNullOrEmty(request.getPhone())) {
+            sql.append(" AND PHONE = :phone ");
+            params.put("phone", request.getPhone());
         }
 
-        if (!StringUtil.stringIsNullOrEmty(request.getPage())) {
+        if (!StringUtil.stringIsNullOrEmty(request.getPageSize())) {
             sql.append(" LIMIT  :page, :size  ");
-            if (request.getPage() == 0) {
+            if (request.getPageSize() == 0) {
                 params.put("page", 0);
             } else {
-                params.put("page", (request.getPage() * request.getPageSize()));
+                params.put("page", (request.getPageSize() * request.getPageSize()));
             }
             params.put("size", request.getPageSize());
         }
 
 
-        Query query = entityManager.createNativeQuery(sql.toString(), Color.class);
+        Query query = entityManager.createNativeQuery(sql.toString(), Customer.class);
         params.forEach(query::setParameter);
 
         listResponse.setListData(query.getResultList());
@@ -77,11 +75,11 @@ public class ColorServiceImpl implements ColorService {
         params = new HashMap<>();
 
 
-        sql.append(" SELECT COUNT(*) FROM color WHERE 1 = 1 ");
+        sql.append(" SELECT COUNT(*) FROM customer WHERE 1 = 1 ");
 
-        if (!StringUtil.stringIsNullOrEmty(request.getCode())) {
-            sql.append(" AND CODE LIKE CONCAT('%', :code ,'%') ");
-            params.put("code", request.getCode());
+        if (!StringUtil.stringIsNullOrEmty(request.getPhone())) {
+            sql.append(" AND PHONE LIKE CONCAT('%', :phone ,'%') ");
+            params.put("phone", request.getPhone());
         }
 
         if (!StringUtil.stringIsNullOrEmty(request.getName())) {
@@ -89,9 +87,9 @@ public class ColorServiceImpl implements ColorService {
             params.put("name", request.getName());
         }
 
-        if (!StringUtil.stringIsNullOrEmty(request.getStatus())) {
-            sql.append(" AND STATUS = :status ");
-            params.put("status", request.getStatus());
+        if (!StringUtil.stringIsNullOrEmty(request.getEmail())) {
+            sql.append(" AND EMAIL = :email ");
+            params.put("email", request.getEmail());
         }
 
 
@@ -105,7 +103,7 @@ public class ColorServiceImpl implements ColorService {
     }
 
     @Override
-    public Color getOneId(Long id) {
+    public Customer getOneId(Long id) {
         return repository.findById(id).get();
     }
 
@@ -116,20 +114,20 @@ public class ColorServiceImpl implements ColorService {
         Pageable p = PageRequest.of(page, pageSize);
         return repository.findAll(p);
     }
-    public Color delete(Long code) {
+    public Customer delete(Long code) {
         // Thực hiện logic xóa ở đây
-        Color cl1 = repository.findById(code).get();
+        Customer cl1 = repository.findById(code).get();
 
         cl1.setStatus(0);
         return repository.save(cl1);
     }
     @Override
-    public Color save( Color color) {
+    public Customer save( Customer color) {
         return repository.save(color);
     }
 
     @Override
-    public Color update(Color color, Long id) {
+    public Customer update(Customer color, Long id) {
         return repository.save(color);
     }
 
