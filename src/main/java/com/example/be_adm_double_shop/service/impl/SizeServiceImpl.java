@@ -5,6 +5,7 @@ import com.example.be_adm_double_shop.dto.response.ListResponse;
 import com.example.be_adm_double_shop.dto.request.SizeRequest;
 import com.example.be_adm_double_shop.entity.Size;
 import com.example.be_adm_double_shop.repository.SizeRepository;
+import com.example.be_adm_double_shop.security.JwtProvider;
 import com.example.be_adm_double_shop.service.SizeService;
 import com.example.be_adm_double_shop.util.Constant;
 import com.example.be_adm_double_shop.util.DateUtil;
@@ -27,6 +28,9 @@ public class SizeServiceImpl implements SizeService {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Autowired
+    private JwtProvider jwtProvider;
 
 
     @Override
@@ -53,6 +57,8 @@ public class SizeServiceImpl implements SizeService {
             sql.append(" AND STATUS = :status ");
             params.put("status", request.getStatus());
         }
+
+        sql.append("order by created_time desc");
 
         if (!StringUtil.stringIsNullOrEmty(request.getPage())) {
             sql.append(" LIMIT  :page, :size  ");
@@ -103,12 +109,12 @@ public class SizeServiceImpl implements SizeService {
     }
 
     @Override
-    public String save(Size size) {
+    public String save(Size size, String username) {
         if (StringUtil.stringIsNullOrEmty(size.getCode())) {
             int i = 1;
             while (true) {
                 String codeGen = Constant.DETAIL_PRODUCT.SIZE + i;
-                if (StringUtil.stringIsNullOrEmty(sizeRepository.findSizeByCode(codeGen))) {
+                if (StringUtil.stringIsNullOrEmty(sizeRepository.checkCodeExits(codeGen))) {
                     size.setCode(codeGen);
                     break;
                 }
@@ -116,8 +122,8 @@ public class SizeServiceImpl implements SizeService {
             }
         }
         size.setStatus(Constant.ACTIVE);
-        size.setCreatedBy("");
-        size.setCreatedTime(DateUtil.dateToString(new Date()));
+        size.setCreatedBy(username);
+        size.setCreatedTime(DateUtil.dateToString4(new Date()));
         try {
             sizeRepository.save(size);
             return Constant.SUCCESS;
@@ -128,10 +134,18 @@ public class SizeServiceImpl implements SizeService {
     }
 
     @Override
-    public Object update(Size size) {
-        size.setUpdated_by("");
-        size.setUpdatedTime(DateUtil.dateToString(new Date()));
-        sizeRepository.save(size);
-        return null;
+    public Object update(Size sizeRequest, String username) {
+        Size size = sizeRepository.getSizeByCode(sizeRequest.getCode());
+        if (!StringUtil.stringIsNullOrEmty(size)) {
+            size.setName(sizeRequest.getName());
+            size.setDescription(sizeRequest.getDescription());
+            size.setStatus(sizeRequest.getStatus());
+            size.setUpdatedBy(username);
+            size.setUpdatedTime(DateUtil.dateToString4(new Date()));
+            sizeRepository.save(size);
+            return Constant.SUCCESS;
+        } else {
+            return "khong tim thay size";
+        }
     }
 }
