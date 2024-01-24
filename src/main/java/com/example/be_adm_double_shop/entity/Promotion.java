@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "promotion")
@@ -24,21 +25,24 @@ public class Promotion {
     private String name;
 
     @Column(name = "start_date")
-    private Date StartDate;
+    private String startDate = LocalDateTime.now().toString();
 
     @Column(name = "end_date")
-    private Date endDate;
+    private String endDate = LocalDateTime.now().toString();
 
     @Column(name = "created_by")
-    private String createdBy;
+    private String createdBy = "TranTung";
 
     @Column(name = "updated_by")
     private String updated_by;
 
     @Column(name = "created_time")
-    private String createdTime;
+    private String createdTime = LocalDateTime.now().toString();
 
     @Column(name = "updated_time")
     private String updatedTime;
+
+    @Column(name = "status")
+    private String status = "1";
 
 }

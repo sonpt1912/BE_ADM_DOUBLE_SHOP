@@ -5,6 +5,7 @@ import lombok.*;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Random;
 
 @Entity
@@ -40,7 +41,7 @@ public class Material {
     private String updated_by ;
 
     @Column(name = "created_time")
-    private String createdTime = "null";
+    private String createdTime = LocalDateTime.now().toString();
 
     @Column(name = "updated_time")
     private String updatedTime;
