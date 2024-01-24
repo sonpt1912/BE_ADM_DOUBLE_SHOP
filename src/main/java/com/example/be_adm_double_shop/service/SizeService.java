@@ -9,8 +9,8 @@ public interface SizeService {
 
     ListResponse<Size> getAllByConditon(SizeRequest request);
 
-    String save(Size size);
+    String save(Size size, String username);
 
-    Object update(Size size);
+    Object update(Size size, String username);
 
 }
