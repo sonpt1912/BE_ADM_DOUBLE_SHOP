@@ -12,5 +12,9 @@ public class Constant {
         String SIZE = "SIZE";
         String COLLAR="COLLAR";
     }
+    public interface PROMOTION{
+        String PROMOTION="PROMOTION";
+    }
+
 
 }

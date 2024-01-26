@@ -6,6 +6,7 @@ import com.example.be_adm_double_shop.entity.Collar;
 import com.example.be_adm_double_shop.entity.Size;
 import com.example.be_adm_double_shop.repository.CollarRepository;
 import com.example.be_adm_double_shop.repository.SizeRepository;
+import com.example.be_adm_double_shop.security.JwtProvider;
 import com.example.be_adm_double_shop.service.CollarService;
 import com.example.be_adm_double_shop.util.Constant;
 import com.example.be_adm_double_shop.util.DateUtil;
@@ -30,6 +31,8 @@ public class CollarServiceImpl implements CollarService {
     @PersistenceContext
     private EntityManager entityManager;
 
+    @Autowired
+    private JwtProvider jwtProvider;
 
     @Override
     public ListResponse<Collar> getAll(SizeRequest request) {
@@ -101,7 +104,7 @@ public class CollarServiceImpl implements CollarService {
     }
 
     @Override
-    public String save(Collar collar) {
+    public String save(Collar collar,String username) {
 
         if (StringUtil.stringIsNullOrEmty(collar.getCode())) {
             int i = 1;
@@ -115,7 +118,7 @@ public class CollarServiceImpl implements CollarService {
             }
         }
         collar.setStatus(Math.toIntExact(Constant.ACTIVE));
-        collar.setCreatedBy("");
+        collar.setCreatedBy(username);
         collar.setCreatedTime(DateUtil.dateToString4(new Date()));
         try {
             repository.save(collar);
@@ -127,19 +130,14 @@ public class CollarServiceImpl implements CollarService {
     }
 
     @Override
-    public Object update(Collar collarRequest) {
+    public Object update(Collar collarRequest,String username) {
         Collar collar = repository.getCollarByCode(collarRequest.getCode());
         if (!StringUtil.stringIsNullOrEmty(collar)) {
             collar.setName(collarRequest.getName());
             collar.setDescription(collarRequest.getDescription());
             collar.setStatus(collarRequest.getStatus());
-            collar.setUpdatedBy("sonpt03");
+            collar.setUpdatedBy(username);
             collar.setUpdatedTime(DateUtil.dateToString4(new Date()));
-            try{
-
-            }catch (Exception e){
-                return e.getMessage();
-            }
             repository.save(collar);
             return Constant.SUCCESS;
         } else {
@@ -153,11 +151,11 @@ public class CollarServiceImpl implements CollarService {
     }
 
     @Override
-    public Collar delete(Long code) {
+    public Collar delete(Long id) {
 
-        Collar cl1 = repository.findById(code).get();
+        Collar cl1 = repository.findById(id).get();
 
-        cl1.setStatus(2);
+        cl1.setStatus(0);
         return repository.save(cl1);
     }
 

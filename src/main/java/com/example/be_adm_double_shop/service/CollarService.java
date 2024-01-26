@@ -15,6 +15,6 @@ public interface CollarService {
     Collar delete(Long id );
 
 
-   String save(Collar collar);
-    Object update(Collar collarRequest);
+   String save(Collar collar,String username);
+    Object update(Collar collarRequest,String username);
 }
