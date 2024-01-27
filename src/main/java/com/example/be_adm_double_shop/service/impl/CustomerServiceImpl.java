@@ -7,6 +7,7 @@ import com.example.be_adm_double_shop.entity.Color;
 import com.example.be_adm_double_shop.entity.Customer;
 import com.example.be_adm_double_shop.repository.ColorRepository;
 import com.example.be_adm_double_shop.repository.CustomerRepository;
+import com.example.be_adm_double_shop.repository.RankRepository;
 import com.example.be_adm_double_shop.service.CustomerService;
 import com.example.be_adm_double_shop.util.StringUtil;
 import jakarta.persistence.EntityManager;
@@ -24,6 +25,8 @@ import java.util.Map;
 public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private CustomerRepository repository;
+    @Autowired
+    private RankRepository rankRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -114,21 +117,23 @@ public class CustomerServiceImpl implements CustomerService {
         Pageable p = PageRequest.of(page, pageSize);
         return repository.findAll(p);
     }
-    public Customer delete(Long code) {
+    public Customer delete(Long id) {
         // Thực hiện logic xóa ở đây
-        Customer cl1 = repository.findById(code).get();
+        Customer cl1 = repository.findById(id).get();
 
         cl1.setStatus(0);
         return repository.save(cl1);
     }
     @Override
     public Customer save( Customer color) {
+        color.setRank(rankRepository.findById(Long.valueOf(1)).get());
         return repository.save(color);
     }
 
     @Override
-    public Customer update(Customer color, Long id) {
-        return repository.save(color);
+    public Customer update(Customer customer, Long id) {
+        customer.setId(id);
+        return repository.save(customer);
     }
 
 

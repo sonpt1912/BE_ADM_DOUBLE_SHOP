@@ -2,10 +2,13 @@ package com.example.be_adm_double_shop.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.Collection;
 
 @Entity
 @Table(name = "employee")
@@ -14,15 +17,15 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Builder
-public class Employee {
+public class Employee implements UserDetails {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "code", nullable = false)
-    private String code;
+    @Column(name = "username", nullable = false)
+    private String username;
 
     @Column(name = "password", nullable = false)
     private String password;
@@ -52,7 +55,7 @@ public class Employee {
     private Integer gender;
 
     @Column(name = "birth_day", nullable = false)
-    private Date birthDay;
+    private String birthDay;
 
     @Column(name = "role", nullable = false)
     private String role;
@@ -71,5 +74,35 @@ public class Employee {
 
     @Column(name = "updated_time")
     private String updatedTime;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public String getUsername() {
+        return this.username;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 
 }

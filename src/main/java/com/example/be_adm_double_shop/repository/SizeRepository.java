@@ -9,7 +9,10 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SizeRepository extends JpaRepository<Size, Long> {
 
-    @Query(value = "SELECT CODE FROM Size WHERE code = :code", nativeQuery = true)
-    String findSizeByCode(@Param("code") String code);
+    @Query(value = "SELECT CODE FROM size WHERE code = :code", nativeQuery = true)
+    String checkCodeExits(@Param("code") String code);
+
+    @Query(value = "SELECT * FROM size WHERE code = :code", nativeQuery = true)
+    Size getSizeByCode(@Param("code") String code);
 
 }

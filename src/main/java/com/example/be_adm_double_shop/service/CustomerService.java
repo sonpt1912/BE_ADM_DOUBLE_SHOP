@@ -13,6 +13,6 @@ public interface CustomerService {
     Customer delete(Long id );
     Page getAllByPage(int page, int pageSize);
 
-    Customer save(Customer color);
+    Customer save(Customer customer);
     Customer update(Customer color, Long id);
 }

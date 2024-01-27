@@ -45,7 +45,7 @@ public class Customer {
     private String password;
 
     @Column(name = "birth_day")
-    private Date birtDay;
+    private String birtDay;
 
     @Column(name = "status")
     private Integer status;
@@ -54,7 +54,7 @@ public class Customer {
     private String createdBy;
 
     @Column(name = "updated_by")
-    private String updated_by;
+    private String updatedBy;
 
     @Column(name = "created_time")
     private String createdTime;

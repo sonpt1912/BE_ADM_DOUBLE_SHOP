@@ -40,7 +40,7 @@ public class Order {
     private String phone;
 
     @Column(name = "order_date")
-    private Date orderDate;
+    private String orderDate;
 
     @Column(name = "discount_amout")
     private BigDecimal discountAmout;
@@ -49,13 +49,13 @@ public class Order {
     private BigDecimal totalAmout;
 
     @Column(name = "confirmDate")
-    private Date confirmDate;
+    private String confirmDate;
 
     @Column(name = "ship_date")
-    private Date shipDate;
+    private String shipDate;
 
     @Column(name = "receive_date")
-    private Date recevieDate;
+    private String recevieDate;
 
     @Column(name = "note")
     private String note;

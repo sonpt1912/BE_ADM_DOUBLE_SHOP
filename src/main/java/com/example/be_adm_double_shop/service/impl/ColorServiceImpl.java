@@ -130,6 +130,7 @@ public class ColorServiceImpl implements ColorService {
 
     @Override
     public Color update(Color color, Long id) {
+        color.setId(id);
         return repository.save(color);
     }
 

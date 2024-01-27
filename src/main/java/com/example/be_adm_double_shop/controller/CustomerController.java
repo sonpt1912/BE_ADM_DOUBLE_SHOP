@@ -31,19 +31,21 @@ public class CustomerController {
     public ResponseEntity getOneById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(customerService.getOneId(id));
     }
-    @PostMapping("/delete/{code}")
-    public Customer delete(@PathVariable("code") Long code){
-        return  customerService.delete(code);
+    @PostMapping("/delete/{id}")
+    public Customer delete(@PathVariable("code") Long id){
+        return  customerService.delete(id);
     }
 
     @PostMapping("/save")
-    public ResponseEntity save( @Valid @RequestBody Customer color ) {
+    public ResponseEntity save( @Valid @RequestBody Customer customer ) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateUtil.FORMAT_DATE_TIME4);
         String date = simpleDateFormat.format(new Date());
-        color.setCreatedTime(date);
+        customer.setCreatedTime(date);
+        System.out.println(customer.getRank().getId());
 
 
-        return ResponseEntity.ok(customerService.save(color));
+
+        return ResponseEntity.ok(customerService.save(customer));
     }
 
     @PutMapping("/update/{id}")
