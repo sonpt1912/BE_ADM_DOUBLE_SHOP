@@ -1,9 +1,11 @@
 package com.example.be_adm_double_shop.controller;
 
+
 import com.example.be_adm_double_shop.dto.request.ColorRequest;
-import com.example.be_adm_double_shop.dto.request.SizeRequest;
+
+
+import com.example.be_adm_double_shop.config.EnableWrapResponse;
 import com.example.be_adm_double_shop.entity.Color;
-import com.example.be_adm_double_shop.repository.ColorRepository;
 import com.example.be_adm_double_shop.service.ColorService;
 import com.example.be_adm_double_shop.service.impl.ColorServiceImpl;
 import com.example.be_adm_double_shop.util.DateUtil;
@@ -18,6 +20,7 @@ import java.util.Date;
 
 @RestController
 @RequestMapping("/color")
+@EnableWrapResponse
 public class ColorController {
 
     @Autowired

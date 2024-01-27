@@ -1,5 +1,6 @@
 package com.example.be_adm_double_shop.controller;
 
+import com.example.be_adm_double_shop.config.EnableWrapResponse;
 import com.example.be_adm_double_shop.dto.request.SizeRequest;
 import com.example.be_adm_double_shop.entity.Size;
 import com.example.be_adm_double_shop.security.JwtProvider;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/size")
+@EnableWrapResponse
 public class SizeController {
 
     @Autowired
