@@ -62,5 +62,10 @@ public class Customer {
     @Column(name = "updated_time")
     private String updatedTime;
 
+    @Column(name = "image")
+    private String image;
+
+
+
 
 }
