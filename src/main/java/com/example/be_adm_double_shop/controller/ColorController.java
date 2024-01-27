@@ -1,5 +1,6 @@
 package com.example.be_adm_double_shop.controller;
 
+import com.example.be_adm_double_shop.config.EnableWrapResponse;
 import com.example.be_adm_double_shop.entity.Color;
 import com.example.be_adm_double_shop.service.ColorService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/color")
+@EnableWrapResponse
 public class ColorController {
 
     @Autowired
