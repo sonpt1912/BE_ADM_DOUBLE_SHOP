@@ -251,7 +251,7 @@ CREATE TABLE `double_shop`.`employee`
 (
     `id`           BIGINT      NOT NULL AUTO_INCREMENT,
     `username`     VARCHAR(45) NOT NULL,
-    `password`     VARCHAR(45) NOT NULL,
+    `password`     VARCHAR((145)) NOT NULL,
     `name`         VARCHAR(45) NOT NULL,
     `email`        VARCHAR(45) NULL,
     `phone`        VARCHAR(45) NOT NULL,

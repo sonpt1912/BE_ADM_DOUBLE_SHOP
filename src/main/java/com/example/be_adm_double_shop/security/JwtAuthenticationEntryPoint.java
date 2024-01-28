@@ -22,9 +22,10 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
         response.setContentType("application/json");
 
         Map<String, Object> errorDetails = new HashMap<>();
-        errorDetails.put("status", HttpStatus.UNAUTHORIZED.value());
-        errorDetails.put("error", "Unauthorized");
-        errorDetails.put("message", "Access Denied !! " + authException.getMessage());
+        errorDetails.put("code", HttpStatus.UNAUTHORIZED.value());
+        errorDetails.put("status", HttpStatus.UNAUTHORIZED.getReasonPhrase());
+        errorDetails.put("message", authException.getMessage());
+        errorDetails.put("data", null);
 
         PrintWriter writer = response.getWriter();
         writer.println(convertObjectToJson(errorDetails));
