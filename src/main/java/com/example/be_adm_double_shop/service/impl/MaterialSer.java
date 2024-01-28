@@ -113,10 +113,12 @@ public class MaterialSer {
     }
 
     public Material add_update(Material m){
+
         return materialRepository.save(m);
     }
 
     public Material update(Material m, Long id) {
+        m.setId(id);
         return materialRepository.save(m);
     }
 
