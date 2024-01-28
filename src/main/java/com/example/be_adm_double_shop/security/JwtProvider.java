@@ -30,6 +30,7 @@ public class JwtProvider {
 
     //retrieve username from jwt token
     public String getUsernameFromToken(String token) {
+        System.out.println("token");
         return getClaimFromToken(token, Claims::getSubject);
     }
 

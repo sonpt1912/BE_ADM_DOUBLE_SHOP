@@ -61,7 +61,6 @@ public class AuthController {
 //            if (passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             if(request.getPassword().equals(user.getPassword())){
                 String token = jwtProvider.generateToken(user);
-
                 Map<String, Object> data = new HashMap<>();
                 data.put("code", HttpStatus.OK.value());
                 data.put("status", HttpStatus.OK.getReasonPhrase());
