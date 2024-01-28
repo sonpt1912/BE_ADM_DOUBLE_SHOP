@@ -54,12 +54,12 @@ public class AuthController {
         return null;
     }
 
-
     @PostMapping("/login")
     public ResponseEntity login(@RequestBody UserRequest request) {
         try {
             Employee user = userService.findUserbyUsername(request.getUsername());
-            if (passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+//            if (passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            if(request.getPassword().equals(user.getPassword())){
                 String token = jwtProvider.generateToken(user);
 
                 Map<String, Object> data = new HashMap<>();
@@ -87,6 +87,5 @@ public class AuthController {
                 .access_token(jwtProvider.generateToken(employee)).build();
         return response;
     }
-
 
 }
