@@ -58,8 +58,8 @@ public class AuthController {
     public ResponseEntity login(@RequestBody UserRequest request) {
         try {
             Employee user = userService.findUserbyUsername(request.getUsername());
-//            if (passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            if(request.getPassword().equals(user.getPassword())){
+            if (passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+
                 String token = jwtProvider.generateToken(user);
                 Map<String, Object> data = new HashMap<>();
                 data.put("code", HttpStatus.OK.value());
@@ -75,7 +75,6 @@ public class AuthController {
         } catch (Exception e) {
             throw new ValidationException(Constant.UNAUTHORIZED, Constant.USERNAME_OR_PASSWORD);
         }
-
     }
 
     @PostMapping("/google")
@@ -86,5 +85,4 @@ public class AuthController {
                 .access_token(jwtProvider.generateToken(employee)).build();
         return response;
     }
-
 }

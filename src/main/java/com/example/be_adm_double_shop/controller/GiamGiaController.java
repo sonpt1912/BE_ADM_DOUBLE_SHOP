@@ -1,11 +1,9 @@
 package com.example.be_adm_double_shop.controller;
 
-import com.example.be_adm_double_shop.dto.request.SizeRequest;
-import com.example.be_adm_double_shop.entity.Collar;
+import com.example.be_adm_double_shop.dto.request.GiamGiaRequest;
 import com.example.be_adm_double_shop.entity.Promotion;
 import com.example.be_adm_double_shop.security.JwtProvider;
-import com.example.be_adm_double_shop.service.CollarService;
-import com.example.be_adm_double_shop.service.PromotionService;
+import com.example.be_adm_double_shop.service.GiamGiaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,14 +12,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/promotion")
 @CrossOrigin(origins = {"*"})
-public class PromotionController {
+public class GiamGiaController {
     @Autowired
-    private PromotionService promotionService;
+    private GiamGiaService promotionService;
 
     @Autowired
     private JwtProvider jwtProvider;
     @PostMapping("/get-promotion-by-condition")
-    public ResponseEntity getAllPromotion(@RequestBody SizeRequest request) {
+    public ResponseEntity getAllPromotion(@RequestBody GiamGiaRequest request) {
         return new ResponseEntity(promotionService.getAll(request), HttpStatus.OK);
     }
 
@@ -41,6 +39,7 @@ public class PromotionController {
     public ResponseEntity getOneById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(promotionService.getOneId(id));
     }
+
     @PostMapping("/delete/{id}")
     public Promotion delete(@PathVariable("id") Long id){
         return promotionService.delete(id);

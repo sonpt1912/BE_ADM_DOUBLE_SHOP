@@ -32,10 +32,8 @@ public class SizeServiceImpl implements SizeService {
     @Autowired
     private JwtProvider jwtProvider;
 
-
     @Override
     public ListResponse<Size> getAllByConditon(SizeRequest request) {
-
 
         ListResponse listResponse = new ListResponse();
 
@@ -77,7 +75,7 @@ public class SizeServiceImpl implements SizeService {
 
         listResponse.setListData(query.getResultList());
 
-//
+
         sql = new StringBuilder();
         params = new HashMap<>();
 
@@ -131,7 +129,6 @@ public class SizeServiceImpl implements SizeService {
         } catch (Exception e) {
             return e.getMessage();
         }
-
     }
 
     @Override

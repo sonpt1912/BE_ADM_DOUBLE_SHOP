@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PromotionRepository extends JpaRepository<Promotion,Long> {
+public interface GiamGiaRepository extends JpaRepository<Promotion,Long> {
     @Query(value = "SELECT name FROM promotion WHERE name = :name", nativeQuery = true)
     String checkNameExits(@Param("name") String name);
 

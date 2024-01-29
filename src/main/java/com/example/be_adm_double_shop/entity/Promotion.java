@@ -27,7 +27,7 @@ public class Promotion {
     private Integer status;
 
     @Column(name = "start_date")
-    private String StartDate;
+    private String startDate;
 
     @Column(name = "end_date")
     private String endDate;
