@@ -1,5 +1,6 @@
 package com.example.be_adm_double_shop.controller;
 
+import com.example.be_adm_double_shop.config.EnableWrapResponse;
 import com.example.be_adm_double_shop.dto.request.MaterialRequest;
 import com.example.be_adm_double_shop.entity.Material;
 import com.example.be_adm_double_shop.service.impl.MaterialSer;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 //@RequestMapping("/Material")
 @CrossOrigin(origins = { "http://localhost:3000"}, allowCredentials = "true")
+@EnableWrapResponse
 public class Material_Controller {
     @Autowired
     private MaterialSer materialSer;

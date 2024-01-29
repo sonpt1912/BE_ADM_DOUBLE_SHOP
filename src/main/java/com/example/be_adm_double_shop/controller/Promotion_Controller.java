@@ -1,6 +1,7 @@
 package com.example.be_adm_double_shop.controller;
 
 
+import com.example.be_adm_double_shop.config.EnableWrapResponse;
 import com.example.be_adm_double_shop.dto.request.PromotionRequest;
 import com.example.be_adm_double_shop.entity.Promotion;
 import com.example.be_adm_double_shop.service.impl.PromotionSer;
@@ -12,6 +13,7 @@ import java.util.List;
 
 
 @RestController
+@EnableWrapResponse
 @CrossOrigin(origins = { "http://localhost:3000"}, allowCredentials = "true")
 public class Promotion_Controller {
     @Autowired

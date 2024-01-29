@@ -32,6 +32,11 @@ public class PromotionSer {
 
         sql.append("select * from promotion where 1 = 1");
 
+        if (!StringUtil.stringIsNullOrEmty(request.getCode())) {
+            sql.append((" and code like concat('%', :code, '%')"));
+            params.put("code", request.getCode());
+        }
+
         if(!StringUtil.stringIsNullOrEmty(request.getName())) {
             sql.append((" and name like concat('%', :name, '%')"));
             params.put("name", request.getName());
@@ -65,6 +70,11 @@ public class PromotionSer {
 
 
         sql.append(" select count(*) from promotion where 1 = 1 ");
+
+        if (!StringUtil.stringIsNullOrEmty(request.getCode())) {
+            sql.append((" and code like concat('%', :code, '%')"));
+            params.put("code", request.getCode());
+        }
 
         if (!StringUtil.stringIsNullOrEmty(request.getName())) {
             sql.append((" and name like concat('%', :name, '%')"));
