@@ -1,11 +1,11 @@
 package com.example.be_adm_double_shop.service;
 
-import com.example.be_adm_double_shop.dto.request.GiamGiaRequest;
+import com.example.be_adm_double_shop.dto.request.PromotionRequest;
 import com.example.be_adm_double_shop.dto.response.ListResponse;
 import com.example.be_adm_double_shop.entity.Promotion;
 
-public interface GiamGiaService {
-    ListResponse<Promotion> getAll(GiamGiaRequest request);
+public interface PromotionService {
+    ListResponse<Promotion> getAll(PromotionRequest request);
 
     Promotion getOneId(Long id);
     Promotion delete(Long id );

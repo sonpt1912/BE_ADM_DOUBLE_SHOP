@@ -11,14 +11,15 @@ import java.util.Date;
 @Setter
 @Builder
 
-public class GiamGiaRequest {
+public class PromotionRequest {
     private Long page;
 
     private Long pageSize;
 
     private String name;
    private Long status;
-
+   private String keyword;
+   private String value;
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
     private Date startDate;
 

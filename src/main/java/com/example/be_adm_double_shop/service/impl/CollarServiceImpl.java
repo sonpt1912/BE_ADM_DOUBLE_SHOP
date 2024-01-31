@@ -3,9 +3,9 @@ package com.example.be_adm_double_shop.service.impl;
 import com.example.be_adm_double_shop.dto.request.SizeRequest;
 import com.example.be_adm_double_shop.dto.response.ListResponse;
 import com.example.be_adm_double_shop.entity.Collar;
-import com.example.be_adm_double_shop.entity.Size;
+
 import com.example.be_adm_double_shop.repository.CollarRepository;
-import com.example.be_adm_double_shop.repository.SizeRepository;
+
 import com.example.be_adm_double_shop.security.JwtProvider;
 import com.example.be_adm_double_shop.service.CollarService;
 import com.example.be_adm_double_shop.util.Constant;
@@ -15,9 +15,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
+
 import org.springframework.stereotype.Service;
 
 import java.util.Date;

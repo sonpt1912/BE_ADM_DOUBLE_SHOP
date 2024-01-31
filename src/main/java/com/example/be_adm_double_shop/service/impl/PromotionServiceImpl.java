@@ -1,11 +1,11 @@
 package com.example.be_adm_double_shop.service.impl;
 
-import com.example.be_adm_double_shop.dto.request.GiamGiaRequest;
+import com.example.be_adm_double_shop.dto.request.PromotionRequest;
 import com.example.be_adm_double_shop.dto.response.ListResponse;
 import com.example.be_adm_double_shop.entity.Promotion;
-import com.example.be_adm_double_shop.repository.GiamGiaRepository;
+import com.example.be_adm_double_shop.repository.PromotionRepository;
 import com.example.be_adm_double_shop.security.JwtProvider;
-import com.example.be_adm_double_shop.service.GiamGiaService;
+import com.example.be_adm_double_shop.service.PromotionService;
 import com.example.be_adm_double_shop.util.Constant;
 import com.example.be_adm_double_shop.util.DateUtil;
 import com.example.be_adm_double_shop.util.StringUtil;
@@ -18,15 +18,15 @@ import org.springframework.stereotype.Service;
 import java.util.*;
 
 @Service
-public class GiamGiaServiceImpl implements GiamGiaService {
+public class PromotionServiceImpl implements PromotionService {
     @Autowired
-    private GiamGiaRepository repository;
+    private PromotionRepository repository;
     @Autowired
     private JwtProvider jwtProvider;
     @PersistenceContext
     private EntityManager entityManager;
     @Override
-    public ListResponse<Promotion> getAll(GiamGiaRequest request) {
+    public ListResponse<Promotion> getAll(PromotionRequest request) {
         ListResponse listResponse = new ListResponse();
 
         StringBuilder sql = new StringBuilder();
@@ -51,6 +51,7 @@ public class GiamGiaServiceImpl implements GiamGiaService {
             sql.append(" and to_char('end_date','dd/mm/yyyy') = :ed ");
             params.put("ed",request.getEndDate());
         }
+
         sql.append("order by created_time desc");
 
         if (!StringUtil.stringIsNullOrEmty(request.getPage())) {
@@ -117,7 +118,7 @@ public class GiamGiaServiceImpl implements GiamGiaService {
         if (StringUtil.stringIsNullOrEmty(promotion.getName())) {
             int i = 1;
             while (true) {
-                String nameGen = Constant.GIAM_GIA.PROMOTION + i;
+                String nameGen = "PROMOTION" + i;
                 if (StringUtil.stringIsNullOrEmty(repository.checkNameExits(nameGen))) {
                     promotion.setName(nameGen);
                     break;

@@ -16,9 +16,7 @@ public class Constant {
         String SIZE = "SIZE";
         String COLLAR="COLLAR";
     }
-    public interface GIAM_GIA {
-        String PROMOTION="PROMOTION";
-    }
+
 
 
 }

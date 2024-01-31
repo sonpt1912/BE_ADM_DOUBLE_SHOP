@@ -1,9 +1,9 @@
 package com.example.be_adm_double_shop.controller;
 
-import com.example.be_adm_double_shop.dto.request.GiamGiaRequest;
+import com.example.be_adm_double_shop.dto.request.PromotionRequest;
 import com.example.be_adm_double_shop.entity.Promotion;
 import com.example.be_adm_double_shop.security.JwtProvider;
-import com.example.be_adm_double_shop.service.GiamGiaService;
+import com.example.be_adm_double_shop.service.PromotionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,14 +12,14 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/promotion")
 @CrossOrigin(origins = {"*"})
-public class GiamGiaController {
+public class PromotionController {
     @Autowired
-    private GiamGiaService promotionService;
+    private PromotionService promotionService;
 
     @Autowired
     private JwtProvider jwtProvider;
     @PostMapping("/get-promotion-by-condition")
-    public ResponseEntity getAllPromotion(@RequestBody GiamGiaRequest request) {
+    public ResponseEntity getAllPromotion(@RequestBody PromotionRequest request) {
         return new ResponseEntity(promotionService.getAll(request), HttpStatus.OK);
     }
 
