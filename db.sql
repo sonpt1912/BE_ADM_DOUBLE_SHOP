@@ -1,42 +1,212 @@
 CREATE SCHEMA `double_shop`;
 
-CREATE TABLE `double_shop`.`user_rank`
+CREATE TABLE `double_shop`.`category`
 (
     `id`           BIGINT      NOT NULL AUTO_INCREMENT,
-    `name`         VARCHAR(45) NULL,
-    `description`  VARCHAR(145) NULL,
-    `from`         BIGINT NULL,
-    `to`           BIGINT NULL,
-    `percent`      INT NULL,
+    `code`         VARCHAR(45) NOT NULL,
+    `name`         VARCHAR(45) NOT NULL,
+    `description`  VARCHAR(45) NULL,
+    `status`       INT NULL,
     `created_by`   VARCHAR(45) NOT NULL,
     `updated_by`   VARCHAR(45) NULL,
     `created_time` VARCHAR(45) NOT NULL,
     `updated_time` VARCHAR(45) NULL,
-    PRIMARY KEY (`id`)
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+    UNIQUE INDEX `code_UNIQUE` (`code` ASC) VISIBLE
+);
+
+
+CREATE TABLE `double_shop`.`collar`
+(
+    `id`           BIGINT      NOT NULL AUTO_INCREMENT,
+    `code`         VARCHAR(45) NOT NULL,
+    `name`         VARCHAR(45) NOT NULL,
+    `description`  VARCHAR(45) NULL,
+    `status`       INT         NOT NULL,
+    `created_by`   VARCHAR(45) NOT NULL,
+    `updated_by`   VARCHAR(45) NULL,
+    `created_time` VARCHAR(45) NOT NULL,
+    `updated_time` VARCHAR(45) NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+    UNIQUE INDEX `code_UNIQUE` (`code` ASC) VISIBLE
+);
+
+
+CREATE TABLE `double_shop`.`brand`
+(
+    `id`           BIGINT      NOT NULL AUTO_INCREMENT,
+    `code`         VARCHAR(45) NOT NULL,
+    `name`         VARCHAR(45) NOT NULL,
+    `description`  VARCHAR(45) NULL,
+    `status`       INT         NOT NULL,
+    `created_by`   VARCHAR(45) NOT NULL,
+    `updated_by`   VARCHAR(45) NULL,
+    `created_time` VARCHAR(45) NOT NULL,
+    `updated_time` VARCHAR(45) NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+    UNIQUE INDEX `code_UNIQUE` (`code` ASC) VISIBLE
+);
+
+
+CREATE TABLE `double_shop`.`size`
+(
+    `id`           BIGINT      NOT NULL AUTO_INCREMENT,
+    `code`         VARCHAR(45) NOT NULL,
+    `name`         VARCHAR(45) NOT NULL,
+    `description`  VARCHAR(45) NULL,
+    `status`       INT         NOT NULL,
+    `created_by`   VARCHAR(45) NOT NULL,
+    `updated_by`   VARCHAR(45) NULL,
+    `created_time` VARCHAR(45) NOT NULL,
+    `updated_time` VARCHAR(45) NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+    UNIQUE INDEX `code_UNIQUE` (`code` ASC) VISIBLE
+);
+
+
+CREATE TABLE `double_shop`.`color`
+(
+    `id`           BIGINT      NOT NULL AUTO_INCREMENT,
+    `code`         VARCHAR(45) NOT NULL,
+    `name`         VARCHAR(45) NOT NULL,
+    `description`  VARCHAR(45) NULL,
+    `status`       INT         NOT NULL,
+    `created_by`   VARCHAR(45) NOT NULL,
+    `updated_by`   VARCHAR(45) NULL,
+    `created_time` VARCHAR(45) NOT NULL,
+    `updated_time` VARCHAR(45) NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+    UNIQUE INDEX `code_UNIQUE` (`code` ASC) VISIBLE
+);
+
+
+CREATE TABLE `double_shop`.`material`
+(
+    `id`           BIGINT      NOT NULL AUTO_INCREMENT,
+    `code`         VARCHAR(45) NOT NULL,
+    `name`         VARCHAR(45) NOT NULL,
+    `description`  VARCHAR(45) NULL,
+    `status`       INT NULL,
+    `created_by`   VARCHAR(45) NOT NULL,
+    `updated_by`   VARCHAR(45) NULL,
+    `created_time` VARCHAR(45) NOT NULL,
+    `updated_time` VARCHAR(45) NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+    UNIQUE INDEX `code_UNIQUE` (`code` ASC) VISIBLE
+);
+
+
+CREATE TABLE `double_shop`.`rank`
+(
+    `id`           BIGINT      NOT NULL AUTO_INCREMENT,
+    `name`         VARCHAR(45) NOT NULL,
+    `description`  VARCHAR(45) NULL,
+    `from`         BIGINT NULL,
+    `to`           BIGINT      NOT NULL,
+    `percent`      INT NULL,
+    `created_time` VARCHAR(45) NOT NULL,
+    `updated_time` VARCHAR(45) NULL,
+    `updated_by`   VARCHAR(45) NOT NULL,
+    `created_by`   VARCHAR(45) NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE
+);
+
+
+CREATE TABLE `double_shop`.`employee`
+(
+    `id`           BIGINT      NOT NULL AUTO_INCREMENT,
+    `name`         VARCHAR(45) NULL,
+    `username`     VARCHAR(45) NOT NULL,
+    `phone`        VARCHAR(45) NULL,
+    `email`        VARCHAR(45) NULL,
+    `gender`       INT NULL,
+    `birth_day`    VARCHAR(45) NOT NULL,
+    `role`         INT         NOT NULL,
+    `status`       INT         NOT NULL,
+    `district`     VARCHAR(45) NOT NULL,
+    `provice`      VARCHAR(45) NOT NULL,
+    `city`         VARCHAR(45) NOT NULL,
+    `password`     VARCHAR(145) NULL,
+    `created_time` VARCHAR(45) NOT NULL,
+    `updated_time` VARCHAR(45) NULL,
+    `updated_by`   VARCHAR(45) NOT NULL,
+    `created_by`   VARCHAR(45) NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+    UNIQUE INDEX `code_UNIQUE` (`code` ASC) VISIBLE
 );
 
 
 CREATE TABLE `double_shop`.`customer`
 (
     `id`           BIGINT      NOT NULL AUTO_INCREMENT,
-    `id_rank`      BIGINT      NOT NULL,
-    `username`     VARCHAR(45) NOT NULL,
-    `name`         VARCHAR(45) NOT NULL,
-    `gender`       INT         NOT NULL,
-    `phone`        VARCHAR(45) NOT NULL,
-    `birth_day`    VARCHAR(45),
+    `id_rank`      BIGINT NULL,
+    `username`     VARCHAR(45) NULL,
+    `name`         VARCHAR(45) NULL,
+    `gender`       INT NULL,
+    `phone`        VARCHAR(45) NULL,
+    `birth_day`    VARCHAR(45) NULL,
     `email`        VARCHAR(45) NULL,
-    `password`     VARCHAR(45) NOT NULL,
-    `status`       INT         NOT NULL,
-    `created_by`   VARCHAR(45) NULL,
+    `password`     VARCHAR(145) NULL,
+    `status`       INT NULL,
+    `created_by`   VARCHAR(45) NOT NULL,
     `updated_by`   VARCHAR(45) NULL,
-    `created_time` VARCHAR(45) NULL,
+    `created_time` VARCHAR(45) NOT NULL,
     `updated_time` VARCHAR(45) NULL,
     PRIMARY KEY (`id`),
-    INDEX          `FK_R_C_idx` (`id_rank` ASC) VISIBLE,
-    CONSTRAINT `FK_R_C`
+    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+    INDEX          `FK_CUS_RANK_idx` (`id_rank` ASC) VISIBLE,
+    CONSTRAINT `FK_CUS_RANK`
         FOREIGN KEY (`id_rank`)
-            REFERENCES `double_shop`.`user_rank` (`id`)
+            REFERENCES `double_shop`.`rank` (`id`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION
+);
+
+
+CREATE TABLE `double_shop`.`voucher`
+(
+    `id`               BIGINT      NOT NULL AUTO_INCREMENT,
+    `code`             VARCHAR(45) NOT NULL,
+    `discount_amount`  BIGINT NULL,
+    `discount_percent` INT NULL,
+    `quantity`         INT         NOT NULL,
+    `start_date`       VARCHAR(45) NOT NULL,
+    `end_date`         VARCHAR(45) NOT NULL,
+    `created_by`       VARCHAR(45) NOT NULL,
+    `created_time`     VARCHAR(45) NOT NULL,
+    `updated_time`     VARCHAR(45) NULL,
+    `updated_by`       VARCHAR(45) NULL,
+    `status`           INT NULL,
+    PRIMARY KEY (`id`)
+);
+
+
+CREATE TABLE `double_shop`.`customer_voucher`
+(
+    `id`          BIGINT NOT NULL AUTO_INCREMENT,
+    `id_voucher`  BIGINT NOT NULL,
+    `id_customer` BIGINT NOT NULL,
+    `usage_date`  VARCHAR(45) NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+    INDEX         `FK_CUSV_VOU_idx` (`id_voucher` ASC) VISIBLE,
+    INDEX         `FK_CUSV_CUS_idx` (`id_customer` ASC) VISIBLE,
+    CONSTRAINT `FK_CUSV_VOU`
+        FOREIGN KEY (`id_voucher`)
+            REFERENCES `double_shop`.`voucher` (`id`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION,
+    CONSTRAINT `FK_CUSV_CUS`
+        FOREIGN KEY (`id_customer`)
+            REFERENCES `double_shop`.`customer` (`id`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION
 );
@@ -50,18 +220,19 @@ CREATE TABLE `double_shop`.`address`
     `province`     VARCHAR(45) NOT NULL,
     `city`         VARCHAR(45) NOT NULL,
     `created_by`   VARCHAR(45) NOT NULL,
-    `updated_by`   VARCHAR(45) NOT NULL,
     `created_time` VARCHAR(45) NOT NULL,
-    `updated_time` VARCHAR(45) NOT NULL,
-    `description`  VARCHAR(145) NULL,
+    `updated_by`   VARCHAR(45) NULL,
+    `updated_time` VARCHAR(45) NULL,
     PRIMARY KEY (`id`),
-    INDEX          `FK_A_C_idx` (`id_customer` ASC) VISIBLE,
-    CONSTRAINT `FK_A_C`
+    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+    INDEX          `FK_ADD_CUS_idx` (`id_customer` ASC) VISIBLE,
+    CONSTRAINT `FK_ADD_CUS`
         FOREIGN KEY (`id_customer`)
             REFERENCES `double_shop`.`customer` (`id`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION
 );
+
 
 CREATE TABLE `double_shop`.`product`
 (
@@ -69,106 +240,38 @@ CREATE TABLE `double_shop`.`product`
     `name`         VARCHAR(45) NOT NULL,
     `status`       INT         NOT NULL,
     `created_by`   VARCHAR(45) NOT NULL,
-    `updated_by`   VARCHAR(45) NULL,
     `created_time` VARCHAR(45) NOT NULL,
     `updated_time` VARCHAR(45) NULL,
-    PRIMARY KEY (`id`)
-);
-
-CREATE TABLE `double_shop`.`category`
-(
-    `id`           BIGINT      NOT NULL AUTO_INCREMENT,
-    `code`         VARCHAR(45) NOT NULL,
-    `name`         VARCHAR(45) NOT NULL,
-    `description`  VARCHAR(45) NULL,
-    `status`       VARCHAR(45) NOT NULL,
-    `created_by`   VARCHAR(45) NOT NULL,
     `updated_by`   VARCHAR(45) NULL,
-    `created_time` VARCHAR(45) NOT NULL,
-    `updated_time` VARCHAR(45) NULL,
     PRIMARY KEY (`id`),
-    UNIQUE INDEX `code_UNIQUE` (`code` ASC) VISIBLE
+    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+    UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE
 );
 
-
-CREATE TABLE `double_shop`.`size`
+CREATE TABLE `double_shop`.`review`
 (
-    `id`           BIGINT      NOT NULL AUTO_INCREMENT,
-    `code`         VARCHAR(45) NOT NULL,
-    `name`         VARCHAR(45) NOT NULL,
-    `description`  VARCHAR(45) NULL,
-    `status`       VARCHAR(45) NOT NULL,
-    `created_by`   VARCHAR(45) NOT NULL,
-    `updated_by`   VARCHAR(45) NULL,
-    `created_time` VARCHAR(45) NOT NULL,
-    `updated_time` VARCHAR(45) NULL,
+    `id`            BIGINT      NOT NULL AUTO_INCREMENT,
+    `id_customer`   BIGINT      NOT NULL,
+    `id_product`    BIGINT      NOT NULL,
+    `product_type`  VARCHAR(45) NOT NULL,
+    `product_color` VARCHAR(45) NOT NULL,
+    `rating`        INT         NOT NULL,
+    `comment`       VARCHAR(145) NULL,
     PRIMARY KEY (`id`),
-    UNIQUE INDEX `code_UNIQUE` (`code` ASC) VISIBLE
+    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+    INDEX           `FK_REVIEW_CUS_idx` (`id_customer` ASC) VISIBLE,
+    INDEX           `FK_REVIEW_PRODUCT_idx` (`id_product` ASC) VISIBLE,
+    CONSTRAINT `FK_REVIEW_CUS`
+        FOREIGN KEY (`id_customer`)
+            REFERENCES `double_shop`.`customer` (`id`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION,
+    CONSTRAINT `FK_REVIEW_PRODUCT`
+        FOREIGN KEY (`id_product`)
+            REFERENCES `double_shop`.`product` (`id`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION
 );
-
-
-CREATE TABLE `double_shop`.`collar`
-(
-    `id`           BIGINT      NOT NULL AUTO_INCREMENT,
-    `code`         VARCHAR(45) NOT NULL,
-    `name`         VARCHAR(45) NOT NULL,
-    `description`  VARCHAR(45) NULL,
-    `status`       VARCHAR(45) NOT NULL,
-    `created_by`   VARCHAR(45) NOT NULL,
-    `updated_by`   VARCHAR(45) NULL,
-    `created_time` VARCHAR(45) NOT NULL,
-    `updated_time` VARCHAR(45) NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `code_UNIQUE` (`code` ASC) VISIBLE
-);
-
-
-CREATE TABLE `double_shop`.`brand`
-(
-    `id`           BIGINT      NOT NULL AUTO_INCREMENT,
-    `code`         VARCHAR(45) NOT NULL,
-    `name`         VARCHAR(45) NOT NULL,
-    `description`  VARCHAR(45) NULL,
-    `status`       VARCHAR(45) NOT NULL,
-    `created_by`   VARCHAR(45) NOT NULL,
-    `updated_by`   VARCHAR(45) NULL,
-    `created_time` VARCHAR(45) NOT NULL,
-    `updated_time` VARCHAR(45) NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `code_UNIQUE` (`code` ASC) VISIBLE
-);
-
-CREATE TABLE `double_shop`.`color`
-(
-    `id`           BIGINT      NOT NULL AUTO_INCREMENT,
-    `code`         VARCHAR(45) NOT NULL,
-    `name`         VARCHAR(45) NOT NULL,
-    `description`  VARCHAR(45) NULL,
-    `status`       VARCHAR(45) NOT NULL,
-    `created_by`   VARCHAR(45) NOT NULL,
-    `updated_by`   VARCHAR(45) NULL,
-    `created_time` VARCHAR(45) NOT NULL,
-    `updated_time` VARCHAR(45) NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `code_UNIQUE` (`code` ASC) VISIBLE
-);
-
-
-CREATE TABLE `double_shop`.`material`
-(
-    `id`           BIGINT      NOT NULL AUTO_INCREMENT,
-    `code`         VARCHAR(45) NOT NULL,
-    `name`         VARCHAR(45) NOT NULL,
-    `description`  VARCHAR(45) NULL,
-    `status`       VARCHAR(45) NOT NULL,
-    `created_by`   VARCHAR(45) NOT NULL,
-    `updated_by`   VARCHAR(45) NULL,
-    `created_time` VARCHAR(45) NOT NULL,
-    `updated_time` VARCHAR(45) NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `code_UNIQUE` (`code` ASC) VISIBLE
-);
-
 
 CREATE TABLE `double_shop`.`detail_product`
 (
@@ -176,50 +279,50 @@ CREATE TABLE `double_shop`.`detail_product`
     `id_color`     BIGINT      NOT NULL,
     `id_product`   BIGINT      NOT NULL,
     `id_size`      BIGINT      NOT NULL,
-    `id_brand`     BIGINT      NOT NULL,
+    `id_branch`    BIGINT      NOT NULL,
     `id_collar`    BIGINT      NOT NULL,
     `id_category`  BIGINT      NOT NULL,
     `quantity`     BIGINT      NOT NULL,
     `status`       INT         NOT NULL,
     `created_by`   VARCHAR(45) NOT NULL,
-    `updated_by`   VARCHAR(45) NULL,
     `created_time` VARCHAR(45) NOT NULL,
-    `update_time`  VARCHAR(45) NULL,
+    `updated_by`   VARCHAR(45) NULL,
+    `updated_time` VARCHAR(45) NULL,
     PRIMARY KEY (`id`),
-    INDEX          `FK_PRODUCT_DP_idx` (`id_product` ASC) VISIBLE,
-    INDEX          `FK_COLOR_DP_idx` (`id_color` ASC) VISIBLE,
-    INDEX          `FK_BRAND_DP_idx` (`id_brand` ASC) VISIBLE,
-    INDEX          `FK_SIZE_DP_idx` (`id_size` ASC) VISIBLE,
-    INDEX          `FK_CATEGORY_DP_idx` (`id_category` ASC) VISIBLE,
-    INDEX          `FK_COLLAR_DP_idx` (`id_collar` ASC) VISIBLE,
-    CONSTRAINT `FK_PRODUCT_DP`
-        FOREIGN KEY (`id_product`)
-            REFERENCES `double_shop`.`product` (`id`)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION,
-    CONSTRAINT `FK_COLOR_DP`
+    INDEX          `FK_DT_COLOR_idx` (`id_color` ASC) VISIBLE,
+    INDEX          `FK_DT_PRO_idx` (`id_product` ASC) VISIBLE,
+    INDEX          `FK_DT_SIZE_idx` (`id_size` ASC) VISIBLE,
+    INDEX          `FK_DT_BRAND_idx` (`id_branch` ASC) VISIBLE,
+    INDEX          `FK_DT_CATE_idx` (`id_category` ASC) VISIBLE,
+    INDEX          `FK_DT_COLLAR_idx` (`id_collar` ASC) VISIBLE,
+    CONSTRAINT `FK_DT_COLOR`
         FOREIGN KEY (`id_color`)
             REFERENCES `double_shop`.`color` (`id`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION,
-    CONSTRAINT `FK_BRAND_DP`
-        FOREIGN KEY (`id_brand`)
-            REFERENCES `double_shop`.`brand` (`id`)
+    CONSTRAINT `FK_DT_PRO`
+        FOREIGN KEY (`id_product`)
+            REFERENCES `double_shop`.`product` (`id`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION,
-    CONSTRAINT `FK_SIZE_DP`
+    CONSTRAINT `FK_DT_SIZE`
         FOREIGN KEY (`id_size`)
             REFERENCES `double_shop`.`size` (`id`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION,
-    CONSTRAINT `FK_CATEGORY_DP`
-        FOREIGN KEY (`id_category`)
-            REFERENCES `double_shop`.`category` (`id`)
+    CONSTRAINT `FK_DT_BRAND`
+        FOREIGN KEY (`id_branch`)
+            REFERENCES `double_shop`.`brand` (`id`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION,
-    CONSTRAINT `FK_COLLAR_DP`
+    CONSTRAINT `FK_DT_COLLAR`
         FOREIGN KEY (`id_collar`)
             REFERENCES `double_shop`.`collar` (`id`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION,
+    CONSTRAINT `FK_DT_CATE`
+        FOREIGN KEY (`id_category`)
+            REFERENCES `double_shop`.`category` (`id`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION
 );
@@ -231,172 +334,101 @@ CREATE TABLE `double_shop`.`detail_material`
     `id_detail_product` BIGINT NOT NULL,
     `id_material`       BIGINT NOT NULL,
     PRIMARY KEY (`id`),
-    INDEX               `FK_DM_DP_idx` (`id_detail_product` ASC) VISIBLE,
-    INDEX               `FK_DM_M_idx` (`id_material` ASC) VISIBLE,
-    CONSTRAINT `FK_DM_M`
-        FOREIGN KEY (`id_material`)
-            REFERENCES `double_shop`.`material` (`id`)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION,
+    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+    UNIQUE INDEX `id_product_UNIQUE` (`id_detail_product` ASC) VISIBLE,
+    UNIQUE INDEX `id_material_UNIQUE` (`id_material` ASC) VISIBLE,
     CONSTRAINT `FK_DM_DP`
         FOREIGN KEY (`id_detail_product`)
             REFERENCES `double_shop`.`detail_product` (`id`)
             ON DELETE NO ACTION
+            ON UPDATE NO ACTION,
+    CONSTRAINT `FK_DM_M`
+        FOREIGN KEY (`id_material`)
+            REFERENCES `double_shop`.`material` (`id`)
+            ON DELETE NO ACTION
             ON UPDATE NO ACTION
 );
 
-
-
-CREATE TABLE `double_shop`.`employee`
+CREATE TABLE `double_shop`.`bill`
 (
-    `id`           BIGINT      NOT NULL AUTO_INCREMENT,
-    `username`     VARCHAR(45) NOT NULL,
-    `password`     VARCHAR((145)) NOT NULL,
-    `name`         VARCHAR(45) NOT NULL,
-    `email`        VARCHAR(45) NULL,
-    `phone`        VARCHAR(45) NOT NULL,
-    `description`  VARCHAR(45) NULL,
-    `district`     VARCHAR(45) NOT NULL,
-    `provice`      VARCHAR(45) NOT NULL,
-    `city`         VARCHAR(45) NOT NULL,
-    `gender`       INT         NOT NULL,
-    `birth_day`    VARCHAR(45) NOT NULL,
-    `role`         VARCHAR(45) NOT NULL,
-    `status`       INT         NOT NULL,
-    `created_by`   VARCHAR(45) NOT NULL,
-    `updated_by`   VARCHAR(45) NULL,
-    `created_time` VARCHAR(45) NOT NULL,
-    `updated_time` VARCHAR(45) NULL,
-    PRIMARY KEY (`id`)
-);
-
-
-CREATE TABLE `double_shop`.`promotion`
-(
-    `id`           BIGINT       NOT NULL AUTO_INCREMENT,
-    `name`         VARCHAR(145) NOT NULL,
-    `start_date`   VARCHAR(45)  NOT NULL,
-    `end_date`     VARCHAR(45)  NOT NULL,
-    `created_by`   VARCHAR(45)  NOT NULL,
-    `updated_by`   VARCHAR(45) NULL,
-    `created_time` VARCHAR(45)  NOT NULL,
-    `updated_time` VARCHAR(45) NULL,
-    PRIMARY KEY (`id`)
-);
-
-
-CREATE TABLE `double_shop`.`cart`
-(
-    `id`                BIGINT NOT NULL AUTO_INCREMENT,
-    `id_detail_product` BIGINT NOT NULL,
-    `id_customer`       BIGINT NOT NULL,
-    `quantity`          BIGINT NOT NULL,
+    `id`             BIGINT      NOT NULL AUTO_INCREMENT,
+    `id_customer`    BIGINT      NOT NULL,
+    `id_employee`    BIGINT      NOT NULL,
+    `id_voucher`     BIGINT NULL,
+    `code`           VARCHAR(45) NOT NULL,
+    `phone`          VARCHAR(45) NOT NULL,
+    `order_date`     VARCHAR(45) NOT NULL,
+    `discount_amout` BIGINT NULL,
+    `total_amount`   BIGINT      NOT NULL,
+    `confirm_date`   VARCHAR(45) NOT NULL,
+    `ship_date`      VARCHAR(45) NULL,
+    `receive_date`   VARCHAR(45) NULL,
+    `note`           VARCHAR(45) NULL,
+    `payment`        VARCHAR(45) NULL,
+    `money_ship`     BIGINT NULL,
+    `status`         INT         NOT NULL,
+    `created_by`     VARCHAR(45) NOT NULL,
+    `created_time`   VARCHAR(45) NOT NULL,
+    `updated_by`     VARCHAR(45) NULL,
+    `updated_time`   VARCHAR(45) NULL,
     PRIMARY KEY (`id`),
-    INDEX               `FK_CART_C_idx` (`id_customer` ASC) VISIBLE,
-    INDEX               `FK_CART_DP_idx` (`id_detail_product` ASC) VISIBLE,
-    CONSTRAINT `FK_CART_C`
+    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+    INDEX            `FK_BILL_customer_idx` (`id_customer` ASC) VISIBLE,
+    INDEX            `FK_BILL_employee_idx` (`id_employee` ASC) VISIBLE,
+    INDEX            `FK_BILL_voucher_idx` (`id_voucher` ASC) VISIBLE,
+    CONSTRAINT `FK_BILL_customer`
         FOREIGN KEY (`id_customer`)
             REFERENCES `double_shop`.`customer` (`id`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION,
-    CONSTRAINT `FK_CART_DP`
-        FOREIGN KEY (`id_detail_product`)
+    CONSTRAINT `FK_BILL_employee`
+        FOREIGN KEY (`id_employee`)
+            REFERENCES `double_shop`.`employee` (`id`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION,
+    CONSTRAINT `FK_BILL_voucher`
+        FOREIGN KEY (`id_voucher`)
+            REFERENCES `double_shop`.`voucher` (`id`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION
+);
+
+CREATE TABLE `double_shop`.`cart`
+(
+    `id`         BIGINT NOT NULL AUTO_INCREMENT,
+    `id_product` BIGINT NOT NULL,
+    `quantity`   BIGINT NOT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+    INDEX        `FK_CART_DTPRO_idx` (`id_product` ASC) VISIBLE,
+    CONSTRAINT `FK_CART_DTPRO`
+        FOREIGN KEY (`id_product`)
             REFERENCES `double_shop`.`detail_product` (`id`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION
 );
 
 
-
-CREATE TABLE `double_shop`.`voucher`
+CREATE TABLE `double_shop`.`detail_bill`
 (
-    `id`                  BIGINT      NOT NULL AUTO_INCREMENT,
-    `id_promotion`        BIGINT      NOT NULL,
-    `code`                VARCHAR(45) NOT NULL,
-    `name`                VARCHAR(45) NOT NULL,
-    `discount_amout`      BIGINT NULL,
-    `discount_percentage` INT NULL,
-    `quantity`            BIGINT      NOT NULL,
-    `created_by`          VARCHAR(45) NOT NULL,
-    `updated_by`          VARCHAR(45) NOT NULL,
-    `created_time`        VARCHAR(45) NULL,
-    `updated_time`        VARCHAR(45) NULL,
+    `id`                BIGINT NOT NULL AUTO_INCREMENT,
+    `id_bill`           BIGINT NOT NULL,
+    `id_detail_product` BIGINT NOT NULL,
+    `quantity`          BIGINT NOT NULL,
+    `price`             BIGINT NOT NULL,
+    `status`            INT    NOT NULL,
     PRIMARY KEY (`id`),
-    INDEX                 `FK_VOUVHER_P_idx` (`id_promotion` ASC) VISIBLE,
-    CONSTRAINT `FK_VOUVHER_P`
-        FOREIGN KEY (`id_promotion`)
-            REFERENCES `double_shop`.`promotion` (`id`)
+    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
+    INDEX               `FK_PRO_BILL_idx` (`id_bill` ASC) VISIBLE,
+    INDEX               `FK_PRO_DP_idx` (`id_detail_product` ASC) VISIBLE,
+    CONSTRAINT `FK_PRO_BILL`
+        FOREIGN KEY (`id_bill`)
+            REFERENCES `double_shop`.`bill` (`id`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION,
+    CONSTRAINT `FK_PRO_DP`
+        FOREIGN KEY (`id_detail_product`)
+            REFERENCES `double_shop`.`detail_product` (`id`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION
 );
-
-
-CREATE TABLE `double_shop`.`customer_voucher`
-(
-    `id`          BIGINT NOT NULL AUTO_INCREMENT,
-    `id_voucher`  BIGINT NOT NULL,
-    `id_customer` BIGINT NOT NULL,
-    `usage_date`  DATE NULL,
-    PRIMARY KEY (`id`),
-    INDEX         `FK_VOUCHER_V_idx` (`id_voucher` ASC) VISIBLE,
-    INDEX         `FK_VOUCHER_C_idx` (`id_customer` ASC) VISIBLE,
-    CONSTRAINT `FK_VOUCHER_C`
-        FOREIGN KEY (`id_customer`)
-            REFERENCES `double_shop`.`customer` (`id`)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION,
-    CONSTRAINT `FK_VOUCHER_V`
-        FOREIGN KEY (`id_voucher`)
-            REFERENCES `double_shop`.`voucher` (`id`)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION
-);
-
-
-CREATE TABLE `double_shop`.`order`
-(
-    `id`             BIGINT      NOT NULL AUTO_INCREMENT,
-    `id_customer`    BIGINT NULL,
-    `id_employee`    BIGINT NULL,
-    `id_voucher`     BIGINT NULL,
-    `code`           VARCHAR(45) NOT NULL,
-    `phone`          VARCHAR(45) NOT NULL,
-    `order_date`     VARCHAR(45) NOT NULL,
-    `discount_amout` DECIMAL NULL,
-    `total_amout`    DECIMAL     NOT NULL,
-    `confirm_date`   VARCHAR(45) NULL,
-    `ship_date`      VARCHAR(45) NULL,
-    `receive_date`   VARCHAR(45) NULL,
-    `note`           VARCHAR(45) NULL,
-    `money_ship`     VARCHAR(45) NOT NULL,
-    `status`         INT         NOT NULL,
-    `created_by`     VARCHAR(45) NOT NULL,
-    `updated_by`     VARCHAR(45) NULL,
-    `created_time`   VARCHAR(45) NULL,
-    `updated_time`   VARCHAR(45) NOT NULL,
-    PRIMARY KEY (`id`),
-    INDEX            `FK_ORDER_V_idx` (`id_voucher` ASC) VISIBLE,
-    INDEX            `FK_ORDER_E_idx` (`id_employee` ASC) VISIBLE,
-    INDEX            `FK_ORDER_C_idx` (`id_customer` ASC) VISIBLE,
-    UNIQUE INDEX `code_UNIQUE` (`code` ASC) VISIBLE,
-    CONSTRAINT `FK_ORDER_C`
-        FOREIGN KEY (`id_customer`)
-            REFERENCES `double_shop`.`customer` (`id`)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION,
-    CONSTRAINT `FK_ORDER_E`
-        FOREIGN KEY (`id_employee`)
-            REFERENCES `double_shop`.`employee` (`id`)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION,
-    CONSTRAINT `FK_ORDER_V`
-        FOREIGN KEY (`id_voucher`)
-            REFERENCES `double_shop`.`voucher` (`id`)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION
-);
-
-
-
-
-

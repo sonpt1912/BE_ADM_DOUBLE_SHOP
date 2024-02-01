@@ -39,9 +39,6 @@ public class Employee implements UserDetails {
     @Column(name = "phone", nullable = false)
     private String phone;
 
-    @Column(name = "description")
-    private String description;
-
     @Column(name = "district", nullable = false)
     private String district;
 
