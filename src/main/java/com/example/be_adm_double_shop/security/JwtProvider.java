@@ -27,7 +27,7 @@ public class JwtProvider {
 
     //retrieve username from jwt token
     public String getUsernameFromToken(String token) {
-        token.substring(7);
+        token = token.substring(7);
         return getClaimFromToken(token, Claims::getSubject);
     }
 
@@ -63,9 +63,9 @@ public class JwtProvider {
     }
 
     //check if the token has expired
-    private Boolean isTokenExpired(String token) {
+    public Boolean isTokenExpired(String token) {
         final Date expiration = getExpirationDateFromToken(token);
-        return expiration.before(new Date());
+        return expiration.after(new Date());
     }
 
     //generate token for user
@@ -97,10 +97,5 @@ public class JwtProvider {
                 .signWith(SignatureAlgorithm.HS512, SECRET_KEY).compact();
     }
 
-    //validate token
-    public Boolean validateToken(String token, UserDetails userDetails) {
-        final String username = getUsernameFromToken(token);
-        return (username.equals(userDetails.getUsername()) && !isTokenExpired(token));
-    }
 
 }
