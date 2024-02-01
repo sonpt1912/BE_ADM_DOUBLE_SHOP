@@ -12,10 +12,7 @@ import org.springframework.stereotype.Component;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
-import java.util.Base64;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 import java.util.function.Function;
 
 @Component
@@ -30,7 +27,7 @@ public class JwtProvider {
 
     //retrieve username from jwt token
     public String getUsernameFromToken(String token) {
-        System.out.println("token");
+        token.substring(7);
         return getClaimFromToken(token, Claims::getSubject);
     }
 
