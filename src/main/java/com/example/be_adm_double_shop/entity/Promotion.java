@@ -44,12 +44,12 @@ public class Promotion {
     private String updatedBy;
 
     @Column(name = "created_time")
-    private String createdTime = LocalDateTime.now().toString();
+    private String createdTime;
 
     @Column(name = "updated_time")
     private String updatedTime;
 
     @Column(name = "status")
-    private String status = "2";
+    private String status;
 
 }

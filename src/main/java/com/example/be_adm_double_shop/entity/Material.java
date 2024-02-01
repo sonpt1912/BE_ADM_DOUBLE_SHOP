@@ -32,16 +32,16 @@ public class Material {
     private String description;
 
     @Column(name = "status")
-    private Integer status = 1;
+    private Integer status;
 
     @Column(name = "created_by")
-    private String createdBy = "null";
+    private String createdBy;
 
     @Column(name = "updated_by")
     private String updated_by ;
 
     @Column(name = "created_time")
-    private String createdTime = LocalDateTime.now().toString();
+    private String createdTime;
 
     @Column(name = "updated_time")
     private String updatedTime;

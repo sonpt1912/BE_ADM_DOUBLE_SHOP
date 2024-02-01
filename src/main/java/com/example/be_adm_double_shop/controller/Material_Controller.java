@@ -20,29 +20,29 @@ public class Material_Controller {
     @Autowired
     private MaterialSer materialSer;
 
-    @RequestMapping("/Material/hien-thi/condition")
+    @RequestMapping("/Material/get-all/condition")
     private ResponseEntity show(@RequestBody MaterialRequest request) {
         return new ResponseEntity(materialSer.getAllByCondition(request), HttpStatus.OK);
     }
 
-    @RequestMapping("/Material/hien-thi")
+    @RequestMapping("/Material/get-all")
     private List<Material> hienThi() {
         return materialSer.getAll();
     }
 
-    @GetMapping("/Material/hien-thi/{id}")
+    @GetMapping("/Material/get-all/{id}")
     public ResponseEntity getOneById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(materialSer.chiTiet(id));
     }
 
-    @RequestMapping("/Material/hien-thi/{viTri}")
+    @RequestMapping("/Material/get-all/{viTri}")
     private List<Material> phanTrang(@PathVariable("viTri") Integer viTri ) {
         return materialSer.phanTrang(viTri);
     }
 
     @RequestMapping("/Material/add")
     private Material add(@RequestBody Material m) {
-        return materialSer.add_update(m);
+        return materialSer.add(m);
     }
 
     @PutMapping("/Material/update/{id}")

@@ -5,6 +5,9 @@ import com.example.be_adm_double_shop.dto.response.ListResponse;
 import com.example.be_adm_double_shop.entity.Material;
 import com.example.be_adm_double_shop.entity.Promotion;
 import com.example.be_adm_double_shop.repository.PromotionRepository;
+import com.example.be_adm_double_shop.security.JwtProvider;
+import com.example.be_adm_double_shop.util.Constant;
+import com.example.be_adm_double_shop.util.DateUtil;
 import com.example.be_adm_double_shop.util.StringUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -102,6 +105,7 @@ public class PromotionSer {
     }
 
     public Promotion add(Promotion p) {
+        p.setStatus(Constant.ACTIVE.toString());
         return promotionRepository.save(p);
     }
 

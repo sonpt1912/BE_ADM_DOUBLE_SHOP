@@ -4,7 +4,9 @@ import com.example.be_adm_double_shop.dto.request.MaterialRequest;
 import com.example.be_adm_double_shop.dto.response.ListResponse;
 import com.example.be_adm_double_shop.entity.Material;
 import com.example.be_adm_double_shop.repository.MaterialRepository;
+import com.example.be_adm_double_shop.util.Constant;
 import com.example.be_adm_double_shop.util.StringUtil;
+import io.swagger.models.auth.In;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
@@ -112,8 +114,8 @@ public class MaterialSer {
 
     }
 
-    public Material add_update(Material m){
-
+    public Material add(Material m){
+        m.setStatus(Integer.valueOf(Constant.ACTIVE.toString()));
         return materialRepository.save(m);
     }
 
