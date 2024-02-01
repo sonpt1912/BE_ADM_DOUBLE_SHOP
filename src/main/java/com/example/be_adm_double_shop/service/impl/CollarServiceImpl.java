@@ -56,6 +56,7 @@ public class CollarServiceImpl implements CollarService {
             sql.append(" AND STATUS = :status ");
             params.put("status", request.getStatus());
         }
+        sql.append("order by created_time desc");
 
         if (!StringUtil.stringIsNullOrEmty(request.getPage())) {
             sql.append(" LIMIT  :page, :size  ");
