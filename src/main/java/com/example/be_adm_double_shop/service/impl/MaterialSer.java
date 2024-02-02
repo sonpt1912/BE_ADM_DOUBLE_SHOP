@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -115,6 +117,8 @@ public class MaterialSer {
     }
 
     public Material add(Material m){
+        m.setCreatedTime(LocalDateTime.now().toString());
+        m.setCreatedBy("TranTung");
         m.setStatus(Integer.valueOf(Constant.ACTIVE.toString()));
         return materialRepository.save(m);
     }
