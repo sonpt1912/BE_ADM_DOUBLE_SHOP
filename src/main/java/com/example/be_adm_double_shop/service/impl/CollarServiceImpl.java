@@ -4,6 +4,7 @@ import com.example.be_adm_double_shop.dto.request.SizeRequest;
 import com.example.be_adm_double_shop.dto.response.ListResponse;
 import com.example.be_adm_double_shop.entity.Collar;
 
+import com.example.be_adm_double_shop.entity.Size;
 import com.example.be_adm_double_shop.repository.CollarRepository;
 
 import com.example.be_adm_double_shop.security.JwtProvider;
@@ -35,6 +36,7 @@ public class CollarServiceImpl implements CollarService {
     @Override
     public ListResponse<Collar> getAll(SizeRequest request) {
 
+
         ListResponse listResponse = new ListResponse();
 
         StringBuilder sql = new StringBuilder();
@@ -56,7 +58,8 @@ public class CollarServiceImpl implements CollarService {
             sql.append(" AND STATUS = :status ");
             params.put("status", request.getStatus());
         }
-        sql.append("order by created_time desc");
+
+//        sql.append("order by created_time desc");
 
         if (!StringUtil.stringIsNullOrEmty(request.getPage())) {
             sql.append(" LIMIT  :page, :size  ");
@@ -68,13 +71,16 @@ public class CollarServiceImpl implements CollarService {
             params.put("size", request.getPageSize());
         }
 
+
         Query query = entityManager.createNativeQuery(sql.toString(), Collar.class);
         params.forEach(query::setParameter);
 
         listResponse.setListData(query.getResultList());
 
+
         sql = new StringBuilder();
         params = new HashMap<>();
+
 
         sql.append(" SELECT COUNT(*) FROM collar WHERE 1 = 1 ");
 
@@ -92,6 +98,7 @@ public class CollarServiceImpl implements CollarService {
             sql.append(" AND STATUS = :status ");
             params.put("status", request.getStatus());
         }
+
 
         Query queryCount = entityManager.createNativeQuery(sql.toString());
         params.forEach(queryCount::setParameter);
@@ -116,7 +123,7 @@ public class CollarServiceImpl implements CollarService {
                 i++;
             }
         }
-        collar.setStatus(Math.toIntExact(Constant.ACTIVE));
+        collar.setStatus(Constant.ACTIVE);
         collar.setCreatedBy(username);
         collar.setCreatedTime(DateUtil.dateToString4(new Date()));
         try {
@@ -154,7 +161,7 @@ public class CollarServiceImpl implements CollarService {
 
         Collar cl1 = repository.findById(id).get();
 
-        cl1.setStatus(0);
+        cl1.setStatus(Constant.IN_ACTIVE);
         return repository.save(cl1);
     }
 

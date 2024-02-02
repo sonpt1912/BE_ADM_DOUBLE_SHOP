@@ -1,5 +1,6 @@
 package com.example.be_adm_double_shop.controller;
 
+import com.example.be_adm_double_shop.config.EnableWrapResponse;
 import com.example.be_adm_double_shop.dto.request.SizeRequest;
 import com.example.be_adm_double_shop.entity.Collar;
 
@@ -44,7 +45,7 @@ public class CollarController {
     }
     @PostMapping("/delete/{id}")
     public Collar delete(@PathVariable("id") Long id){
-        return  collarService.delete(id);
+        return collarService.delete(id);
     }
 
 }
