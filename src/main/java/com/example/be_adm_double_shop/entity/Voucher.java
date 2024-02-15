@@ -3,7 +3,6 @@ package com.example.be_adm_double_shop.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Timestamp;
 
 @Entity
 @Table(name = "voucher")
@@ -19,21 +18,33 @@ public class Voucher {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "id_promotion")
-    private Promotion promotion;
+//    @ManyToOne
+//    @JoinColumn(name = "id_promotion")
+//    private Promotion promotion;
 
     @Column(name = "code")
     private String code;
 
-    @Column(name = "name")
-    private String name;
+//    @Column(name = "name")
+//    private String name;
 
-    @Column(name = "discountAmout")
-    private Long discountAmout;
+    @Column(name = "discountAmount")
+    private Long discountAmount;
 
-    @Column(name = "discountPercentage")
-    private Integer discountPercentage;
+    @Column(name = "discountPercent")
+    private Integer discountPercent;
+
+    @Column(name = "quantity")
+    private int quantity;
+
+    @Column(name = "start_date")
+    private String startDate;
+
+    @Column(name = "end_date")
+    private String endDate;
+
+    @Column(name = "status")
+    private Long status;
 
     @Column(name = "created_by")
     private String createdBy;

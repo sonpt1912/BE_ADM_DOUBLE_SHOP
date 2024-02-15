@@ -21,7 +21,6 @@ public class SizeController {
     @Autowired
     private JwtProvider jwtProvider;
 
-
     @PostMapping("/get-size-by-condition")
     public ResponseEntity getAllSize(@RequestBody SizeRequest request) {
         return new ResponseEntity(sizeService.getAllByConditon(request), HttpStatus.OK);
