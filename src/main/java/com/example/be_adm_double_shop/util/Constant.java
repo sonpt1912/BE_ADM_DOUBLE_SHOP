@@ -12,6 +12,14 @@ public class Constant {
 
     public static final Long IN_ACTIVE = 0L;
 
+    public static final Long IS_ADMIN = 0L;
+
+    public static final Long IS_EMPLOYEE = 1L;
+
+    public static final String API001 = "API001";
+
+    public static final String DEFAULT_PASSWORD = "Xin chao";
+
     public interface DETAIL_PRODUCT {
         String SIZE = "SIZE";
     }

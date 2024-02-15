@@ -8,4 +8,9 @@ public interface EmployeeService {
 
     Employee findUserbyUsername(String username);
 
+
+    Object createEmployee(Employee employee, String creator);
+
+    Object updateEmployee(Employee employee, String creator);
+
 }
