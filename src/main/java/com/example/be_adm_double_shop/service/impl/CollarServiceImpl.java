@@ -59,7 +59,7 @@ public class CollarServiceImpl implements CollarService {
             params.put("status", request.getStatus());
         }
 
-//        sql.append("order by created_time desc");
+        sql.append("order by created_time desc");
 
         if (!StringUtil.stringIsNullOrEmty(request.getPage())) {
             sql.append(" LIMIT  :page, :size  ");
@@ -156,13 +156,6 @@ public class CollarServiceImpl implements CollarService {
         return repository.findById(id).get();
     }
 
-    @Override
-    public Collar delete(Long id) {
 
-        Collar cl1 = repository.findById(id).get();
-
-        cl1.setStatus(Constant.IN_ACTIVE);
-        return repository.save(cl1);
-    }
 
 }

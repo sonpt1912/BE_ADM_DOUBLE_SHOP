@@ -43,9 +43,6 @@ public class CollarController {
     public ResponseEntity getOneById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(collarService.getOneId(id));
     }
-    @PostMapping("/delete/{id}")
-    public Collar delete(@PathVariable("id") Long id){
-        return collarService.delete(id);
-    }
+
 
 }

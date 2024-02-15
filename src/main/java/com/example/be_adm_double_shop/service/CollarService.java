@@ -9,7 +9,6 @@ public interface CollarService {
     ListResponse<Collar> getAll(SizeRequest request);
 
     Collar getOneId(Long id);
-    Collar delete(Long id );
 
 
    String save(Collar collar,String username);
