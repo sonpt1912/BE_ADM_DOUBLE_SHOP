@@ -43,8 +43,6 @@ public class CustomerController {
         customer.setCreatedTime(date);
         System.out.println(customer.getRank().getId());
 
-
-
         return ResponseEntity.ok(customerService.save(customer));
     }
 
