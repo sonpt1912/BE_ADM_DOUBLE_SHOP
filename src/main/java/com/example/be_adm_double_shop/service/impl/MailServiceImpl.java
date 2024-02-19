@@ -7,7 +7,6 @@ import jakarta.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMailMessage;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.thymeleaf.TemplateEngine;
@@ -27,7 +26,28 @@ public class MailServiceImpl implements MailService {
 
 
     @Override
-    public void sendMailFortgotPassword() {
+    public Object sendMailFortgotPassword() {
+        try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+            helper.setFrom("DOUBLE SHOP");
+            helper.setSubject("THAY DOI MAT KHAU");
+
+
+            Context context = new Context();
+            context.setVariable("", "");
+            context.setVariable("", "");
+
+            String template = templateEngine.process("", context);
+            helper.setText(template, true);
+
+            javaMailSender.send(message);
+            return Constant.SUCCESS;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return e.getMessage();
+        }
 
     }
 
@@ -50,7 +70,7 @@ public class MailServiceImpl implements MailService {
             context.setVariable("account", "");
             context.setVariable("password", "");
 
-            String processContent = templateEngine.process("CreateAccount" , context);
+            String processContent = templateEngine.process("CreateAccount", context);
 
             helper.setText(processContent, true);
             javaMailSender.send(message);

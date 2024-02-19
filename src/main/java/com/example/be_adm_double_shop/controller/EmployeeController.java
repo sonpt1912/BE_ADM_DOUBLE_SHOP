@@ -33,7 +33,10 @@ public class EmployeeController {
     }
 
 
-//    @PostMapping("/reset-password")
-//    public ResponseEntity resetPassword(@RequestHeader("Authorization") String token, @RequestBody )
+    @PostMapping("/reset-password")
+    public ResponseEntity resetPassword(@RequestHeader("Authorization") String token, @RequestBody Employee employee) {
+        String username = jwtProvider.getUsernameFromToken(token);
+        return new ResponseEntity(employeeService.resetPassword(employee, username), HttpStatus.OK);
+    }
 
 }

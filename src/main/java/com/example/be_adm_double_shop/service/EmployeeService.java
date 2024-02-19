@@ -13,4 +13,6 @@ public interface EmployeeService {
 
     Object updateEmployee(Employee employee, String creator);
 
+    Object resetPassword(Employee employee, String updatedBy);
+
 }

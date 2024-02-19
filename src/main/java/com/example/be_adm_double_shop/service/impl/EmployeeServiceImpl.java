@@ -65,4 +65,10 @@ public class EmployeeServiceImpl implements EmployeeService {
         return userRepository.save(employee);
     }
 
+    @Override
+    public Object resetPassword(Employee employee, String updatedBy) {
+        mailService.sendMailFortgotPassword();
+        return null;
+    }
+
 }
