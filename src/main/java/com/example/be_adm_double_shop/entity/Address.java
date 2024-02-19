@@ -1,5 +1,6 @@
 package com.example.be_adm_double_shop.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -40,7 +41,7 @@ public class Address {
     @Column(name = "updated_time")
     private String updatedTime;
 
-
+@JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_customer", referencedColumnName = "id")
     private Customer customer;

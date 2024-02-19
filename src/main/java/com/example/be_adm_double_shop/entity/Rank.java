@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "user_rank")
+@Table(name = "customer_rank")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter

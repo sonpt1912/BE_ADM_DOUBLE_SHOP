@@ -37,7 +37,7 @@ public class Color {
     private String description;
 
     @Column(name = "status")
-    private Integer status;
+    private Long status;
 
     @Column(name = "created_by")
     private String createdBy;
