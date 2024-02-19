@@ -120,7 +120,7 @@ public class SizeServiceImpl implements SizeService {
                 i++;
             }
         }
-        size.setStatus(Constant.ACTIVE);
+        size.setStatus(Math.toIntExact(Constant.ACTIVE));
         size.setCreatedBy(username);
         size.setCreatedTime(DateUtil.dateToString4(new Date()));
         try {
