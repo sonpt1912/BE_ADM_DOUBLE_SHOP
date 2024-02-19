@@ -21,6 +21,11 @@ public class Voucher {
     @Column(name = "code", unique = true, nullable = false, length = 45)
     private String code;
 
+
+    @Column(name = "name")
+    private String name;
+
+
     @Column(name = "discount_amount")
     private Long discountAmount;
 
