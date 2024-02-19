@@ -2,8 +2,11 @@ package com.example.be_adm_double_shop.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.apache.commons.lang3.RandomStringUtils;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Random;
 
 @Entity
 @Table(name = "material")
