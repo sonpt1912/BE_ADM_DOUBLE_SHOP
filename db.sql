@@ -133,6 +133,7 @@ CREATE TABLE `double_shop`.`employee`
     `district`     VARCHAR(45) NOT NULL,
     `provice`      VARCHAR(45) NOT NULL,
     `city`         VARCHAR(45) NOT NULL,
+    `description` VARCHAR(145) NOT NULL,
     `password`     VARCHAR(145) NULL,
     `created_time` VARCHAR(45) NOT NULL,
     `updated_time` VARCHAR(45) NULL,
