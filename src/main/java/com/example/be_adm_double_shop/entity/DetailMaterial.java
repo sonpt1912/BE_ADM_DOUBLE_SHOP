@@ -18,12 +18,12 @@ public class DetailMaterial {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "id_material")
-    private Material material;
+    @JoinColumn(name = "id_detail_product", referencedColumnName = "id")
+    private DetailProduct detailProduct;
 
     @ManyToOne
-    @JoinColumn(name = "id_detail_product")
-    private DetailProduct detailProduct;
+    @JoinColumn(name = "id_material", referencedColumnName = "id")
+    private Material material;
 
 
 }

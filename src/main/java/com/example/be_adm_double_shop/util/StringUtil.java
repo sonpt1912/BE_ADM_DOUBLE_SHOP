@@ -1,5 +1,7 @@
 package com.example.be_adm_double_shop.util;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class StringUtil {
@@ -8,6 +10,13 @@ public class StringUtil {
         if (objInput == null)
             return strNullValue;
         return objInput.toString();
+    }
+
+    public static String generatorCurrentDateTime() {
+        LocalDateTime currentTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(DateUtil.FORMAT_DATE_TIME4);
+        String formattedTime = currentTime.format(formatter);
+        return formattedTime;
     }
 
     public static boolean stringIsNullOrEmty(String str) {

@@ -5,6 +5,7 @@ import com.example.be_adm_double_shop.dto.response.ListResponse;
 import com.example.be_adm_double_shop.dto.request.SizeRequest;
 import com.example.be_adm_double_shop.entity.Size;
 import com.example.be_adm_double_shop.repository.SizeRepository;
+import com.example.be_adm_double_shop.security.JwtProvider;
 import com.example.be_adm_double_shop.service.SizeService;
 import com.example.be_adm_double_shop.util.Constant;
 import com.example.be_adm_double_shop.util.DateUtil;
@@ -27,6 +28,9 @@ public class SizeServiceImpl implements SizeService {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Autowired
+    private JwtProvider jwtProvider;
 
 
     @Override
@@ -106,7 +110,7 @@ public class SizeServiceImpl implements SizeService {
     }
 
     @Override
-    public String save(Size size) {
+    public String save(Size size, String username) {
         if (StringUtil.stringIsNullOrEmty(size.getCode())) {
             int i = 1;
             while (true) {
@@ -118,8 +122,8 @@ public class SizeServiceImpl implements SizeService {
                 i++;
             }
         }
-        size.setStatus(Constant.ACTIVE);
-        size.setCreatedBy("");
+        size.setStatus(Math.toIntExact(Constant.ACTIVE));
+        size.setCreatedBy(username);
         size.setCreatedTime(DateUtil.dateToString4(new Date()));
         try {
             sizeRepository.save(size);
@@ -131,19 +135,14 @@ public class SizeServiceImpl implements SizeService {
     }
 
     @Override
-    public Object update(Size sizeRequest) {
+    public Object update(Size sizeRequest, String username) {
         Size size = sizeRepository.getSizeByCode(sizeRequest.getCode());
         if (!StringUtil.stringIsNullOrEmty(size)) {
             size.setName(sizeRequest.getName());
             size.setDescription(sizeRequest.getDescription());
             size.setStatus(sizeRequest.getStatus());
-            size.setUpdatedBy("sonpt03");
+            size.setUpdatedBy(username);
             size.setUpdatedTime(DateUtil.dateToString4(new Date()));
-            try{
-
-            }catch (Exception e){
-                return e.getMessage();
-            }
             sizeRepository.save(size);
             return Constant.SUCCESS;
         } else {
