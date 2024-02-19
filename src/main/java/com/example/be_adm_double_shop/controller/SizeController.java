@@ -21,7 +21,6 @@ public class SizeController {
     @Autowired
     private JwtProvider jwtProvider;
 
-
     @PostMapping("/get-size-by-condition")
     public ResponseEntity getAllSize(@RequestBody SizeRequest request) {
         return new ResponseEntity(sizeService.getAllByConditon(request), HttpStatus.OK);
@@ -30,7 +29,7 @@ public class SizeController {
     @PostMapping("/save")
     public ResponseEntity save(@RequestHeader("Authorization") String token, @RequestBody Size size) {
         String username = jwtProvider.getUsernameFromToken(token);
-        return new ResponseEntity(sizeService.save(size, username), HttpStatus.OK);
+        return new ResponseEntity(sizeService.save(size, "username"), HttpStatus.OK);
     }
 
     @PostMapping("/update")

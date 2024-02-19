@@ -21,50 +21,50 @@ import java.util.Set;
 public class Customer {
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @ManyToOne
     @JoinColumn(name = "id_rank", referencedColumnName = "id")
     private Rank rank;
 
-
-    @Column(name = "username")
+    @Column(name = "username", length = 45)
     private String username;
 
-    @Column(name = "name")
+    @Column(name = "name", length = 45)
     private String name;
 
     @Column(name = "gender")
     private Integer gender;
 
-    @Column(name = "phone")
+    @Column(name = "phone", length = 45)
     private String phone;
 
-    @Column(name = "email")
+    @Column(name = "birth_day", length = 45)
+    private String birthDay;
+
+    @Column(name = "email", length = 45)
     private String email;
 
-    @Column(name = "password")
+    @Column(name = "password", length = 145)
     private String password;
-
-    @Column(name = "birth_day")
-    private String birtDay;
 
     @Column(name = "status")
     private Long status;
 
-    @Column(name = "created_by")
+    @Column(name = "created_by", nullable = false, length = 45)
     private String createdBy;
 
-    @Column(name = "updated_by")
+    @Column(name = "updated_by", length = 45)
     private String updatedBy;
 
-    @Column(name = "created_time")
+    @Column(name = "created_time", nullable = false, length = 45)
     private String createdTime;
 
-    @Column(name = "updated_time")
+    @Column(name = "updated_time", length = 45)
     private String updatedTime;
+
 
 
 
@@ -74,4 +74,7 @@ public class Customer {
     private List<Address> address;
 
 
+
+
 }
+

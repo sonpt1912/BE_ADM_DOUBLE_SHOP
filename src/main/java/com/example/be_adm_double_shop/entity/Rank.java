@@ -16,34 +16,35 @@ import java.time.LocalDateTime;
 public class Rank {
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false, length = 45)
     private String name;
 
-    @Column(name = "description")
+    @Column(name = "description", length = 45)
     private String description;
 
     @Column(name = "from")
     private Long from;
 
-    @Column(name = "to")
+    @Column(name = "to", nullable = false)
     private Long to;
 
-    @Column(name= "percent")
+    @Column(name = "percent")
     private Integer percent;
 
-    @Column(name = "created_by")
-    private String createdBy;
-
-    @Column(name = "updated_by")
-    private String updated_by;
-
-    @Column(name = "created_time")
+    @Column(name = "created_time", nullable = false, length = 45)
     private String createdTime;
 
-    @Column(name = "updated_time")
+    @Column(name = "updated_time", length = 45)
     private String updatedTime;
+
+    @Column(name = "updated_by", nullable = false, length = 45)
+    private String updatedBy;
+
+    @Column(name = "created_by", length = 45)
+    private String createdBy;
+
 }

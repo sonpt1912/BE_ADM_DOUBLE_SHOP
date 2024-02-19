@@ -1,6 +1,5 @@
 package com.example.be_adm_double_shop.security;
 
-import com.example.be_adm_double_shop.entity.Employee;
 import com.example.be_adm_double_shop.repository.EmployeeRepository;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.MalformedJwtException;
@@ -14,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -36,12 +34,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
-        String requestHeader = request.getHeader("Authorization");
+        String token = request.getHeader("Authorization");
         String username = null;
-        String token = null;
-        if (requestHeader != null && requestHeader.startsWith("Bearer")) {
+        if (token != null && token.startsWith("Bearer")) {
             //looking good
-            token = requestHeader.substring(7);
             try {
                 username = this.jwtHelper.getUsernameFromToken(token);
             } catch (IllegalArgumentException e) {
@@ -57,19 +53,17 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 e.printStackTrace();
             }
         } else {
-//            logger.info("Invalid Header Value !! ");
+
         }
         if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             //fetch user detail from username
-            UserDetails userDetails = this.userDetailsService.findEmployeeByUsername(username);
-            Boolean validateToken = this.jwtHelper.validateToken(token, userDetails);
+            UserDetails userDetails = userDetailsService.findEmployeeByUsername(username);
+            Boolean validateToken = jwtHelper.isTokenExpired(token.substring(7));
             if (validateToken) {
-                //set the authentication
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             } else {
-//                logger.info("Validation fails !!");
             }
         }
         filterChain.doFilter(request, response);

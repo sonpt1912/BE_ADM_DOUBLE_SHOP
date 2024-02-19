@@ -1,13 +1,13 @@
 package com.example.be_adm_double_shop.controller;
 
+
 import com.example.be_adm_double_shop.config.EnableWrapResponse;
-import com.example.be_adm_double_shop.dto.request.ColorRequest;
+
 import com.example.be_adm_double_shop.dto.request.CustomerRequest;
 import com.example.be_adm_double_shop.entity.Address;
 import com.example.be_adm_double_shop.entity.Customer;
 import com.example.be_adm_double_shop.repository.CustomerRepository;
 import com.example.be_adm_double_shop.service.CustomerService;
-import com.example.be_adm_double_shop.service.impl.ColorServiceImpl;
 import com.example.be_adm_double_shop.util.DateUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +50,7 @@ public class CustomerController {
 
 
 
+
 @PostMapping("/save")
 public ResponseEntity save(@Valid @RequestBody Customer customerRequest) {
     customerRequest.setCreatedBy("huong");
@@ -62,6 +63,7 @@ public ResponseEntity save(@Valid @RequestBody Customer customerRequest) {
         address.setCreatedBy("huong");
         address.setCreatedTime(date);
         address.setCustomer(customerRequest);
+
     }
     customerRequest.setAddress(addresses);
     Customer savedCustomer = customerService.save(customerRequest);

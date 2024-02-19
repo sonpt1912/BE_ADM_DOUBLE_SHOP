@@ -6,7 +6,6 @@ import com.example.be_adm_double_shop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.sql.Timestamp;
 import java.util.List;
 @Service
 public class ProductServiceImpl implements ProductService {

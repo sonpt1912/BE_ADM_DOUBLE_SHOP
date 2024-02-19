@@ -1,11 +1,8 @@
 package com.example.be_adm_double_shop.service.impl;
 
-import com.example.be_adm_double_shop.dto.request.ColorRequest;
 import com.example.be_adm_double_shop.dto.request.CustomerRequest;
 import com.example.be_adm_double_shop.dto.response.ListResponse;
-import com.example.be_adm_double_shop.entity.Color;
 import com.example.be_adm_double_shop.entity.Customer;
-import com.example.be_adm_double_shop.repository.ColorRepository;
 import com.example.be_adm_double_shop.repository.CustomerRepository;
 import com.example.be_adm_double_shop.repository.RankRepository;
 import com.example.be_adm_double_shop.service.CustomerService;
@@ -123,7 +120,7 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer delete(Long id) {
         System.out.println(id);
         Customer cl1 = repository.findById(id).get();
-        cl1.setStatus(Constant.IN_ACTIVE);
+        cl1.setStatus(Long.valueOf(Constant.IN_ACTIVE));
         return repository.save(cl1);
     }
     @Override
