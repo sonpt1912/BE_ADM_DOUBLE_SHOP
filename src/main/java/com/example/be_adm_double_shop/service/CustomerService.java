@@ -3,7 +3,6 @@ import com.example.be_adm_double_shop.dto.request.CustomerRequest;
 import com.example.be_adm_double_shop.dto.response.ListResponse;
 import com.example.be_adm_double_shop.entity.Customer;
 import org.springframework.data.domain.Page;
-import org.springframework.stereotype.Service;
 
 
 public interface CustomerService {

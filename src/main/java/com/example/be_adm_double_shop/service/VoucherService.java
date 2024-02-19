@@ -1,9 +1,7 @@
 package com.example.be_adm_double_shop.service;
 
-import com.example.be_adm_double_shop.dto.request.SizeRequest;
 import com.example.be_adm_double_shop.dto.request.VoucherRequest;
 import com.example.be_adm_double_shop.dto.response.ListResponse;
-import com.example.be_adm_double_shop.entity.Collar;
 import com.example.be_adm_double_shop.entity.Voucher;
 
 public interface VoucherService {
@@ -11,6 +9,12 @@ public interface VoucherService {
 
     Voucher getOneId(Long id);
 
+<<<<<<< HEAD
     String save(Voucher voucher,String username);
     Object update(Voucher voucherRequest,String username);
+=======
+
+    String save(Voucher voucher, String username);
+    Object update(Voucher voucherRequest, String username);
+>>>>>>> 1f06eea3282da96d9e1c4b00837e835d78b476ae
 }

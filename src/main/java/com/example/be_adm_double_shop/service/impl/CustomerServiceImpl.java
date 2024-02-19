@@ -1,11 +1,8 @@
 package com.example.be_adm_double_shop.service.impl;
 
-import com.example.be_adm_double_shop.dto.request.ColorRequest;
 import com.example.be_adm_double_shop.dto.request.CustomerRequest;
 import com.example.be_adm_double_shop.dto.response.ListResponse;
-import com.example.be_adm_double_shop.entity.Color;
 import com.example.be_adm_double_shop.entity.Customer;
-import com.example.be_adm_double_shop.repository.ColorRepository;
 import com.example.be_adm_double_shop.repository.CustomerRepository;
 import com.example.be_adm_double_shop.repository.RankRepository;
 import com.example.be_adm_double_shop.service.CustomerService;
