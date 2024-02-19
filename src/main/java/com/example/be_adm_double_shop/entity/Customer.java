@@ -2,10 +2,14 @@ package com.example.be_adm_double_shop.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.apache.catalina.mapper.Mapper;
 
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Table(name = "customer")
@@ -47,7 +51,7 @@ public class Customer {
     private String password;
 
     @Column(name = "status")
-    private Integer status;
+    private Long status;
 
     @Column(name = "created_by", nullable = false, length = 45)
     private String createdBy;
@@ -62,4 +66,15 @@ public class Customer {
     private String updatedTime;
 
 
+
+
+    @Setter
+    @Getter
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private List<Address> address;
+
+
+
+
 }
+

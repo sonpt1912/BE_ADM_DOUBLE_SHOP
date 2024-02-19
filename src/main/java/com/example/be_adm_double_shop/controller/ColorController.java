@@ -45,12 +45,10 @@ public class ColorController {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateUtil.FORMAT_DATE_TIME4);
         String date = simpleDateFormat.format(new Date());
         color.setCreatedTime(date);
-
-
         return ResponseEntity.ok(colorService.save(color));
     }
 
-    @PutMapping("/update/{id}")
+    @PostMapping("/update/{id}")
     public ResponseEntity update(@RequestBody Color color, @PathVariable("id") Long id) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateUtil.FORMAT_DATE_TIME4);
         String date = simpleDateFormat.format(new Date());

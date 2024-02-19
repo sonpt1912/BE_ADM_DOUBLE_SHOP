@@ -18,7 +18,4 @@ public class ColorRequest {
 
     private String code;
 
-    private String createdBy;
-
-    private String createdTime;
 }

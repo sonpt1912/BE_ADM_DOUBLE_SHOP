@@ -5,6 +5,7 @@ import com.example.be_adm_double_shop.dto.response.ListResponse;
 import com.example.be_adm_double_shop.entity.Color;
 import com.example.be_adm_double_shop.repository.ColorRepository;
 import com.example.be_adm_double_shop.service.ColorService;
+import com.example.be_adm_double_shop.util.Constant;
 import com.example.be_adm_double_shop.util.StringUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -117,7 +118,7 @@ public class ColorServiceImpl implements ColorService {
         // Thực hiện logic xóa ở đây
         Color cl1 = repository.findById(code).get();
 
-        cl1.setStatus(0);
+        cl1.setStatus(Constant.IN_ACTIVE);
         return repository.save(cl1);
     }
     @Override

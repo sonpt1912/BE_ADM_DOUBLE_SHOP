@@ -6,6 +6,7 @@ import com.example.be_adm_double_shop.entity.Customer;
 import com.example.be_adm_double_shop.repository.CustomerRepository;
 import com.example.be_adm_double_shop.repository.RankRepository;
 import com.example.be_adm_double_shop.service.CustomerService;
+import com.example.be_adm_double_shop.util.Constant;
 import com.example.be_adm_double_shop.util.StringUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -39,9 +40,9 @@ public class CustomerServiceImpl implements CustomerService {
 
         sql.append(" SELECT * FROM customer WHERE 1 = 1 ");
 
-        if (!StringUtil.stringIsNullOrEmty(request.getEmail())) {
-            sql.append(" AND EMAIL LIKE CONCAT('%', :email ,'%') ");
-            params.put("email", request.getEmail());
+        if (!StringUtil.stringIsNullOrEmty(request.getStatus())) {
+            sql.append(" AND STATUS LIKE CONCAT('%', :status ,'%') ");
+            params.put("status", request.getStatus());
         }
 
         if (!StringUtil.stringIsNullOrEmty(request.getName())) {
@@ -87,10 +88,10 @@ public class CustomerServiceImpl implements CustomerService {
             params.put("name", request.getName());
         }
 
-        if (!StringUtil.stringIsNullOrEmty(request.getEmail())) {
-            sql.append(" AND EMAIL = :email ");
-            params.put("email", request.getEmail());
-        }
+//        if (!StringUtil.stringIsNullOrEmty(request.getEmail())) {
+//            sql.append(" AND EMAIL = :email ");
+//            params.put("email", request.getEmail());
+//        }
 
 
         Query queryCount = entityManager.createNativeQuery(sql.toString());
@@ -99,11 +100,13 @@ public class CustomerServiceImpl implements CustomerService {
         Integer countData = ((Long) queryCount.getSingleResult()).intValue();
 
         listResponse.setTotalRecord(countData);
+
         return listResponse;
     }
 
     @Override
     public Customer getOneId(Long id) {
+        System.out.println("aaaa" + id);
         return repository.findById(id).get();
     }
 
@@ -115,15 +118,15 @@ public class CustomerServiceImpl implements CustomerService {
         return repository.findAll(p);
     }
     public Customer delete(Long id) {
-        // Thực hiện logic xóa ở đây
+        System.out.println(id);
         Customer cl1 = repository.findById(id).get();
-
-        cl1.setStatus(0);
+        cl1.setStatus(Long.valueOf(Constant.IN_ACTIVE));
         return repository.save(cl1);
     }
     @Override
     public Customer save( Customer color) {
         color.setRank(rankRepository.findById(Long.valueOf(1)).get());
+
         return repository.save(color);
     }
 

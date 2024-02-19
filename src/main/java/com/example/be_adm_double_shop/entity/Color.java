@@ -34,8 +34,10 @@ public class Color {
     @Column(name = "description", length = 45)
     private String description;
 
+
     @Column(name = "status", nullable = false)
     private Integer status;
+
 
     @Column(name = "created_by", nullable = false, length = 45)
     private String createdBy;
