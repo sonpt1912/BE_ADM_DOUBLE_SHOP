@@ -36,7 +36,6 @@ public class VoucherServiceImpl implements VoucherService {
     @Override
     public ListResponse<Voucher> getAll(VoucherRequest request) {
 
-
         ListResponse listResponse = new ListResponse();
 
         StringBuilder sql = new StringBuilder();
@@ -48,6 +47,10 @@ public class VoucherServiceImpl implements VoucherService {
             sql.append(" AND CODE LIKE CONCAT('%', :code ,'%') ");
             params.put("code", request.getCode());
         }
+        if(!StringUtil.stringIsNullOrEmty(request.getName())){
+            sql.append(" AND name LIKE CONCAT('%', :name ,'%') ");
+            params.put("name", request.getName());
+        }
 
         if (!StringUtil.stringIsNullOrEmty(request.getStatus())) {
             sql.append(" AND STATUS = :status ");
@@ -55,22 +58,21 @@ public class VoucherServiceImpl implements VoucherService {
         }
 
         if (!StringUtil.stringIsNullOrEmty(request.getDiscountAmount())) {
-            sql.append("and discountamount = :discountamount");
-            params.put("discountamount", request.getDiscountAmount());
+            sql.append("and discount_amount = :discountAmount");
+            params.put("discountAmount", request.getDiscountAmount());
         }
         if(!StringUtil.stringIsNullOrEmty(request.getQuantity())){
-            sql.append("and quantity=:quantity");
-            params.put("quantity",request.getQuantity());
+            sql.append("and quantity = :quantities ");
+            params.put("quantities", request.getQuantity());
         }
         if (!StringUtil.stringIsNullOrEmty(request.getStartDate())) {
-            sql.append(" and to_char('start_date','dd/mm/yyyy') = ? ");
-            params.put("start_date", request.getStartDate());
+            sql.append(" AND start_date = CONCAT('%', :startDate ,'%') ");
+            params.put("startDate", request.getStartDate());
         }
         if (!StringUtil.stringIsNullOrEmty(request.getEndDate())) {
-            sql.append(" and to_char('end_date','dd/mm/yyyy') = ? ");
-            params.put("end_date", request.getEndDate());
+            sql.append(" AND end_date = CONCAT('%', :endDate ,'%') ");
+            params.put("endDate", request.getEndDate());
         }
-            sql.append("order by created_time desc");
 
             if (!StringUtil.stringIsNullOrEmty(request.getPage())) {
                 sql.append(" LIMIT  :page, :size  ");
@@ -82,22 +84,23 @@ public class VoucherServiceImpl implements VoucherService {
                 params.put("size", request.getPageSize());
             }
 
-
             Query query = entityManager.createNativeQuery(sql.toString(), Voucher.class);
             params.forEach(query::setParameter);
 
             listResponse.setListData(query.getResultList());
 
-
             sql = new StringBuilder();
             params = new HashMap<>();
-
 
             sql.append(" SELECT COUNT(*) FROM voucher WHERE 1 = 1 ");
 
         if (!StringUtil.stringIsNullOrEmty(request.getCode())) {
             sql.append(" AND CODE LIKE CONCAT('%', :code ,'%') ");
             params.put("code", request.getCode());
+        }
+        if(!StringUtil.stringIsNullOrEmty(request.getName())){
+            sql.append(" AND name LIKE CONCAT('%', :name ,'%') ");
+            params.put("name", request.getName());
         }
 
         if (!StringUtil.stringIsNullOrEmty(request.getStatus())) {
@@ -106,20 +109,20 @@ public class VoucherServiceImpl implements VoucherService {
         }
 
         if (!StringUtil.stringIsNullOrEmty(request.getDiscountAmount())) {
-            sql.append("and discountamount = :discountamount");
-            params.put("discountamount", request.getDiscountAmount());
+            sql.append("and discount_amount = :discountAmount");
+            params.put("discountAmount", request.getDiscountAmount());
         }
         if(!StringUtil.stringIsNullOrEmty(request.getQuantity())){
-            sql.append("and quantity=:quantity");
-            params.put("quantity",request.getQuantity());
+            sql.append("and quantity = :quantities ");
+            params.put("quantities", request.getQuantity());
         }
         if (!StringUtil.stringIsNullOrEmty(request.getStartDate())) {
-            sql.append(" and to_char('start_date','dd/mm/yyyy') = ? ");
-            params.put("start_date", request.getStartDate());
+            sql.append(" AND start_date = CONCAT('%', :startDate ,'%') ");
+            params.put("startDate", request.getStartDate());
         }
         if (!StringUtil.stringIsNullOrEmty(request.getEndDate())) {
-            sql.append(" and to_char('end_date','dd/mm/yyyy') = ? ");
-            params.put("end_date", request.getEndDate());
+            sql.append(" AND end_date = CONCAT('%', :endDate ,'%') ");
+            params.put("endDate", request.getEndDate());
         }
 
                 Query queryCount = entityManager.createNativeQuery(sql.toString());
@@ -137,9 +140,9 @@ public class VoucherServiceImpl implements VoucherService {
     }
 
 
-
     @Override
     public String save(Voucher voucher, String username) {
+
         if (StringUtil.stringIsNullOrEmty(voucher.getCode())) {
             int i = 1;
             while (true) {
@@ -151,10 +154,21 @@ public class VoucherServiceImpl implements VoucherService {
                 i++;
             }
         }
+        if(StringUtil.stringIsNullOrEmty(voucher.getDiscountPercent())){
+            voucher.setDiscountPercent(0);
+        }
+        if(voucher.getQuantity()<0||voucher.getDiscountAmount()<0){
+            return Constant.FAIL;
+        }
         voucher.setStatus(Constant.ACTIVE);
-
         voucher.setCreatedBy(username);
         voucher.setCreatedTime(DateUtil.dateToString4(new Date()));
+        if(voucher.getDiscountAmount()>100000){
+            return Constant.FAIL;
+        }
+        if(voucher.getDiscountPercent()>10){
+            return Constant.FAIL;
+        }
         try {
             repository.save(voucher);
             return Constant.SUCCESS;
@@ -167,16 +181,19 @@ public class VoucherServiceImpl implements VoucherService {
     public Object update(Voucher voucherRequest, String username) {
         Voucher voucher = repository.getVoucherByCode(voucherRequest.getCode());
         if (!StringUtil.stringIsNullOrEmty(voucher)) {
-
+            if(voucher.getDiscountAmount()>100000){
+                return Constant.FAIL;
+            }
+            if(voucher.getDiscountPercent()>10){
+                return Constant.FAIL;
+            }
             voucher.setDiscountAmount(voucherRequest.getDiscountAmount());
             voucher.setStatus(voucherRequest.getStatus());
-
             voucher.setUpdatedTime(DateUtil.dateToString4(new Date()));
-            voucher.setCreatedBy(voucherRequest.getCreatedBy());
-            voucher.setCreatedTime(voucherRequest.getCreatedTime());
+
+
             voucher.setQuantity(voucherRequest.getQuantity());
             voucher.setUpdated_by(username);
-
             repository.save(voucher);
             return Constant.SUCCESS;
         } else {

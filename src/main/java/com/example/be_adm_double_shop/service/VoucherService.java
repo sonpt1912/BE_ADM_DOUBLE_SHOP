@@ -11,7 +11,6 @@ public interface VoucherService {
 
     Voucher getOneId(Long id);
 
-
     String save(Voucher voucher,String username);
     Object update(Voucher voucherRequest,String username);
 }

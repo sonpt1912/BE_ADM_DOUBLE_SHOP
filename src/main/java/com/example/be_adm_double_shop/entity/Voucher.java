@@ -25,13 +25,13 @@ public class Voucher {
     @Column(name = "code")
     private String code;
 
-//    @Column(name = "name")
-//    private String name;
+    @Column(name = "name")
+    private String name;
 
-    @Column(name = "discountAmount")
+    @Column(name = "discount_amount")
     private Long discountAmount;
 
-    @Column(name = "discountPercent")
+    @Column(name = "discount_percent")
     private Integer discountPercent;
 
     @Column(name = "quantity")

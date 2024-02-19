@@ -18,12 +18,14 @@ public class VoucherRequest {
     private Long status;
 
     private String code;
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-    private Date startDate;
-    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern = "dd/MM/yyyy")
-    private Date endDate;
 
-    private int quantity;
+    private String name;
+
+    private String startDate;
+
+    private String endDate;
+
+    private Long quantity;
 
     private Long discountAmount;
 
