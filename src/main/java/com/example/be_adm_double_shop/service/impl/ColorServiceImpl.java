@@ -3,14 +3,12 @@ package com.example.be_adm_double_shop.service.impl;
 import com.example.be_adm_double_shop.dto.request.ColorRequest;
 import com.example.be_adm_double_shop.dto.response.ListResponse;
 import com.example.be_adm_double_shop.entity.Color;
-import com.example.be_adm_double_shop.entity.Size;
 import com.example.be_adm_double_shop.repository.ColorRepository;
 import com.example.be_adm_double_shop.service.ColorService;
 import com.example.be_adm_double_shop.util.StringUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -18,7 +16,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Service

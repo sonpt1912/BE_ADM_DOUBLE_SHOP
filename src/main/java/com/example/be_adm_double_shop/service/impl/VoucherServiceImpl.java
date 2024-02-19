@@ -1,12 +1,8 @@
 package com.example.be_adm_double_shop.service.impl;
 
-import com.example.be_adm_double_shop.dto.request.SizeRequest;
 import com.example.be_adm_double_shop.dto.request.VoucherRequest;
 import com.example.be_adm_double_shop.dto.response.ListResponse;
-import com.example.be_adm_double_shop.entity.Collar;
-import com.example.be_adm_double_shop.entity.Size;
 import com.example.be_adm_double_shop.entity.Voucher;
-import com.example.be_adm_double_shop.repository.CollarRepository;
 import com.example.be_adm_double_shop.repository.VoucherRepository;
 import com.example.be_adm_double_shop.security.JwtProvider;
 import com.example.be_adm_double_shop.service.VoucherService;
@@ -175,7 +171,7 @@ public class VoucherServiceImpl implements VoucherService {
             voucher.setCreatedBy(voucherRequest.getCreatedBy());
             voucher.setCreatedTime(voucherRequest.getCreatedTime());
             voucher.setQuantity(voucherRequest.getQuantity());
-            voucher.setUpdated_by(username);
+            voucher.setUpdatedBy(username);
 
             repository.save(voucher);
             return Constant.SUCCESS;

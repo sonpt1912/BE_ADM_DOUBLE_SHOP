@@ -1,10 +1,8 @@
 package com.example.be_adm_double_shop.controller;
 
-import com.example.be_adm_double_shop.dto.request.ColorRequest;
 import com.example.be_adm_double_shop.dto.request.CustomerRequest;
 import com.example.be_adm_double_shop.entity.Customer;
 import com.example.be_adm_double_shop.service.CustomerService;
-import com.example.be_adm_double_shop.service.impl.ColorServiceImpl;
 import com.example.be_adm_double_shop.util.DateUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;

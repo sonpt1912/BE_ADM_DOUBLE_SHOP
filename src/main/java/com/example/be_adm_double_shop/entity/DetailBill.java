@@ -4,13 +4,13 @@ import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
-@Table(name = "detail_material")
+@Table(name = "detail_bill")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-public class DetailMaterial {
+public class DetailBill {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,12 +18,19 @@ public class DetailMaterial {
     private Long id;
 
     @ManyToOne
+    @JoinColumn(name = "id_bill", referencedColumnName = "id")
+    private Bill bill;
+
+    @ManyToOne
     @JoinColumn(name = "id_detail_product", referencedColumnName = "id")
     private DetailProduct detailProduct;
 
-    @ManyToOne
-    @JoinColumn(name = "id_material", referencedColumnName = "id")
-    private Material material;
+    @Column(name = "quantity", nullable = false)
+    private Long quantity;
 
+    @Column(name = "price", nullable = false)
+    private Long price;
 
+    @Column(name = "status", nullable = false)
+    private Integer status;
 }
