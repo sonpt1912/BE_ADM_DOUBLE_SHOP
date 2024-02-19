@@ -4,17 +4,17 @@ public class Constant {
 
     public static final String SUCCESS = "SUCCESS";
 
-    public static final Long ACTIVE = 1L;
+    public static final Integer ACTIVE = 1;
 
     public static final String UNAUTHORIZED = "401";
 
     public static final String USERNAME_OR_PASSWORD = "Tài khoản hoặc mật khẩu không chính xác";
 
-    public static final Long IN_ACTIVE = 0L;
+    public static final Integer IN_ACTIVE = 0;
 
-    public static final Long IS_ADMIN = 0L;
+    public static final Integer IS_ADMIN = 0;
 
-    public static final Long IS_EMPLOYEE = 1L;
+    public static final Integer IS_EMPLOYEE = 1;
 
     public static final String API001 = "API001";
 

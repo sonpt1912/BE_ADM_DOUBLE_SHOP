@@ -14,19 +14,19 @@ import java.sql.Date;
 public class CustomerVoucher {
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "id_voucher")
+    @JoinColumn(name = "id_voucher", referencedColumnName = "id")
     private Voucher voucher;
 
     @ManyToOne
-    @JoinColumn(name = "id_customer")
+    @JoinColumn(name = "id_customer", referencedColumnName = "id")
     private Customer customer;
 
-    @Column(name = "usage_date")
-    private Date usageDate;
+    @Column(name = "usage_date", length = 45)
+    private String usageDate;
 
 }

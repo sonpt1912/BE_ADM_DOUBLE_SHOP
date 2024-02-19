@@ -15,34 +15,33 @@ import java.sql.Timestamp;
 public class Address {
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "district")
-    private String district;
-
-    @Column(name = "province")
-    private String province;
-
-    @Column(name = "city")
-    private String city;
-
-    @Column(name = "created_by")
-    private String createdBy;
-
-    @Column(name = "updated_by")
-    private String updatedBy;
-
-    @Column(name = "created_time")
-    private String createdTime;
-
-    @Column(name = "updated_time")
-    private String updatedTime;
-
 
     @ManyToOne
     @JoinColumn(name = "id_customer", referencedColumnName = "id")
     private Customer customer;
+
+    @Column(name = "district", length = 45, nullable = false)
+    private String district;
+
+    @Column(name = "province", length = 45, nullable = false)
+    private String province;
+
+    @Column(name = "city", length = 45, nullable = false)
+    private String city;
+
+    @Column(name = "created_by", length = 45, nullable = false)
+    private String createdBy;
+
+    @Column(name = "created_time", length = 45, nullable = false)
+    private String createdTime;
+
+    @Column(name = "updated_by", length = 45)
+    private String updatedBy;
+
+    @Column(name = "updated_time", length = 45)
+    private String updatedTime;
+
 
 }
