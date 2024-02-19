@@ -3,7 +3,6 @@ package com.example.be_adm_double_shop.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Timestamp;
 
 @Entity
 @Table(name = "voucher")
@@ -15,36 +14,41 @@ import java.sql.Timestamp;
 public class Voucher {
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "id_promotion")
-    private Promotion promotion;
-
-    @Column(name = "code")
+    @Column(name = "code", unique = true, nullable = false, length = 45)
     private String code;
 
-    @Column(name = "name")
-    private String name;
+    @Column(name = "discount_amount")
+    private Long discountAmount;
 
-    @Column(name = "discountAmout")
-    private Long discountAmout;
+    @Column(name = "discount_percent")
+    private Integer discountPercent;
 
-    @Column(name = "discountPercentage")
-    private Integer discountPercentage;
+    @Column(name = "quantity", nullable = false)
+    private Integer quantity;
 
-    @Column(name = "created_by")
+    @Column(name = "start_date", nullable = false, length = 45)
+    private String startDate;
+
+    @Column(name = "end_date", nullable = false, length = 45)
+    private String endDate;
+
+    @Column(name = "created_by", nullable = false, length = 45)
     private String createdBy;
 
-    @Column(name = "updated_by")
-    private String updated_by;
-
-    @Column(name = "created_time")
+    @Column(name = "created_time", nullable = false, length = 45)
     private String createdTime;
 
-    @Column(name = "updated_time")
+    @Column(name = "updated_time", length = 45)
     private String updatedTime;
+
+    @Column(name = "updated_by", length = 45)
+    private String updatedBy;
+
+    @Column(name = "status")
+    private Integer status;
 
 }

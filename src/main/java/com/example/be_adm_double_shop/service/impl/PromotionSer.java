@@ -105,7 +105,7 @@ public class PromotionSer {
     }
 
     public Promotion add(Promotion p) {
-        p.setStatus(Constant.ACTIVE.toString());
+        p.setStatus(Constant.ACTIVE);
         return promotionRepository.save(p);
     }
 
@@ -119,7 +119,7 @@ public class PromotionSer {
 
     public Promotion delete(Long id) {
         Promotion promotion = promotionRepository.getOneById(id);
-        promotion.setStatus("0");
+        promotion.setStatus(0);
         return promotionRepository.save(promotion);
     }
 }

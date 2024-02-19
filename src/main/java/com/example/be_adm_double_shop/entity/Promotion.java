@@ -28,8 +28,14 @@ public class Promotion {
     @Column(name = "name")
     private String name;
 
-    @Column(name = "value")
-    private Integer value;
+    @Column(name = "discount_amount")
+    private Long discountAmount;
+
+    @Column(name = "discount_percent")
+    private Integer discountPercent;
+
+    @Column(name = "status")
+    private Integer status;
 
     @Column(name = "start_date")
     private String startDate;
@@ -48,8 +54,4 @@ public class Promotion {
 
     @Column(name = "updated_time")
     private String updatedTime;
-
-    @Column(name = "status")
-    private String status;
-
 }
