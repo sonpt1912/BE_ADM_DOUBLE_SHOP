@@ -5,6 +5,8 @@ import lombok.*;
 
 import java.sql.Date;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Random;
 
 @Entity
 @Table(name = "promotion")
@@ -20,8 +22,17 @@ public class Promotion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "code")
+    private String code;
+
     @Column(name = "name")
     private String name;
+
+    @Column(name = "discount_amount")
+    private Long discountAmount;
+
+    @Column(name = "discount_percent")
+    private Integer discountPercent;
 
     @Column(name = "status")
     private Integer status;
@@ -33,7 +44,7 @@ public class Promotion {
     private String endDate;
 
     @Column(name = "created_by")
-    private String createdBy;
+    private String createdBy = "TranTung";
 
     @Column(name = "updated_by")
     private String updatedBy;
@@ -43,5 +54,4 @@ public class Promotion {
 
     @Column(name = "updated_time")
     private String updatedTime;
-
 }

@@ -39,7 +39,6 @@ public class SizeServiceImpl implements SizeService {
 
         StringBuilder sql = new StringBuilder();
         Map<String, Object> params = new HashMap<>();
-
         sql.append(" SELECT * FROM size WHERE 1 = 1 ");
 
         if (!StringUtil.stringIsNullOrEmty(request.getCode())) {

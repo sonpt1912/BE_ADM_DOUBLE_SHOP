@@ -29,7 +29,9 @@ public class JwtProvider {
 
     //retrieve username from jwt token
     public String getUsernameFromToken(String token) {
+
         token = token.substring(7);
+
         return getClaimFromToken(token, Claims::getSubject);
     }
 

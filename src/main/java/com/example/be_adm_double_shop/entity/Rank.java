@@ -7,7 +7,7 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "user_rank")
+@Table(name = "customer_rank")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -26,10 +26,10 @@ public class Rank {
     @Column(name = "description", length = 45)
     private String description;
 
-    @Column(name = "from_value")
+    @Column(name = "from")
     private Long from;
 
-    @Column(name = "to_value", nullable = false)
+    @Column(name = "to", nullable = false)
     private Long to;
 
     @Column(name = "percent")
