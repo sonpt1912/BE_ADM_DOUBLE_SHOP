@@ -438,3 +438,20 @@ CREATE TABLE `double_shop`.`detail_bill`
             ON DELETE NO ACTION
             ON UPDATE NO ACTION
 );
+
+CREATE TABLE promotion
+(
+    id               BIGINT AUTO_INCREMENT PRIMARY KEY,
+    code             VARCHAR(255),
+    name             VARCHAR(255),
+    discount_amount  BIGINT,
+    discount_percent INT,
+    status           INT,
+    start_date       DATE,
+    end_date         DATE,
+    created_by       VARCHAR(255) NOT NULL,
+    updated_by       VARCHAR(255),
+    created_time     VARCHAR(255) NOT NULL,
+    updated_time     VARCHAR(255)
+);
+
