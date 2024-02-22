@@ -65,16 +65,8 @@ public class Customer {
     @Column(name = "updated_time", length = 45)
     private String updatedTime;
 
-
-
-
-    @Setter
-    @Getter
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Address> address;
-
-
-
 
 }
 

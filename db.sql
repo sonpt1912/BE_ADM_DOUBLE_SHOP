@@ -127,21 +127,20 @@ CREATE TABLE `double_shop`.`employee`
     `phone`        VARCHAR(45) NULL,
     `email`        VARCHAR(45) NULL,
     `gender`       INT NULL,
+    `description`  varchar(145) null,
     `birth_day`    VARCHAR(45) NOT NULL,
     `role`         INT         NOT NULL,
     `status`       INT         NOT NULL,
     `district`     VARCHAR(45) NOT NULL,
     `provice`      VARCHAR(45) NOT NULL,
     `city`         VARCHAR(45) NOT NULL,
-    `description` VARCHAR(145) NOT NULL,
     `password`     VARCHAR(145) NULL,
     `created_time` VARCHAR(45) NOT NULL,
     `updated_time` VARCHAR(45) NULL,
     `updated_by`   VARCHAR(45) NOT NULL,
     `created_by`   VARCHAR(45) NULL,
     PRIMARY KEY (`id`),
-    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-    UNIQUE INDEX `code_UNIQUE` (`code` ASC) VISIBLE
+    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE
 );
 
 
@@ -283,6 +282,7 @@ CREATE TABLE `double_shop`.`detail_product`
     `id_branch`    BIGINT      NOT NULL,
     `id_collar`    BIGINT      NOT NULL,
     `id_category`  BIGINT      NOT NULL,
+    `id_material`  BIGINT      NOT NULL,
     `quantity`     BIGINT      NOT NULL,
     `status`       INT         NOT NULL,
     `created_by`   VARCHAR(45) NOT NULL,
@@ -324,6 +324,11 @@ CREATE TABLE `double_shop`.`detail_product`
     CONSTRAINT `FK_DT_CATE`
         FOREIGN KEY (`id_category`)
             REFERENCES `double_shop`.`category` (`id`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION,
+    CONSTRAINT `FK_DT_MATERIAL`
+        FOREIGN KEY (`id_category`)
+            REFERENCES `double_shop`.`material` (`id`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION
 );
@@ -433,3 +438,20 @@ CREATE TABLE `double_shop`.`detail_bill`
             ON DELETE NO ACTION
             ON UPDATE NO ACTION
 );
+
+CREATE TABLE promotion
+(
+    id               BIGINT AUTO_INCREMENT PRIMARY KEY,
+    code             VARCHAR(255),
+    name             VARCHAR(255),
+    discount_amount  BIGINT,
+    discount_percent INT,
+    status           INT,
+    start_date       DATE,
+    end_date         DATE,
+    created_by       VARCHAR(255) NOT NULL,
+    updated_by       VARCHAR(255),
+    created_time     VARCHAR(255) NOT NULL,
+    updated_time     VARCHAR(255)
+);
+

@@ -44,7 +44,7 @@ public class Promotion {
     private String endDate;
 
     @Column(name = "created_by")
-    private String createdBy = "TranTung";
+    private String createdBy;
 
     @Column(name = "updated_by")
     private String updatedBy;
