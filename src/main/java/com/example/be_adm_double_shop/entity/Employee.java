@@ -59,6 +59,8 @@ public class Employee implements UserDetails {
     @Column(name = "city", length = 45)
     private String city;
 
+    @Column(name = "description")
+    private String description;
     @Column(name = "password", length = 145, nullable = false)
     private String password;
 
