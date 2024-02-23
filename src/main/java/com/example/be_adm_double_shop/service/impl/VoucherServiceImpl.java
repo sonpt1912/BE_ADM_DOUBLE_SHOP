@@ -153,18 +153,14 @@ public class VoucherServiceImpl implements VoucherService {
         if(StringUtil.stringIsNullOrEmty(voucher.getDiscountPercent())){
             voucher.setDiscountPercent(0);
         }
-        if(voucher.getQuantity()<0||voucher.getDiscountAmount()<0){
-            return Constant.FAIL;
+        if(StringUtil.stringIsNullOrEmty(voucher.getDiscountAmount())){
+            voucher.setDiscountAmount(0L);
         }
+
         voucher.setStatus(Math.toIntExact(Constant.ACTIVE));
         voucher.setCreatedBy(username);
         voucher.setCreatedTime(DateUtil.dateToString4(new Date()));
-        if(voucher.getDiscountAmount()>100000){
-            return Constant.FAIL;
-        }
-        if(voucher.getDiscountPercent()>10){
-            return Constant.FAIL;
-        }
+
         try {
             repository.save(voucher);
             return Constant.SUCCESS;
@@ -189,7 +185,6 @@ public class VoucherServiceImpl implements VoucherService {
 
 
             voucher.setQuantity(voucherRequest.getQuantity());
-
 
 
             voucher.setUpdatedBy(username);
