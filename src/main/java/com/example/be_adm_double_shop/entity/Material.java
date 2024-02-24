@@ -40,7 +40,7 @@ public class Material {
     @Column(name = "updated_by", length = 45)
     private String updatedBy;
 
-    @Column(name = "created_time", nullable = false, length = 45)
+    @Column(name = "created_time")
     private String createdTime;
 
     @Column(name = "updated_time", length = 45)

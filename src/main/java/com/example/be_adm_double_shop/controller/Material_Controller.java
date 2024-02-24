@@ -45,9 +45,8 @@ public class Material_Controller {
         return materialSer.add(m);
     }
 
-    @PutMapping("/Material/update/{id}")
+    @RequestMapping("/Material/update/{id}")
     private Material update(@RequestBody Material m, @PathVariable("id") Long id) {
-        System.out.println(id);
         return materialSer.update(m,id);
     }
 

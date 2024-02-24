@@ -15,6 +15,7 @@ import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -105,6 +106,8 @@ public class PromotionSer {
     }
 
     public Promotion add(Promotion p) {
+        p.setCreatedTime(LocalDateTime.now().toString());
+        p.setCreatedBy("TranTung");
         p.setStatus(Constant.ACTIVE);
         return promotionRepository.save(p);
     }
@@ -114,6 +117,8 @@ public class PromotionSer {
     }
 
     public Promotion update(Promotion p) {
+        p.setCreatedTime(LocalDateTime.now().toString());
+        p.setUpdatedTime(LocalDateTime.now().toString());
         return promotionRepository.save(p);
     }
 

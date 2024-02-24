@@ -119,12 +119,13 @@ public class MaterialSer {
     public Material add(Material m){
         m.setCreatedTime(LocalDateTime.now().toString());
         m.setCreatedBy("TranTung");
-        m.setStatus(Integer.valueOf(Constant.ACTIVE.toString()));
+        m.setStatus(Constant.ACTIVE);
         return materialRepository.save(m);
     }
 
     public Material update(Material m, Long id) {
         m.setId(id);
+        m.setCreatedTime(LocalDateTime.now().toString());
         return materialRepository.save(m);
     }
 
