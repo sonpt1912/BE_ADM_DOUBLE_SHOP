@@ -1,6 +1,7 @@
 package com.example.be_adm_double_shop.controller;
 
 import com.example.be_adm_double_shop.config.EnableWrapResponse;
+import com.example.be_adm_double_shop.dto.request.EmployeeRequest;
 import com.example.be_adm_double_shop.entity.Employee;
 import com.example.be_adm_double_shop.security.JwtProvider;
 import com.example.be_adm_double_shop.service.EmployeeService;
@@ -37,6 +38,11 @@ public class EmployeeController {
     public ResponseEntity resetPassword(@RequestHeader("Authorization") String token, @RequestBody Employee employee) {
         String username = jwtProvider.getUsernameFromToken(token);
         return new ResponseEntity(employeeService.resetPassword(employee, username), HttpStatus.OK);
+    }
+
+    @PostMapping("/get-all-employee-by-condition")
+    public ResponseEntity getAllEmployeeByCondition(@RequestBody EmployeeRequest employeeRequest) {
+        return new ResponseEntity(employeeService.getAllEmployeeByCondition(employeeRequest), HttpStatus.OK);
     }
 
 }
