@@ -7,7 +7,11 @@ public class Constant {
 
     public static final String FAIL="FAIL";
 
+
+
+
     public static final Integer ACTIVE = 1;
+
 
     public static final String UNAUTHORIZED = "401";
 
