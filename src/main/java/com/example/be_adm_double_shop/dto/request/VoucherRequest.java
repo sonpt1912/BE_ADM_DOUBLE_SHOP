@@ -25,8 +25,8 @@ public class VoucherRequest {
 
     private String endDate;
 
-    private Long quantity;
-
     private Long discountAmount;
+
+    private Long discountPercent;
 
 }

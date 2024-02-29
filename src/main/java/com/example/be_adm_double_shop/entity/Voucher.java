@@ -30,7 +30,7 @@ public class Voucher {
     @Column(name = "discount_percent")
     private Integer discountPercent;
 
-    @Column(name = "quantity", nullable = false)
+    @Column(name = "quantity")
     private Integer quantity;
 
     @Column(name = "start_date")
@@ -42,10 +42,10 @@ public class Voucher {
     @Column(name = "created_by", nullable = false, length = 45)
     private String createdBy;
 
-    @Column(name = "created_time", nullable = false, length = 45)
+    @Column(name = "created_time")
     private String createdTime;
 
-    @Column(name = "updated_time", length = 45)
+    @Column(name = "updated_time")
     private String updatedTime;
 
     @Column(name = "updated_by", length = 45)
