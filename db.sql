@@ -184,6 +184,7 @@ CREATE TABLE `double_shop`.`voucher`
     `created_time`     VARCHAR(45) NOT NULL,
     `updated_time`     VARCHAR(45) NULL,
     `updated_by`       VARCHAR(45) NULL,
+    `minimum_order`     bigint not null ,
     `status`           INT NULL,
     PRIMARY KEY (`id`)
 );
