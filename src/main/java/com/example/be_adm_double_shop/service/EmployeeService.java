@@ -11,7 +11,7 @@ public interface EmployeeService {
 
     Employee findUserbyUsername(String username);
 
-    List<Object> getAllEmployeeByCondition(EmployeeRequest employeeRequest);
+    Object getAllEmployeeByCondition(EmployeeRequest employeeRequest);
 
 
     Object createEmployee(Employee employee, String creator);

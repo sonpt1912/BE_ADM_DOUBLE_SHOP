@@ -3,6 +3,7 @@ package com.example.be_adm_double_shop.service.impl;
 import com.example.be_adm_double_shop.dto.ValidationException;
 import com.example.be_adm_double_shop.dto.request.EmployeeRequest;
 import com.example.be_adm_double_shop.dto.request.MailRequest;
+import com.example.be_adm_double_shop.dto.response.ListResponse;
 import com.example.be_adm_double_shop.entity.Employee;
 import com.example.be_adm_double_shop.repository.EmployeeRepository;
 import com.example.be_adm_double_shop.service.EmployeeService;
@@ -50,12 +51,13 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Object> getAllEmployeeByCondition(EmployeeRequest employeeRequest) {
+    public Object getAllEmployeeByCondition(EmployeeRequest employeeRequest) {
 
         StringBuilder str = new StringBuilder();
         Map<String, Object> params = new HashMap<>();
+        ListResponse<Employee> listResponse = new ListResponse<>();
 
-        str.append("SELECT * FROM EMPLOYEE e ");
+        str.append("SELECT * FROM employee e ");
         str.append("WHERE 1 = 1 ");
 
         if (!StringUtil.stringIsNullOrEmty(employeeRequest.getFullName())) {
@@ -96,10 +98,53 @@ public class EmployeeServiceImpl implements EmployeeService {
             params.put("size", employeeRequest.getPageSize());
         }
 
-        Query query = entityManager.createNativeQuery(str.toString(), Employee.class);
-        params.forEach(query::setParameter);
+        Query queryList = entityManager.createNativeQuery(str.toString(), Employee.class);
+        params.forEach(queryList::setParameter);
 
-        return query.getResultList();
+        List<Employee> employeeList = queryList.getResultList();
+
+        str.setLength(0);
+        params.clear();
+
+
+        str.append("SELECT COUNT(*) FROM employee e ");
+        str.append("WHERE 1 = 1 ");
+
+        if (!StringUtil.stringIsNullOrEmty(employeeRequest.getFullName())) {
+            str.append(" AND e.name like CONCAT('%', :name ,'%') ");
+            params.put("name", employeeRequest.getFullName());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(employeeRequest.getPhone())) {
+            str.append(" AND e.name like CONCAT('%', :phone ,'%') ");
+            params.put("phone", employeeRequest.getPhone());
+        }
+        if (!StringUtil.stringIsNullOrEmty(employeeRequest.getEmail())) {
+            str.append(" AND e.phone like CONCAT('%', :email ,'%') ");
+            params.put("phone", employeeRequest.getEmail());
+        }
+        if (!StringUtil.stringIsNullOrEmty(employeeRequest.getCity())) {
+            str.append(" AND e.city like CONCAT('%', :city ,'%') ");
+            params.put("city", employeeRequest.getCity());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(employeeRequest.getDistrict())) {
+            str.append(" AND e.district like CONCAT('%', :district ,'%') ");
+            params.put("district", employeeRequest.getDistrict());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(employeeRequest.getProvince())) {
+            str.append(" AND e.province like CONCAT('%', :province ,'%') ");
+            params.put("province", employeeRequest.getProvince());
+        }
+
+        Query querySize = entityManager.createNativeQuery(str.toString());
+        params.forEach(querySize::setParameter);
+
+        listResponse.setListData(employeeList);
+        int totalRecord = ((Number) querySize.getSingleResult()).intValue();
+        listResponse.setTotalRecord(totalRecord);
+        return listResponse;
     }
 
     @Override
