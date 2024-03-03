@@ -2,6 +2,7 @@ package com.example.be_adm_double_shop.controller;
 
 import com.example.be_adm_double_shop.repository.DetailProductRepository;
 import com.example.be_adm_double_shop.repository.ProductRepository;
+import com.example.be_adm_double_shop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class ProductController {
 
     @Autowired
-    private ProductRepository productRepository;
+    private ProductService productService;
 
     @Autowired
     private DetailProductRepository detailProductRepository;

@@ -297,6 +297,7 @@ CREATE TABLE `double_shop`.`detail_product`
     INDEX          `FK_DT_BRAND_idx` (`id_branch` ASC) VISIBLE,
     INDEX          `FK_DT_CATE_idx` (`id_category` ASC) VISIBLE,
     INDEX          `FK_DT_COLLAR_idx` (`id_collar` ASC) VISIBLE,
+    INDEX          `FK_DT_MT_idx` (`id_collar` ASC) VISIBLE,
     CONSTRAINT `FK_DT_COLOR`
         FOREIGN KEY (`id_color`)
             REFERENCES `double_shop`.`color` (`id`)
@@ -328,7 +329,7 @@ CREATE TABLE `double_shop`.`detail_product`
             ON DELETE NO ACTION
             ON UPDATE NO ACTION,
     CONSTRAINT `FK_DT_MATERIAL`
-        FOREIGN KEY (`id_category`)
+        FOREIGN KEY (`id_material`)
             REFERENCES `double_shop`.`material` (`id`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION
