@@ -70,7 +70,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             params.put("phone", employeeRequest.getPhone());
         }
         if (!StringUtil.stringIsNullOrEmty(employeeRequest.getEmail())) {
-            str.append(" AND e.phone like CONCAT('%', :email ,'%') ");
+            str.append(" AND e.email like CONCAT('%', :email ,'%') ");
             params.put("email", employeeRequest.getEmail());
         }
         if (!StringUtil.stringIsNullOrEmty(employeeRequest.getCity())) {
@@ -121,7 +121,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         }
         if (!StringUtil.stringIsNullOrEmty(employeeRequest.getEmail())) {
             str.append(" AND e.phone like CONCAT('%', :email ,'%') ");
-            params.put("phone", employeeRequest.getEmail());
+            params.put("email", employeeRequest.getEmail());
         }
         if (!StringUtil.stringIsNullOrEmty(employeeRequest.getCity())) {
             str.append(" AND e.city like CONCAT('%', :city ,'%') ");
