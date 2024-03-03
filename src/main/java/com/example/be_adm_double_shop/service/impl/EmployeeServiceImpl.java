@@ -70,7 +70,7 @@ public class EmployeeServiceImpl implements EmployeeService {
             params.put("phone", employeeRequest.getPhone());
         }
         if (!StringUtil.stringIsNullOrEmty(employeeRequest.getEmail())) {
-            str.append(" AND e.phone like CONCAT('%', :email ,'%') ");
+            str.append(" AND e.email like CONCAT('%', :email ,'%') ");
             params.put("email", employeeRequest.getEmail());
         }
         if (!StringUtil.stringIsNullOrEmty(employeeRequest.getCity())) {

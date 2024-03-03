@@ -13,7 +13,6 @@ public interface EmployeeService {
 
     Object getAllEmployeeByCondition(EmployeeRequest employeeRequest);
 
-
     Object createEmployee(Employee employee, String creator);
 
     Object updateEmployee(Employee employee, String creator);

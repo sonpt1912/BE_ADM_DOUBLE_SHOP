@@ -35,9 +35,6 @@ public class ProductServiceImpl implements ProductService {
         sql.append(" JOIN color c on dp.id_color = c.id JOIN size s on dp.id_size = s.id WHERE 1 = 1 ");
 
 
-
-
-
         Query query = entityManager.createNativeQuery(sql.toString());
         params.forEach(query::setParameter);
 
