@@ -184,7 +184,7 @@ CREATE TABLE `double_shop`.`voucher`
     `created_time`     VARCHAR(45) NOT NULL,
     `updated_time`     VARCHAR(45) NULL,
     `updated_by`       VARCHAR(45) NULL,
-    `minimum_order`     bigint not null ,
+    `minimum_order`    bigint      not null,
     `status`           INT NULL,
     PRIMARY KEY (`id`)
 );
@@ -238,6 +238,8 @@ CREATE TABLE `double_shop`.`address`
 CREATE TABLE `double_shop`.`product`
 (
     `id`           BIGINT      NOT NULL AUTO_INCREMENT,
+    `code`         VARCHAR(45) NOT NULL,
+    `images`       VARCHAR(255),
     `name`         VARCHAR(45) NOT NULL,
     `status`       INT         NOT NULL,
     `created_by`   VARCHAR(45) NOT NULL,
@@ -280,7 +282,7 @@ CREATE TABLE `double_shop`.`detail_product`
     `id_color`     BIGINT      NOT NULL,
     `id_product`   BIGINT      NOT NULL,
     `id_size`      BIGINT      NOT NULL,
-    `id_branch`    BIGINT      NOT NULL,
+    `id_brand`    BIGINT      NOT NULL,
     `id_collar`    BIGINT      NOT NULL,
     `id_category`  BIGINT      NOT NULL,
     `id_material`  BIGINT      NOT NULL,
