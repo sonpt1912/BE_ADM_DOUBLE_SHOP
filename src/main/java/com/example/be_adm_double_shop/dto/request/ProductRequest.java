@@ -9,6 +9,8 @@ import lombok.*;
 @Builder
 public class ProductRequest {
 
+    private String code;
+
     private String name;
 
     private Long idProduct;
@@ -24,6 +26,10 @@ public class ProductRequest {
     private Long idMaterial;
 
     private Long idColor;
+
+    private Integer page;
+
+    private Integer pageSize;
 
 
 }

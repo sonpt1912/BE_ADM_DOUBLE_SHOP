@@ -5,9 +5,9 @@ public class Constant {
     public static final String SUCCESS = "SUCCESS";
 
 
-    public static final String FAIL="FAIL";
+    public static final String FAIL = "FAIL";
 
-
+    public static final String RootFolder = "ecommerce";
 
 
     public static final Integer ACTIVE = 1;
@@ -29,10 +29,9 @@ public class Constant {
 
     public interface DETAIL_PRODUCT {
         String SIZE = "SIZE";
-        String COLLAR="COLLAR";
+        String COLLAR = "COLLAR";
 
     }
-
 
 
 }
