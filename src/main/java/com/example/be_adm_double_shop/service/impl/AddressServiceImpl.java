@@ -97,12 +97,13 @@ public class AddressServiceImpl implements AddressService {
 //        listResponse.setTotalRecord(countData);
 //        return listResponse;
 //    }
-
-//    @Override
-//    public Customer getOneId(Long id) {
-//        System.out.println("aaaa" + id);
-//        return repository.findById(id).get();
     }
+        @Override
+        public Address getOneId (Long id){
+            System.out.println("aaaa" + id);
+            return repository.findById(id).get();
+        }
+
 
 
 
@@ -118,17 +119,17 @@ public class AddressServiceImpl implements AddressService {
 //        cl1.setStatus(0);
 //        return repository.save(cl1);
 //    }
-//    @Override
-//    public Customer save( Customer color) {
-//        color.setRank(rankRepository.findById(Long.valueOf(1)).get());
-//        return repository.save(color);
-//    }
-//
-//    @Override
-//    public Customer update(Customer customer, Long id) {
-//        customer.setId(id);
-//        return repository.save(customer);
-//    }
+   @Override
+   public Address save( Address color) {
+//       color.setRank(rankRepository.findById(Long.valueOf(1)).get());
+       return repository.save(color);
+   }
+
+    @Override
+    public Address update(Address customer, Long id) {
+        customer.setId(id);
+        return repository.save(customer);
+    }
 
 
 }

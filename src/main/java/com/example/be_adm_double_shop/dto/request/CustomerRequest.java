@@ -10,7 +10,7 @@ import java.util.Date;
 @Setter
 @Builder
 public class CustomerRequest {
-    private String name;
+    private Long page;
     private String phone;
     private Integer status;
     private Long pageSize;
