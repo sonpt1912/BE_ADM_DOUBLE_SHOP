@@ -4,12 +4,14 @@ import com.example.be_adm_double_shop.dto.request.VoucherRequest;
 import com.example.be_adm_double_shop.dto.response.ListResponse;
 import com.example.be_adm_double_shop.entity.Voucher;
 
+import java.text.ParseException;
+
 public interface VoucherService {
     ListResponse<Voucher> getAll(VoucherRequest request);
 
     Voucher getOneId(Long id);
 
     String save(Voucher voucher, String username);
-    Object update(Voucher voucherRequest, String username);
+    Object update(Voucher voucherRequest, String username) throws ParseException;
 
 }

@@ -15,8 +15,15 @@ import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 @Service
 public class VoucherServiceImpl implements VoucherService {
@@ -159,7 +166,7 @@ public class VoucherServiceImpl implements VoucherService {
             voucher.setDiscountAmount(0L);
         }
 
-        voucher.setStatus(Math.toIntExact(Constant.ACTIVE));
+        voucher.setStatus(Constant.ACTIVE);
         voucher.setCreatedBy(username);
         voucher.setCreatedTime(DateUtil.dateToString4(new Date()));
 
@@ -172,22 +179,27 @@ public class VoucherServiceImpl implements VoucherService {
     }
 
     @Override
-    public Object update(Voucher voucherRequest, String username) {
+    public Object update(Voucher voucherRequest, String username) throws ParseException {
         Voucher voucher = repository.getVoucherByCode(voucherRequest.getCode());
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
         if (!StringUtil.stringIsNullOrEmty(voucher)) {
             if(voucherRequest.getDiscountPercent()==null)voucherRequest.setDiscountPercent(0);
             if(voucherRequest.getDiscountAmount()==null)voucherRequest.setDiscountAmount(0L);
             voucher.setDiscountAmount(voucherRequest.getDiscountAmount());
-
+            voucher.setName(voucherRequest.getName());
             voucher.setUpdatedTime(DateUtil.dateToString4(new Date()));
             voucher.setDiscountPercent(voucherRequest.getDiscountPercent());
             voucher.setMinimumOrder(voucherRequest.getMinimumOrder());
             voucher.setStartDate(voucherRequest.getStartDate());
-            voucher.setStatus(voucherRequest.getStatus());
 
             voucher.setEndDate(voucherRequest.getEndDate());
-            voucher.setQuantity(voucherRequest.getQuantity());
 
+            voucher.setQuantity(voucherRequest.getQuantity());
+            voucher.setStatus(voucherRequest.getStatus());
+            if(LocalDateTime.parse(voucherRequest.getEndDate(), formatter).isAfter(LocalDateTime.now())){
+                voucher.setStatus(1);
+            }
 
             voucher.setUpdatedBy(username);
 
