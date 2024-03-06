@@ -26,12 +26,13 @@ import java.util.List;
 
 public class AdressController {
 
-  @Autowired
-  private AddressService addressService;
-  @Autowired
-  private AdressRepository adressRepository;
-  @Autowired
-  private CustomerService customerService;
+    @Autowired
+    private AddressService addressService;
+    @Autowired
+    private AdressRepository adressRepository;
+    @Autowired
+    private CustomerService customerService;
+
     @PostMapping("/get-all")
     public ResponseEntity getAllColor(@RequestBody AddressRequest request) {
 
@@ -39,26 +40,22 @@ public class AdressController {
 
         return new ResponseEntity(addressService.getAll(request), HttpStatus.OK);
     }
+
     @PostMapping("/update/{id}")
     public ResponseEntity update(@RequestBody Address updatedAddress, @PathVariable("id") Long id) {
-        Customer customer = customerService.getOneId(id);
-        if (customer != null) {
-            List<Address> addresses = customer.getAddress();
+        Address address = addressService.getOneId(id);
 
-            for (Address address : addresses) {
-                if (address.getId().equals(id)) {
-                    address.setCity(updatedAddress.getCity());
-                    address.setDistrict(updatedAddress.getDistrict());
-                    address.setProvince(updatedAddress.getProvince());
-                    address.setDescription(updatedAddress.getDescription());
-                    address.setIs_defaul(1);
+        if (address != null) {
+            address.setCity(updatedAddress.getCity());
+            address.setDistrict(updatedAddress.getDistrict());
+            address.setProvince(updatedAddress.getProvince());
+            address.setDescription(updatedAddress.getDescription());
 
-                } else {
-
-                    address.setIs_defaul(0);
-                }
-            }
-            customerService.save(customer);
+//            Address updatedAddress = addressService.save(address);
+            return ResponseEntity.ok(addressService.save(address));
+        } else {
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.ok("Cập nhật địa chỉ thành công");
-    }}
+    }
+
+}

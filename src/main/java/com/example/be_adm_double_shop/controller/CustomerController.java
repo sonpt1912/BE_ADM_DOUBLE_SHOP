@@ -123,6 +123,38 @@ public ResponseEntity save(@Valid @RequestBody Customer customerRequest) {
         }
         return null;
     }
+    @PostMapping("/update-address/{customerId}/{addressId}")
+    public ResponseEntity updateAddress(@PathVariable("customerId") Long customerId,
+                                        @PathVariable("addressId") Long addressId,
+                                        @RequestBody Address updatedAddress) {
+
+        Customer customer = customerService.getOneId(customerId);
+
+
+
+            for (Address address : customer.getAddress()) {
+                if (address.getId().equals(addressId)) {
+
+                    address.setCity(updatedAddress.getCity());
+                    address.setDistrict(updatedAddress.getDistrict());
+                    address.setProvince(updatedAddress.getProvince());
+                    address.setDescription(updatedAddress.getDescription());
+
+
+                    address.setIs_defaul(1);
+
+                } else {
+
+                    address.setIs_defaul(0);
+                }
+            }
+
+
+
+
+            return ResponseEntity.ok(customerService.save(customer));
+
+    }
 
 
 }
