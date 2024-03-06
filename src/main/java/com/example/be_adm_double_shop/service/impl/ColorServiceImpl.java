@@ -56,7 +56,7 @@ public class ColorServiceImpl implements ColorService {
 
         if (!StringUtil.stringIsNullOrEmty(request.getPage())) {
             sql.append(" LIMIT  :page, :size  ");
-            if (request.getPage() == 0) {
+            if (request.getPageSize() == 0) {
                 params.put("page", 0);
             } else {
                 params.put("page", (request.getPage() * request.getPageSize()));
