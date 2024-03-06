@@ -37,4 +37,5 @@ public class Product {
     @Column(name = "updated_by", length = 45)
     private String updatedBy;
 
+
 }

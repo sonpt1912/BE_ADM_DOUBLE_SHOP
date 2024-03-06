@@ -16,7 +16,7 @@ import java.util.List;
 //@RequestMapping("/Material")
 @CrossOrigin(origins = { "http://localhost:3000"}, allowCredentials = "true")
 @EnableWrapResponse
-public class Material_Controller {
+public class MaterialController {
     @Autowired
     private MaterialSer materialSer;
 

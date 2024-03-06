@@ -54,4 +54,6 @@ public class Promotion {
 
     @Column(name = "updated_time")
     private String updatedTime;
+
+
 }

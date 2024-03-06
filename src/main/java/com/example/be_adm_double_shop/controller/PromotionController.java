@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @EnableWrapResponse
 @CrossOrigin(origins = { "http://localhost:3000"}, allowCredentials = "true")
-public class Promotion_Controller {
+public class PromotionController {
     @Autowired
     private PromotionSer promotionSer;
 
