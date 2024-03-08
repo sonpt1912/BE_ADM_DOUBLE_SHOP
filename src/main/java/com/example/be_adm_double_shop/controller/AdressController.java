@@ -5,6 +5,7 @@ import com.example.be_adm_double_shop.dto.request.AddressRequest;
 import com.example.be_adm_double_shop.dto.request.CustomerRequest;
 import com.example.be_adm_double_shop.entity.Address;
 import com.example.be_adm_double_shop.entity.Customer;
+import com.example.be_adm_double_shop.repository.AdressRepository;
 import com.example.be_adm_double_shop.service.AddressService;
 import com.example.be_adm_double_shop.service.CustomerService;
 import com.example.be_adm_double_shop.util.DateUtil;
@@ -16,47 +17,45 @@ import org.springframework.web.bind.annotation.*;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 
 
 @RestController
-@RequestMapping("/customer1")
-@EnableWrapResponse
-@CrossOrigin(origins = { "http://localhost:3000"}, allowCredentials = "true")
+@RequestMapping("/address")
+
+
 public class AdressController {
 
-  @Autowired
-  private AddressService customerService;
+    @Autowired
+    private AddressService addressService;
+    @Autowired
+    private AdressRepository adressRepository;
+    @Autowired
+    private CustomerService customerService;
+
     @PostMapping("/get-all")
     public ResponseEntity getAllColor(@RequestBody AddressRequest request) {
 
 //      System.out.println("a" +  customerService.getAll(request).);
 
-        return new ResponseEntity(customerService.getAll(request), HttpStatus.OK);
+        return new ResponseEntity(addressService.getAll(request), HttpStatus.OK);
     }
-//    @GetMapping("/get-one-by-id/{id}")
-//    public ResponseEntity getOneById(@PathVariable("id") Long id) {
-//        System.out.println("id" + id);
-//        return ResponseEntity.ok(customerService.getOneId(id));
-//    }
-//    @PostMapping("/delete/{id}")
-//    public Customer delete(@PathVariable("code") Long id){
-//        return  customerService.delete(id);
-//    }
-//
-//    @PostMapping("/save")
-//    public ResponseEntity save( @Valid @RequestBody Customer customer ) {
-//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateUtil.FORMAT_DATE_TIME4);
-//        String date = simpleDateFormat.format(new Date());
-//        customer.setCreatedTime(date);
-//        return ResponseEntity.ok(customerService.save(customer));
-//    }
-//
-//    @PutMapping("/update/{id}")
-//    public ResponseEntity update(@RequestBody Customer color, @PathVariable("id") Long id) {
-//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateUtil.FORMAT_DATE_TIME4);
-//        String date = simpleDateFormat.format(new Date());
-//        color.setUpdatedTime(date);
-//        color.setCreatedTime(date);
-//        return ResponseEntity.ok(customerService.update(color, id));
-//    }
+
+    @PostMapping("/update/{id}")
+    public ResponseEntity update(@RequestBody Address updatedAddress, @PathVariable("id") Long id) {
+        Address address = addressService.getOneId(id);
+
+        if (address != null) {
+            address.setCity(updatedAddress.getCity());
+            address.setDistrict(updatedAddress.getDistrict());
+            address.setProvince(updatedAddress.getProvince());
+            address.setDescription(updatedAddress.getDescription());
+
+//            Address updatedAddress = addressService.save(address);
+            return ResponseEntity.ok(addressService.save(address));
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 }
