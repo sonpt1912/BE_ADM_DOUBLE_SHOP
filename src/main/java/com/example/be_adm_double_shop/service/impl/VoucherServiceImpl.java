@@ -21,10 +21,8 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
+
 @Service
 public class VoucherServiceImpl implements VoucherService {
     @Autowired
@@ -149,14 +147,14 @@ public class VoucherServiceImpl implements VoucherService {
     public String save(Voucher voucher, String username) {
 
         if (StringUtil.stringIsNullOrEmty(voucher.getCode())) {
-            int i = 1;
+
             while (true) {
-                String codeGen = "VOUCHER" + i;
+                String codeGen = UUID.randomUUID().toString();
                 if (StringUtil.stringIsNullOrEmty(repository.checkCodeExits(codeGen))) {
                     voucher.setCode(codeGen);
                     break;
                 }
-                i++;
+
             }
         }
         if(StringUtil.stringIsNullOrEmty(voucher.getDiscountPercent())){
