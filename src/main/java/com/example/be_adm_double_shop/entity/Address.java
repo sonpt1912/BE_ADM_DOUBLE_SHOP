@@ -19,8 +19,7 @@ public class Address {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-@JsonIgnore
-
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name = "id_customer", referencedColumnName = "id")
     private Customer customer;
@@ -45,6 +44,12 @@ public class Address {
 
     @Column(name = "updated_time", length = 45)
     private String updatedTime;
+    @Column(name = "description", length = 45)
+    private String description;
+    @Column(name = "is_defaul", length = 45)
+    private Integer is_defaul;
 
-
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+    }
 }

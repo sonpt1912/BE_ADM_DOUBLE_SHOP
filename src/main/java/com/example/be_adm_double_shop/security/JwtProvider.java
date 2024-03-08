@@ -31,8 +31,8 @@ public class JwtProvider {
     public String getUsernameFromToken(String token) {
 
         token = token.substring(7);
-
         return getClaimFromToken(token, Claims::getSubject);
+
     }
 
     //retrieve expiration date from jwt token
@@ -59,6 +59,7 @@ public class JwtProvider {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             UserInfo payloadObject = objectMapper.readValue(payload, UserInfo.class);
+
             return payloadObject;
         } catch (Exception e) {
             e.printStackTrace();
