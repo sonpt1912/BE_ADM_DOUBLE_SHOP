@@ -1,12 +1,13 @@
 package com.example.be_adm_double_shop.service.impl;
 
-import com.example.be_adm_double_shop.dto.request.PromotionRequest;
+import com.example.be_adm_double_shop.dto.request.DetailPromotionRequest;
 import com.example.be_adm_double_shop.dto.response.ListResponse;
-import com.example.be_adm_double_shop.entity.Material;
+import com.example.be_adm_double_shop.entity.DetailProduct;
+import com.example.be_adm_double_shop.entity.DetailPromotion;
 import com.example.be_adm_double_shop.entity.Promotion;
-import com.example.be_adm_double_shop.entity.Size;
+import com.example.be_adm_double_shop.repository.DetailProductRepository;
+import com.example.be_adm_double_shop.repository.DetailPromotionRepository;
 import com.example.be_adm_double_shop.repository.PromotionRepository;
-import com.example.be_adm_double_shop.security.JwtProvider;
 import com.example.be_adm_double_shop.util.Constant;
 import com.example.be_adm_double_shop.util.DateUtil;
 import com.example.be_adm_double_shop.util.StringUtil;
@@ -23,20 +24,26 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class PromotionSer {
+public class DetailPromotionServicelmpl {
+    @Autowired
+    private DetailPromotionRepository detailPromotionRepository;
+
     @Autowired
     private PromotionRepository promotionRepository;
+
+    @Autowired
+    private DetailProductRepository detailProductRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    public ListResponse<Promotion> getAllByCondition(PromotionRequest request) {
+    public ListResponse<DetailPromotion> getAllByCondition(DetailPromotionRequest request) {
         ListResponse listResponse = new ListResponse();
 
         StringBuilder sql = new StringBuilder();
         Map<String, Object> params = new HashMap<>();
 
-        sql.append("select * from promotion where 1 = 1");
+        sql.append("select * from detail_promotion where 1 = 1");
 
         if (!StringUtil.stringIsNullOrEmty(request.getCode())) {
             sql.append((" and code like concat('%', :code, '%')"));
@@ -75,7 +82,7 @@ public class PromotionSer {
         params = new HashMap<>();
 
 
-        sql.append(" select count(*) from promotion where 1 = 1 ");
+        sql.append(" select count(*) from detail_promotion where 1 = 1 ");
 
         if (!StringUtil.stringIsNullOrEmty(request.getCode())) {
             sql.append((" and code like concat('%', :code, '%')"));
@@ -103,31 +110,16 @@ public class PromotionSer {
         return listResponse;
     }
 
-    public List<Promotion> getAll(){
-        return promotionRepository.getAll();
+    public List<DetailPromotion> getAll(){
+        return detailPromotionRepository.findAll();
     }
 
-    public Promotion add(Promotion p, String username) {
-//        p.setCreatedTime(LocalDateTime.now().toString());
-//        p.setCreatedBy("TranTung");
-//        p.setStatus(Constant.ACTIVE);
-//        return promotionRepository.save(p);
-        if (StringUtil.stringIsNullOrEmty(p.getCode())) {
-            int i = 1;
-            while (true) {
-                String codeGen = Constant.DETAIL_PRODUCT.SIZE + i;
-                if (StringUtil.stringIsNullOrEmty(promotionRepository.checkCodeExits(codeGen))) {
-                    p.setCode(codeGen);
-                    break;
-                }
-                i++;
-            }
-        }
-        p.setStatus(Constant.ACTIVE);
-        p.setCreatedBy(username);
-        p.setCreatedTime(DateUtil.dateToString4(new Date()));
+    public DetailPromotion add(DetailPromotion p, String username) {
+        p.getPromotion().setStatus(Constant.ACTIVE);
+        p.getPromotion().setCreatedBy(username);
+        p.getPromotion().setCreatedTime(DateUtil.dateToString4(new Date()));
         try {
-            return promotionRepository.save(p);
+            return detailPromotionRepository.save(p);
 
         } catch (Exception e) {
             e.getMessage();
@@ -135,43 +127,25 @@ public class PromotionSer {
         }
     }
 
-    public Promotion getOneById(long id) {
-        return promotionRepository.getOneById(id);
+    public DetailPromotion getOneById(long id) {
+        return detailPromotionRepository.findById(id).get();
     }
 
-    public Promotion update(Promotion p, String username) {
-//        Promotion pro = promotionRepository.getOneById(p.getId());
-//        p.setCreatedTime(pro.getCreatedTime());
-//        p.setUpdatedTime(LocalDateTime.now().toString());
-//        return promotionRepository.save(p);
-        if (StringUtil.stringIsNullOrEmty(p.getCode())) {
-            int i = 1;
-            while (true) {
-                String codeGen = Constant.DETAIL_PRODUCT.SIZE + i;
-                if (StringUtil.stringIsNullOrEmty(promotionRepository.checkCodeExits(codeGen))) {
-                    p.setCode(codeGen);
-                    break;
-                }
-                i++;
-            }
-        }
-        Promotion pro = promotionRepository.getOneById(p.getId());
-        p.setCreatedTime(pro.getCreatedTime());
-        p.setCreatedBy(pro.getCreatedBy());
-        p.setStatus(Constant.ACTIVE);
-        p.setUpdatedBy(username);
-        p.setUpdatedTime(DateUtil.dateToString4(new Date()));
+    public DetailPromotion update(DetailPromotion p, String username) {
+        p.getPromotion().setUpdatedBy(username);
+        p.getPromotion().setUpdatedTime(DateUtil.dateToString4(new Date()));
         try {
-            return promotionRepository.save(p);
+            return detailPromotionRepository.save(p);
         } catch (Exception e) {
             e.getMessage();
             return p;
         }
     }
 
-    public Promotion delete(Long id) {
-        Promotion promotion = promotionRepository.getOneById(id);
-        promotion.setStatus(0);
-        return promotionRepository.save(promotion);
+    public DetailPromotion delete(Long idDetailPromotion) {
+        DetailPromotion detailPromotion = detailPromotionRepository.findById(idDetailPromotion).get();
+        detailPromotion.getPromotion().setStatus(0);
+        return detailPromotionRepository.save(detailPromotion);
     }
+
 }

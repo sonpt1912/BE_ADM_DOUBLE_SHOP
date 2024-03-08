@@ -4,6 +4,7 @@ package com.example.be_adm_double_shop.controller;
 import com.example.be_adm_double_shop.config.EnableWrapResponse;
 import com.example.be_adm_double_shop.dto.request.PromotionRequest;
 import com.example.be_adm_double_shop.entity.Promotion;
+import com.example.be_adm_double_shop.security.JwtProvider;
 import com.example.be_adm_double_shop.service.impl.PromotionSer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,9 @@ import java.util.List;
 public class PromotionController {
     @Autowired
     private PromotionSer promotionSer;
+
+    @Autowired
+    private JwtProvider jwtProvider;
 
     @RequestMapping("/promotion/hien-thi/condition")
     private ResponseEntity show(@RequestBody PromotionRequest request) {
@@ -35,14 +39,17 @@ public class PromotionController {
     }
 
     @RequestMapping("/promotion/add")
-    private List<Promotion> add(@RequestBody Promotion m) {
-        promotionSer.add(m);
-        return promotionSer.getAll();
+    private ResponseEntity add(@RequestHeader("Authorization") String token, @RequestBody Promotion m) {
+        String username = jwtProvider.getUsernameFromToken(token);
+        return new ResponseEntity(promotionSer.add(m, username), HttpStatus.OK);
+//        promotionSer.add(m);
+//        return promotionSer.getAll();
     }
 
     @RequestMapping("/promotion/update/{id}")
-    private Promotion update(@RequestBody Promotion m) {
-        return promotionSer.update(m);
+    private ResponseEntity update(@RequestHeader("Authorization") String token, @RequestBody Promotion m) {
+        String username = jwtProvider.getUsernameFromToken(token);
+        return new ResponseEntity(promotionSer.update(m, username), HttpStatus.OK);
     }
 
     @RequestMapping("/promotion/delete/{id}")
