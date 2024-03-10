@@ -6,11 +6,15 @@ import lombok.Data;
 
 public class EmployeeRequest {
 
+    private Long id;
+
     private String username;
 
     private String fullName;
 
     private String phone;
+
+    private String password;
 
     private String email;
 

@@ -13,6 +13,8 @@ public class MailRequest {
 
     private String content;
 
+    private String subContent;
+
     private String reciver;
 
 }

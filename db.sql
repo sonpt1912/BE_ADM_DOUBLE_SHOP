@@ -337,28 +337,6 @@ CREATE TABLE `double_shop`.`detail_product`
             ON UPDATE NO ACTION
 );
 
-
-CREATE TABLE `double_shop`.`detail_material`
-(
-    `id`                BIGINT NOT NULL AUTO_INCREMENT,
-    `id_detail_product` BIGINT NOT NULL,
-    `id_material`       BIGINT NOT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-    UNIQUE INDEX `id_product_UNIQUE` (`id_detail_product` ASC) VISIBLE,
-    UNIQUE INDEX `id_material_UNIQUE` (`id_material` ASC) VISIBLE,
-    CONSTRAINT `FK_DM_DP`
-        FOREIGN KEY (`id_detail_product`)
-            REFERENCES `double_shop`.`detail_product` (`id`)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION,
-    CONSTRAINT `FK_DM_M`
-        FOREIGN KEY (`id_material`)
-            REFERENCES `double_shop`.`material` (`id`)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION
-);
-
 CREATE TABLE `double_shop`.`bill`
 (
     `id`             BIGINT      NOT NULL AUTO_INCREMENT,

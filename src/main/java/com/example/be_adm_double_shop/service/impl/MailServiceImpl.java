@@ -62,15 +62,15 @@ public class MailServiceImpl implements MailService {
             MimeMessage message = javaMailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true);
 
-            helper.setFrom("DOUBLE SHOP");
+            helper.setFrom(sender,"DOUBLE_SHOP");
             helper.setTo(mailRequest.getReciver());
-            helper.setSubject("TAI KHOAN CUA BAN DA DUOC TAO THANH CONG");
+            helper.setSubject("TÀI KHOẢN ĐƯỢC TẠO THÀNH CONG");
 
             Context context = new Context();
-            context.setVariable("account", "");
-            context.setVariable("password", "");
+            context.setVariable("account", mailRequest.getSubContent());
+            context.setVariable("password", mailRequest.getContent());
 
-            String processContent = templateEngine.process("CreateAccount", context);
+            String processContent = templateEngine.process("create-account", context);
 
             helper.setText(processContent, true);
             javaMailSender.send(message);
