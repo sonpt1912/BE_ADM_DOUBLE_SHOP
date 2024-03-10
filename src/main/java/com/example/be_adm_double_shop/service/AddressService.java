@@ -12,10 +12,10 @@ import java.util.List;
 public interface AddressService {
     List<Address> getAll(AddressRequest request);
 
-//    Customer getOneId(Long id);
+    Address getOneId(Long id);
 //    Customer delete(Long id );
     Page getAllByPage(int page, int pageSize);
 
-//    Customer save(Customer customer);
-//    Customer update(Customer color, Long id);
+    Address save(Address customer);
+    Address update(Address color, Long id);
 }

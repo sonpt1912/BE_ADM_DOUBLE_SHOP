@@ -1,5 +1,6 @@
 package com.example.be_adm_double_shop.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.apache.catalina.mapper.Mapper;
@@ -51,7 +52,7 @@ public class Customer {
     private String password;
 
     @Column(name = "status")
-    private Long status;
+    private Integer status;
 
     @Column(name = "created_by", nullable = false, length = 45)
     private String createdBy;
@@ -65,8 +66,11 @@ public class Customer {
     @Column(name = "updated_time", length = 45)
     private String updatedTime;
 
+
     @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
     private List<Address> address;
+
+
 
 }
 

@@ -220,6 +220,8 @@ CREATE TABLE `double_shop`.`address`
     `district`     VARCHAR(45) NOT NULL,
     `province`     VARCHAR(45) NOT NULL,
     `city`         VARCHAR(45) NOT NULL,
+    `description`  VARCHAR(45) NOT NULL,
+    `is_defaul`    INT NOT NULL,
     `created_by`   VARCHAR(45) NOT NULL,
     `created_time` VARCHAR(45) NOT NULL,
     `updated_by`   VARCHAR(45) NULL,
