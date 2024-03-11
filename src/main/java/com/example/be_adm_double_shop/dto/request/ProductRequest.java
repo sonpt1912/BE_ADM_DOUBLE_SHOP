@@ -10,7 +10,7 @@ import lombok.*;
 public class ProductRequest {
 
     private String code;
-
+    
     private String name;
 
     private Long idProduct;

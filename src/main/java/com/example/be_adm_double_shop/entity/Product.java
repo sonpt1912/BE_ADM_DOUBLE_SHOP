@@ -5,6 +5,7 @@ import lombok.*;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "product")
@@ -45,6 +46,6 @@ public class Product {
     private String updatedBy;
 
     @Transient
-    private List<String> imageLink;
+    private Map listImages;
 
 }

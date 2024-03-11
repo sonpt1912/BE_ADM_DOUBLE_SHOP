@@ -2,6 +2,8 @@ package com.example.be_adm_double_shop.dto.response;
 
 import lombok.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -9,18 +11,13 @@ import lombok.*;
 @Builder
 public class ProductResponse {
 
+
     private String productName;
 
-    private String brandName;
+    private Long quantity;
 
-    private String collarName;
+    private Long price;
 
-    private String categoryName;
-
-    private String materialName;
-
-    private String colorName;
-
-    private String sizeName;
+    private List<String> images;
 
 }

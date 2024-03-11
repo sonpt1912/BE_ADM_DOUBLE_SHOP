@@ -2,7 +2,6 @@ package com.example.be_adm_double_shop.controller;
 
 import com.example.be_adm_double_shop.dto.request.ProductRequest;
 import com.example.be_adm_double_shop.repository.DetailProductRepository;
-import com.example.be_adm_double_shop.repository.ProductRepository;
 import com.example.be_adm_double_shop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -23,8 +22,8 @@ public class ProductController {
     private DetailProductRepository detailProductRepository;
 
     @PostMapping("/get-all-product")
-    public ResponseEntity getAllProduct(@RequestBody ProductRequest request) {
-        return new ResponseEntity(productService.getAllProductByCondition(request), HttpStatus.OK);
+    public ResponseEntity getAllProduct(@RequestBody ProductRequest request) throws Exception {
+        return new ResponseEntity(productService.getAllProduct(request), HttpStatus.OK);
     }
 
     @PostMapping("/get-detail-product")

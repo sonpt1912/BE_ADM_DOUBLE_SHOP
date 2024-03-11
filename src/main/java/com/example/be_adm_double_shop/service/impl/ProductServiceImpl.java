@@ -92,59 +92,61 @@ public class ProductServiceImpl implements ProductService {
         sql.setLength(0);
         params.clear();
 
-//        sql.append(" SELECT COUNT(*)");
-//        sql.append(" FROM product p JOIN detail_product dp ON p.id = dp.id_product ");
-//        sql.append(" JOIN brand b on dp.id_brand = b.id");
-//        sql.append(" JOIN collar cl ON dp.id_collar = cl.id ");
-//        sql.append(" JOIN category ct on dp.id_category = ct.id ");
-//        sql.append(" JOIN material m on dp.id_material = m.id ");
-//        sql.append(" JOIN color c on dp.id_color = c.id ");
-//        sql.append(" JOIN size s on dp.id_size = s.id WHERE 1 = 1 ");
-//
-//        if (!StringUtil.stringIsNullOrEmty(request.getIdBrand())) {
-//            sql.append(" AND b.id = :idBrand ");
-//            params.put("idBrand", request.getIdBrand());
-//        }
-//
-//        if (!StringUtil.stringIsNullOrEmty(request.getIdCategory())) {
-//            sql.append(" AND ct.id = :idCategory ");
-//            params.put("idCategory", request.getIdCategory());
-//        }
-//
-//        if (!StringUtil.stringIsNullOrEmty(request.getIdCollar())) {
-//            sql.append(" AND cl.id = :idcollar ");
-//            params.put("idcollar", request.getIdCollar());
-//        }
-//
-//        if (!StringUtil.stringIsNullOrEmty(request.getIdColor())) {
-//            sql.append(" AND c.id = :idColor ");
-//            params.put("idColor", request.getIdColor());
-//        }
-//
-//        if (!StringUtil.stringIsNullOrEmty(request.getIdMaterial())) {
-//            sql.append(" AND m.id = :idMaterial ");
-//            params.put("idMaterial", request.getIdMaterial());
-//        }
-//
-//        if (!StringUtil.stringIsNullOrEmty(request.getIdSize())) {
-//            sql.append(" AND s.id = :idSize");
-//            params.put("idSize", request.getIdSize());
-//        }
-//
-//        Query totalQuery = entityManager.createNativeQuery(sql.toString());
-//        params.forEach(totalQuery::setParameter);
-//
-//        int totalRecord = (Integer) totalQuery.getSingleResult();
-//
-//        listProductResponse.setTotalRecord(totalRecord);
+        sql.append(" SELECT COUNT(*)");
+        sql.append(" FROM product p JOIN detail_product dp ON p.id = dp.id_product ");
+        sql.append(" JOIN brand b on dp.id_brand = b.id");
+        sql.append(" JOIN collar cl ON dp.id_collar = cl.id ");
+        sql.append(" JOIN category ct on dp.id_category = ct.id ");
+        sql.append(" JOIN material m on dp.id_material = m.id ");
+        sql.append(" JOIN color c on dp.id_color = c.id ");
+        sql.append(" JOIN size s on dp.id_size = s.id WHERE 1 = 1 ");
+
+        if (!StringUtil.stringIsNullOrEmty(request.getIdBrand())) {
+            sql.append(" AND b.id = :idBrand ");
+            params.put("idBrand", request.getIdBrand());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getIdCategory())) {
+            sql.append(" AND ct.id = :idCategory ");
+            params.put("idCategory", request.getIdCategory());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getIdCollar())) {
+            sql.append(" AND cl.id = :idcollar ");
+            params.put("idcollar", request.getIdCollar());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getIdColor())) {
+            sql.append(" AND c.id = :idColor ");
+            params.put("idColor", request.getIdColor());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getIdMaterial())) {
+            sql.append(" AND m.id = :idMaterial ");
+            params.put("idMaterial", request.getIdMaterial());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getIdSize())) {
+            sql.append(" AND s.id = :idSize");
+            params.put("idSize", request.getIdSize());
+        }
+
+        Query totalQuery = entityManager.createNativeQuery(sql.toString());
+        params.forEach(totalQuery::setParameter);
+
+        int totalRecord = ((Long) totalQuery.getSingleResult()).intValue();
+
+        listProductResponse.setTotalRecord(totalRecord);
         return listProductResponse;
     }
 
     @Override
-    public Object getAllProduct(ProductRequest request) {
+    public Object getAllProduct(ProductRequest request) throws Exception {
         ListResponse<Product> listResponse = (ListResponse<Product>) getAllProductByCondition(request);
-
-        return null;
+        for (int i = 0; i < listResponse.getTotalRecord(); i++) {
+            listResponse.getListData().get(i).setListImages(cloudinary.search().expression("folder:samples/animals/*").maxResults(500).execute());
+        }
+        return listResponse;
     }
 
     @Override
