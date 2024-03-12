@@ -2,6 +2,8 @@ package com.example.be_adm_double_shop.dto.request;
 
 import lombok.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
@@ -10,7 +12,7 @@ import lombok.*;
 public class ProductRequest {
 
     private String code;
-
+    
     private String name;
 
     private Long idProduct;
@@ -30,6 +32,10 @@ public class ProductRequest {
     private Integer page;
 
     private Integer pageSize;
+
+    private Integer status;
+
+    private List<SizeRequest> listSize;
 
 
 }

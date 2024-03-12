@@ -3,6 +3,7 @@ package com.example.be_adm_double_shop.service.impl;
 import com.example.be_adm_double_shop.dto.request.CustomerRequest;
 import com.example.be_adm_double_shop.dto.response.ListResponse;
 import com.example.be_adm_double_shop.entity.Customer;
+import com.example.be_adm_double_shop.repository.AdressRepository;
 import com.example.be_adm_double_shop.repository.CustomerRepository;
 import com.example.be_adm_double_shop.repository.RankRepository;
 import com.example.be_adm_double_shop.service.CustomerService;
@@ -25,9 +26,11 @@ public class CustomerServiceImpl implements CustomerService {
     private CustomerRepository repository;
     @Autowired
     private RankRepository rankRepository;
+    @Autowired
+    private AdressRepository a;
 
     @PersistenceContext
-    private EntityManager entityManager;
+    private EntityManager entityManager1;
 
 
     @Override
@@ -38,63 +41,52 @@ public class CustomerServiceImpl implements CustomerService {
         StringBuilder sql = new StringBuilder();
         Map<String, Object> params = new HashMap<>();
 
-        sql.append(" SELECT * FROM customer WHERE 1 = 1 ");
 
+        sql.append(" SELECT * FROM customer WHERE 1 = 1 ");
+        if (!StringUtil.stringIsNullOrEmty(request.getPhone())) {
+            sql.append(" AND phone LIKE CONCAT('%', :phone ,'%') ");
+            params.put("phone", request.getPhone());
+        }
         if (!StringUtil.stringIsNullOrEmty(request.getStatus())) {
-            sql.append(" AND STATUS LIKE CONCAT('%', :status ,'%') ");
+            sql.append(" AND status = :status ");
             params.put("status", request.getStatus());
         }
 
-        if (!StringUtil.stringIsNullOrEmty(request.getName())) {
-            sql.append(" AND NAME LIKE CONCAT('%', :name ,'%') ");
-            params.put("name", request.getName());
-        }
-
-        if (!StringUtil.stringIsNullOrEmty(request.getPhone())) {
-            sql.append(" AND PHONE = :phone ");
-            params.put("phone", request.getPhone());
-        }
-
-        if (!StringUtil.stringIsNullOrEmty(request.getPageSize())) {
-            sql.append(" LIMIT  :page, :size  ");
-            if (request.getPageSize() == 0) {
-                params.put("page", 0);
-            } else {
-                params.put("page", (request.getPageSize() * request.getPageSize()));
-            }
-            params.put("size", request.getPageSize());
-        }
 
 
-        Query query = entityManager.createNativeQuery(sql.toString(), Customer.class);
+//        if (!StringUtil.stringIsNullOrEmty(request.getPageSize())) {
+//            sql.append(" LIMIT  :page, :size  ");
+//            if (request.getPageSize() == 0) {
+//                params.put("page", 0);
+//            } else {
+//                params.put("page", (request.getPageSize() * request.getPageSize()));
+//            }
+//            params.put("size", request.getPageSize());
+//        }
+
+
+        Query query = entityManager1.createNativeQuery(sql.toString(), Customer.class);
         params.forEach(query::setParameter);
 
         listResponse.setListData(query.getResultList());
 
-//
         sql = new StringBuilder();
         params = new HashMap<>();
 
 
-        sql.append(" SELECT COUNT(*) FROM customer WHERE 1 = 1 ");
+        sql.append("SELECT COUNT(*) FROM customer WHERE 1 = 1 ");
 
         if (!StringUtil.stringIsNullOrEmty(request.getPhone())) {
-            sql.append(" AND PHONE LIKE CONCAT('%', :phone ,'%') ");
+            sql.append(" AND phone LIKE CONCAT('%', :phone ,'%') ");
             params.put("phone", request.getPhone());
         }
-
-        if (!StringUtil.stringIsNullOrEmty(request.getName())) {
-            sql.append(" AND NAME LIKE CONCAT('%', :name ,'%') ");
-            params.put("name", request.getName());
+        if (!StringUtil.stringIsNullOrEmty(request.getStatus())) {
+            sql.append(" AND status = :status ");
+            params.put("status", request.getStatus());
         }
 
-//        if (!StringUtil.stringIsNullOrEmty(request.getEmail())) {
-//            sql.append(" AND EMAIL = :email ");
-//            params.put("email", request.getEmail());
-//        }
 
-
-        Query queryCount = entityManager.createNativeQuery(sql.toString());
+        Query queryCount = entityManager1.createNativeQuery(sql.toString());
         params.forEach(queryCount::setParameter);
 
         Integer countData = ((Long) queryCount.getSingleResult()).intValue();
@@ -106,8 +98,7 @@ public class CustomerServiceImpl implements CustomerService {
 
     @Override
     public Customer getOneId(Long id) {
-        System.out.println("aaaa" + id);
-        return repository.findById(id).get();
+        return repository.findById(id).orElse(null);
     }
 
 
@@ -120,9 +111,10 @@ public class CustomerServiceImpl implements CustomerService {
     public Customer delete(Long id) {
         System.out.println(id);
         Customer cl1 = repository.findById(id).get();
-        cl1.setStatus(Long.valueOf(Constant.IN_ACTIVE));
+        cl1.setStatus(Integer.valueOf(Constant.IN_ACTIVE));
         return repository.save(cl1);
     }
+
     @Override
     public Customer save( Customer color) {
         color.setRank(rankRepository.findById(Long.valueOf(1)).get());
@@ -130,8 +122,11 @@ public class CustomerServiceImpl implements CustomerService {
         return repository.save(color);
     }
 
+
+
     @Override
     public Customer update(Customer customer, Long id) {
+        customer.setRank(rankRepository.findById(Long.valueOf(1)).get());
         customer.setId(id);
         return repository.save(customer);
     }

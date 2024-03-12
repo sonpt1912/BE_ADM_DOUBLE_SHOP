@@ -7,8 +7,9 @@ public class Constant {
 
     public static final String FAIL = "FAIL";
 
-    public static final String RootFolder = "ecommerce";
+    public static final String ROOT_FOLDER = "double_shop";
 
+    public static final String PRODUCT_FOLDER = "product";
 
     public static final Integer ACTIVE = 1;
 

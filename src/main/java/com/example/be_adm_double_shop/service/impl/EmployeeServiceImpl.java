@@ -18,10 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -39,15 +36,16 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EntityManager entityManager;
 
     // NOT CHANGE
-    public Employee createUser(Employee user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
-    }
 
     // NOT CHANGE
     @Override
     public Employee findUserbyUsername(String username) {
         return userRepository.findEmployeeByUsername(username);
+    }
+
+    @Override
+    public Employee findUserbyEmail(String email) {
+        return userRepository.findEmployeeByEmail(email);
     }
 
     @Override
@@ -149,17 +147,38 @@ public class EmployeeServiceImpl implements EmployeeService {
 
     @Override
     public Object createEmployee(Employee employee, String creator) {
+
+        List<String> fullName = Arrays.stream(employee.getName().split(" ")).toList();
+        String username = fullName.get(fullName.size() - 1);
+        for (int i = 0; i < fullName.size(); i++) {
+            if (fullName.get(i).equals(fullName.get(fullName.size()))) {
+                break;
+            }
+            username += fullName.get(i).charAt(0);
+        }
+        while (true) {
+            username += (Math.random() * 10) + 1;
+            if (!StringUtil.stringIsNullOrEmty(userRepository.findEmployeeByUsername(employee.getUsername()))) {
+                break;
+            }
+        }
         employee.setCreatedBy(creator);
         employee.setStatus(Constant.ACTIVE);
+        employee.setUsername(username);
         employee.setCreatedTime(DateUtil.dateToString(new Date(), DateUtil.FORMAT_DATE_TIME4));
         employee.setRole(Constant.IS_EMPLOYEE);
-        employee.setUsername(employee.getEmail());
-        employee.setPassword(passwordEncoder.encode(Constant.DEFAULT_PASSWORD));
+        employee.setUsername(employee.getUsername());
+        String password = Constant.DEFAULT_PASSWORD;
+        if (!StringUtil.stringIsNullOrEmty(employee.getPassword())) {
+            password = employee.getPassword();
+        }
+        employee.setPassword(passwordEncoder.encode(password));
         try {
             userRepository.save(employee);
             MailRequest mailRequest = MailRequest.builder()
-                    .content(Constant.DEFAULT_PASSWORD)
-                    .reciver(employee.getUsername())
+                    .reciver(employee.getEmail())
+                    .content(password)
+                    .subContent(employee.getUsername())
                     .build();
             mailService.sendMailCreateAccount(mailRequest);
             return Constant.SUCCESS;
@@ -171,20 +190,32 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public Object updateEmployee(Employee employee, String creator) {
-        if (StringUtil.stringIsNullOrEmty(employee.getId())) {
-           throw new ValidationException("Khong tim thay nhan vien");
+    public Object updateEmployee(EmployeeRequest request, String updateBy) {
+
+        if (StringUtil.stringIsNullOrEmty(request.getId())) {
+            throw new ValidationException("Truong id khong duoc de trong");
         }
+
+        if (StringUtil.stringIsNullOrEmty(userRepository.findEmployeeById(request.getId()))) {
+            throw new ValidationException("Khong tim thay nhan vien");
+        }
+
+        Employee employee = userRepository.findEmployeeById(request.getId());
+
+        if (request.getPhone() != null) {
+            employee.setPhone(request.getPhone());
+        }
+
+        if (request.getStatus() != null) {
+            employee.setStatus(request.getStatus());
+        }
+
+        employee.setUpdatedBy(updateBy);
         employee.setUpdatedTime(DateUtil.dateToString4(new Date()));
-        employee.setUpdatedBy(creator);
+
         return userRepository.save(employee);
     }
 
     // NOT CHANGE
-    @Override
-    public Object resetPassword(Employee employee, String updatedBy) {
-        mailService.sendMailFortgotPassword();
-        return null;
-    }
 
 }
