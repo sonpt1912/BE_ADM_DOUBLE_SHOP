@@ -28,17 +28,11 @@ public class EmployeeController {
     }
 
     @PostMapping("/update")
-    public ResponseEntity updateEmplooyee(@RequestHeader("Authorization") String token, @RequestBody Employee employee) {
+    public ResponseEntity updateEmplooyee(@RequestHeader("Authorization") String token, @RequestBody EmployeeRequest employee) {
         String username = jwtProvider.getUsernameFromToken(token);
         return new ResponseEntity(employeeService.updateEmployee(employee, username), HttpStatus.OK);
     }
 
-
-    @PostMapping("/reset-password")
-    public ResponseEntity resetPassword(@RequestHeader("Authorization") String token, @RequestBody Employee employee) {
-        String username = jwtProvider.getUsernameFromToken(token);
-        return new ResponseEntity(employeeService.resetPassword(employee, username), HttpStatus.OK);
-    }
 
     @PostMapping("/get-all-employee-by-condition")
     public ResponseEntity getAllEmployeeByCondition(@RequestBody EmployeeRequest employeeRequest) {
