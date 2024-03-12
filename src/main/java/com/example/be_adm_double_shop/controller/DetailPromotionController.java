@@ -21,7 +21,7 @@ import java.util.List;
 @RestController
 @EnableWrapResponse
 @CrossOrigin(origins = { "http://localhost:3000"}, allowCredentials = "true")
-public class DrtailPromotionController {
+public class DetailPromotionController {
     @Autowired
     private DetailPromotionServicelmpl detailPromotionServicelmpl;
 
@@ -47,8 +47,6 @@ public class DrtailPromotionController {
     private ResponseEntity add(@RequestHeader("Authorization") String token, @RequestBody DetailPromotion m) {
         String username = jwtProvider.getUsernameFromToken(token);
         return new ResponseEntity(detailPromotionServicelmpl.add(m, username), HttpStatus.OK);
-//        promotionSer.add(m);
-//        return promotionSer.getAll();
     }
 
     @RequestMapping("/detail-promotion/update/{id}")

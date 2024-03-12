@@ -42,8 +42,6 @@ public class PromotionController {
     private ResponseEntity add(@RequestHeader("Authorization") String token, @RequestBody Promotion m) {
         String username = jwtProvider.getUsernameFromToken(token);
         return new ResponseEntity(promotionSer.add(m, username), HttpStatus.OK);
-//        promotionSer.add(m);
-//        return promotionSer.getAll();
     }
 
     @RequestMapping("/promotion/update/{id}")
