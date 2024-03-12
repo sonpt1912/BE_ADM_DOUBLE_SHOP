@@ -43,20 +43,23 @@ public class DetailPromotionServicelmpl {
         StringBuilder sql = new StringBuilder();
         Map<String, Object> params = new HashMap<>();
 
-        sql.append("select * from detail_promotion where 1 = 1");
+        sql.append("select detail_promotion.id, promotion.code, promotion.name, promotion.discount_amount, " +
+                "promotion.discount_percent, promotion.start_date, promotion.end_date, promotion.status " +
+                "from detail_promotion join promotion on detail_promotion.id_promotion = promotion.id " +
+                "join detail_product on detail_promotion.id_detail_product = detail_product.id where 1 = 1");
 
         if (!StringUtil.stringIsNullOrEmty(request.getCode())) {
-            sql.append((" and code like concat('%', :code, '%')"));
+            sql.append((" and promotion.code like concat('%', :code, '%')"));
             params.put("code", request.getCode());
         }
 
         if(!StringUtil.stringIsNullOrEmty(request.getName())) {
-            sql.append((" and name like concat('%', :name, '%')"));
+            sql.append((" and promotion.name like concat('%', :name, '%')"));
             params.put("name", request.getName());
         }
 
         if (!StringUtil.stringIsNullOrEmty(request.getStatus())) {
-            sql.append(" and status = :status ");
+            sql.append(" and promotion.status = :status ");
             params.put("status", request.getStatus());
         }
 
@@ -85,17 +88,17 @@ public class DetailPromotionServicelmpl {
         sql.append(" select count(*) from detail_promotion where 1 = 1 ");
 
         if (!StringUtil.stringIsNullOrEmty(request.getCode())) {
-            sql.append((" and code like concat('%', :code, '%')"));
+            sql.append((" and promotion.code like concat('%', :code, '%')"));
             params.put("code", request.getCode());
         }
 
         if (!StringUtil.stringIsNullOrEmty(request.getName())) {
-            sql.append((" and name like concat('%', :name, '%')"));
+            sql.append((" and promotion.name like concat('%', :name, '%')"));
             params.put("name", request.getName());
         }
 
         if (!StringUtil.stringIsNullOrEmty(request.getStatus())) {
-            sql.append(" and status = :status ");
+            sql.append(" and promotion.status = :status ");
             params.put("status", request.getStatus());
         }
 
@@ -118,6 +121,7 @@ public class DetailPromotionServicelmpl {
         p.getPromotion().setStatus(Constant.ACTIVE);
         p.getPromotion().setCreatedBy(username);
         p.getPromotion().setCreatedTime(DateUtil.dateToString4(new Date()));
+        p.getDetailProduct().setId(5L);
         try {
             return detailPromotionRepository.save(p);
 

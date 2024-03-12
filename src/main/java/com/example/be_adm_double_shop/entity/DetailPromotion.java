@@ -17,11 +17,11 @@ public class DetailPromotion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "id_detail_product", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_detail_product")
     private DetailProduct detailProduct;
 
-    @ManyToOne
-    @JoinColumn(name = "id_promotion", referencedColumnName = "id")
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_promotion")
     private Promotion promotion;
 }

@@ -221,7 +221,7 @@ CREATE TABLE `double_shop`.`address`
     `province`     VARCHAR(45) NOT NULL,
     `city`         VARCHAR(45) NOT NULL,
     `description`  VARCHAR(45) NOT NULL,
-    `is_defaul`    INT NOT NULL,
+    `is_defaul`    INT         NOT NULL,
     `created_by`   VARCHAR(45) NOT NULL,
     `created_time` VARCHAR(45) NOT NULL,
     `updated_by`   VARCHAR(45) NULL,
@@ -478,4 +478,7 @@ CREATE TABLE `double_shop`.`detail_promotion`
             ON DELETE NO ACTION
             ON UPDATE NO ACTION
 );
+
+ALTER TABLE `double_shop`.`detail_promotion`
+    CHANGE COLUMN `id` `id` BIGINT NOT NULL AUTO_INCREMENT;
 
