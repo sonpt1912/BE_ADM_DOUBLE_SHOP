@@ -57,7 +57,7 @@ public ResponseEntity save(@Valid @RequestBody Customer customerRequest) {
     for (Address address : addresses) {
         address.setCreatedBy("huong");
         address.setCreatedTime(date);
-        address.setIs_defaul(1);
+        address.setDefaul(1);
         address.setCustomer(customerRequest);
 
     }
@@ -141,11 +141,11 @@ public ResponseEntity save(@Valid @RequestBody Customer customerRequest) {
                     address.setDescription(updatedAddress.getDescription());
 
 
-                    address.setIs_defaul(1);
+                    address.setDefaul(1);
 
                 } else {
 
-                    address.setIs_defaul(0);
+                    address.setDefaul(0);
                 }
             }
 

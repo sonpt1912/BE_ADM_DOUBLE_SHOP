@@ -47,9 +47,7 @@ public class Address {
     @Column(name = "description", length = 45)
     private String description;
     @Column(name = "is_defaul", length = 45)
-    private Integer is_defaul;
+    private Integer defaul;
 
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
+
 }
