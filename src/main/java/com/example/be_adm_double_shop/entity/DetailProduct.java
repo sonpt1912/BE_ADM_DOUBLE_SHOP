@@ -44,22 +44,22 @@ public class DetailProduct {
     @JoinColumn(name = "id_category", referencedColumnName = "id")
     private Category category;
 
-    @Column(name = "quantity", nullable = false)
+    @Column(name = "quantity")
     private Long quantity;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
     private Integer status;
 
-    @Column(name = "created_by", nullable = false, length = 45)
+    @Column(name = "created_by")
     private String createdBy;
 
-    @Column(name = "created_time", nullable = false, length = 45)
+    @Column(name = "created_time")
     private String createdTime;
 
-    @Column(name = "updated_by", length = 45)
+    @Column(name = "updated_by")
     private String updatedBy;
 
-    @Column(name = "updated_time", length = 45)
+    @Column(name = "updated_time")
     private String updatedTime;
 
 }
