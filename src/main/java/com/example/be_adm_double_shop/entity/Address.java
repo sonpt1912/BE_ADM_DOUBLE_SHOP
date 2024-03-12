@@ -24,30 +24,32 @@ public class Address {
     @JoinColumn(name = "id_customer", referencedColumnName = "id")
     private Customer customer;
 
-    @Column(name = "district", length = 45, nullable = false)
+    @Column(name = "district")
     private String district;
 
-    @Column(name = "province", length = 45, nullable = false)
+    @Column(name = "province")
     private String province;
 
-    @Column(name = "city", length = 45, nullable = false)
+    @Column(name = "city")
     private String city;
 
-    @Column(name = "created_by", length = 45, nullable = false)
+    @Column(name = "created_by")
     private String createdBy;
 
-    @Column(name = "created_time", length = 45, nullable = false)
+    @Column(name = "created_time")
     private String createdTime;
 
-    @Column(name = "updated_by", length = 45)
+    @Column(name = "updated_by")
     private String updatedBy;
 
-    @Column(name = "updated_time", length = 45)
+    @Column(name = "updated_time")
     private String updatedTime;
-    @Column(name = "description", length = 45)
+
+    @Column(name = "description")
     private String description;
     @Column(name = "is_defaul", length = 45)
     private Integer defaul;
+
 
 
 }

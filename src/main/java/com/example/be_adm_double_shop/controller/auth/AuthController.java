@@ -80,7 +80,7 @@ public class AuthController {
     @PostMapping("/google")
     public Object loginGoogle(@RequestBody TokenRequest crenditial) throws NoSuchAlgorithmException, InvalidKeySpecException {
         UserInfo user = (UserInfo) jwtProvider.getAllClaimsFromToken(crenditial.getCrenditial());
-        Employee employee = userService.findUserbyUsername(user.getEmail());
+        Employee employee = userService.findUserbyEmail(user.getEmail());
         JwtResponse response = JwtResponse.builder()
                 .access_token(jwtProvider.generateToken(employee)).build();
         return response;

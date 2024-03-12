@@ -5,9 +5,14 @@ public class Constant {
     public static final String SUCCESS = "SUCCESS";
 
 
-    public static final String FAIL="FAIL";
+    public static final String FAIL = "FAIL";
+
+    public static final String ROOT_FOLDER = "double_shop";
+
+    public static final String PRODUCT_FOLDER = "product";
 
     public static final Integer ACTIVE = 1;
+
 
     public static final String UNAUTHORIZED = "401";
 
@@ -21,14 +26,13 @@ public class Constant {
 
     public static final String API001 = "API001";
 
-    public static final String DEFAULT_PASSWORD = "Xin chao";
+    public static final String DEFAULT_PASSWORD = "hello";
 
     public interface DETAIL_PRODUCT {
         String SIZE = "SIZE";
-        String COLLAR="COLLAR";
+        String COLLAR = "COLLAR";
 
     }
-
 
 
 }
