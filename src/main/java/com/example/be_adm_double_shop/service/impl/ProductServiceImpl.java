@@ -1,11 +1,16 @@
 package com.example.be_adm_double_shop.service.impl;
 
 import com.cloudinary.Cloudinary;
+import com.example.be_adm_double_shop.dto.request.ColorRequest;
 import com.example.be_adm_double_shop.dto.request.ProductRequest;
+import com.example.be_adm_double_shop.dto.request.SizeRequest;
 import com.example.be_adm_double_shop.dto.response.ListResponse;
+import com.example.be_adm_double_shop.entity.DetailProduct;
 import com.example.be_adm_double_shop.entity.Product;
+import com.example.be_adm_double_shop.repository.DetailProductRepository;
 import com.example.be_adm_double_shop.repository.ProductRepository;
 import com.example.be_adm_double_shop.service.ProductService;
+import com.example.be_adm_double_shop.util.DateUtil;
 import com.example.be_adm_double_shop.util.StringUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -13,6 +18,7 @@ import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +30,9 @@ public class ProductServiceImpl implements ProductService {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Autowired
+    private DetailProductRepository detailProductRepository;
 
     @Autowired
     private Cloudinary cloudinary;
@@ -152,6 +161,35 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Product getProductById(Long productId) {
         return productRepository.findById(productId).orElse(null);
+    }
+
+    @Override
+    public Object createProduct(ProductRequest request, String username) {
+        // tạo product
+        Product product = Product.builder()
+                .code(request.getCode())
+                .name(request.getName())
+                .createdBy(username)
+                .createdBy(DateUtil.dateToString4(new Date()))
+                .build();
+        product = productRepository.save(product);
+
+        if (product != null) {
+            // tạo detail product
+            for (SizeRequest sizeRequest : request.getListSize()) {
+                for (ColorRequest colorRequest : sizeRequest.getListColor()) {
+//                    DetailProduct detailProduct = DetailProduct.builder()
+//                            .product()
+//                            .size()
+//                            .build();
+//                    detailProductRepository.save(detailProduct);
+                }
+            }
+        }
+
+        // tạo folder lưu trữ ảnh theo code
+        // lưu ảnh vào folder đó
+        return null;
     }
 
 }

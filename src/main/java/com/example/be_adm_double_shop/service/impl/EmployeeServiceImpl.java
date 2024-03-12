@@ -18,10 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
@@ -151,11 +148,23 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public Object createEmployee(Employee employee, String creator) {
 
-        if (!StringUtil.stringIsNullOrEmty(userRepository.findEmployeeByUsername(employee.getUsername()))) {
-            throw new ValidationException("Username da ton tai");
+        List<String> fullName = Arrays.stream(employee.getName().split(" ")).toList();
+        String username = fullName.get(fullName.size() - 1);
+        for (int i = 0; i < fullName.size(); i++) {
+            if (fullName.get(i).equals(fullName.get(fullName.size()))) {
+                break;
+            }
+            username += fullName.get(i).charAt(0);
+        }
+        while (true) {
+            username += (Math.random() * 10) + 1;
+            if (!StringUtil.stringIsNullOrEmty(userRepository.findEmployeeByUsername(employee.getUsername()))) {
+                break;
+            }
         }
         employee.setCreatedBy(creator);
         employee.setStatus(Constant.ACTIVE);
+        employee.setUsername(username);
         employee.setCreatedTime(DateUtil.dateToString(new Date(), DateUtil.FORMAT_DATE_TIME4));
         employee.setRole(Constant.IS_EMPLOYEE);
         employee.setUsername(employee.getUsername());
