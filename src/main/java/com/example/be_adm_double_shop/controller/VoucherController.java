@@ -9,6 +9,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.ParseException;
+
 @RestController
 @RequestMapping("/voucher")
 @CrossOrigin(origins = {"*"})
@@ -30,7 +32,7 @@ public class VoucherController {
     }
 
     @PostMapping("/update")
-    public ResponseEntity update(@RequestHeader("Authorization") String token, @RequestBody Voucher voucher) {
+    public ResponseEntity update(@RequestHeader("Authorization") String token, @RequestBody Voucher voucher) throws ParseException {
         String username = jwtProvider.getUsernameFromToken(token);
         return ResponseEntity.ok(voucherService.update(voucher, username));
     }
