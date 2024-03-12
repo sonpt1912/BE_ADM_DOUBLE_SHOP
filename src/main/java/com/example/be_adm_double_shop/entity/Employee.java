@@ -24,56 +24,56 @@ public class Employee implements UserDetails {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name", length = 45, nullable = false)
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "username", unique = true, nullable = false, length = 45)
+    @Column(name = "username")
     private String username;
 
-    @Column(name = "phone", length = 45)
+    @Column(name = "phone")
     private String phone;
 
 
-    @Column(name = "email", length = 45)
+    @Column(name = "email")
     private String email;
 
 
     @Column(name = "gender")
     private Integer gender;
 
-    @Column(name = "birth_day", nullable = false, length = 45)
+    @Column(name = "birth_day")
     private String birthDay;
 
-    @Column(name = "role", nullable = false)
+    @Column(name = "role")
     private Integer role;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
     private Integer status;
 
-    @Column(name = "district", length = 45)
+    @Column(name = "district")
     private String district;
 
-    @Column(name = "provice", length = 45)
+    @Column(name = "provice")
     private String provice;
 
-    @Column(name = "city", length = 45)
+    @Column(name = "city")
     private String city;
 
     @Column(name = "description")
     private String description;
-    @Column(name = "password", length = 145, nullable = false)
+    @Column(name = "password")
     private String password;
 
-    @Column(name = "created_time", nullable = false, length = 45)
+    @Column(name = "created_time")
     private String createdTime;
 
-    @Column(name = "updated_time", length = 45)
+    @Column(name = "updated_time")
     private String updatedTime;
 
-    @Column(name = "updated_by", nullable = false, length = 45)
+    @Column(name = "updated_by")
     private String updatedBy;
 
-    @Column(name = "created_by", length = 45)
+    @Column(name = "created_by")
     private String createdBy;
 
     @Override

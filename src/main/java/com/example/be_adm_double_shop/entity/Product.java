@@ -4,6 +4,8 @@ import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Timestamp;
+import java.util.List;
+import java.util.Map;
 
 @Entity
 @Table(name = "product")
@@ -19,22 +21,31 @@ public class Product {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name", unique = true, nullable = false, length = 45)
+    @Column(name = "images")
+    private String images;
+
+    @Column(name = "code")
+    private String code;
+
+    @Column(name = "name")
     private String name;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
     private Integer status;
 
-    @Column(name = "created_by", nullable = false, length = 45)
+    @Column(name = "created_by")
     private String createdBy;
 
-    @Column(name = "created_time", nullable = false, length = 45)
+    @Column(name = "created_time")
     private String createdTime;
 
-    @Column(name = "updated_time", length = 45)
+    @Column(name = "updated_time")
     private String updatedTime;
 
-    @Column(name = "updated_by", length = 45)
+    @Column(name = "updated_by")
     private String updatedBy;
+
+    @Transient
+    private Map listImages;
 
 }

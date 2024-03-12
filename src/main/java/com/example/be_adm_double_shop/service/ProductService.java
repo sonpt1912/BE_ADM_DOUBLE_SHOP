@@ -1,12 +1,13 @@
 package com.example.be_adm_double_shop.service;
 
+import com.example.be_adm_double_shop.dto.request.ProductRequest;
 import com.example.be_adm_double_shop.entity.Product;
 
-import java.util.List;
-
 public interface ProductService {
-    List<Product> getAllProducts();
+    Object getAllProductByCondition(ProductRequest request);
 
-     Product getProductById(Long productId);
+    Object getAllProduct(ProductRequest request) throws Exception;
+
+    Product getProductById(Long productId);
 
 }

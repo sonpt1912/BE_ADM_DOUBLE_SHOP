@@ -33,7 +33,7 @@ public class DetailProduct {
     private Size size;
 
     @ManyToOne
-    @JoinColumn(name = "id_branch", referencedColumnName = "id")
+    @JoinColumn(name = "id_brand", referencedColumnName = "id")
     private Brand brand;
 
     @ManyToOne
