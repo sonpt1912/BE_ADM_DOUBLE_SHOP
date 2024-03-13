@@ -1,15 +1,16 @@
 package com.example.be_adm_double_shop.service.impl;
 
 import com.cloudinary.Cloudinary;
+import com.cloudinary.utils.ObjectUtils;
+import com.example.be_adm_double_shop.dto.ValidationException;
 import com.example.be_adm_double_shop.dto.request.ColorRequest;
 import com.example.be_adm_double_shop.dto.request.ProductRequest;
 import com.example.be_adm_double_shop.dto.request.SizeRequest;
 import com.example.be_adm_double_shop.dto.response.ListResponse;
-import com.example.be_adm_double_shop.entity.DetailProduct;
-import com.example.be_adm_double_shop.entity.Product;
-import com.example.be_adm_double_shop.repository.DetailProductRepository;
-import com.example.be_adm_double_shop.repository.ProductRepository;
+import com.example.be_adm_double_shop.entity.*;
+import com.example.be_adm_double_shop.repository.*;
 import com.example.be_adm_double_shop.service.ProductService;
+import com.example.be_adm_double_shop.util.Constant;
 import com.example.be_adm_double_shop.util.DateUtil;
 import com.example.be_adm_double_shop.util.StringUtil;
 import jakarta.persistence.EntityManager;
@@ -17,6 +18,7 @@ import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -30,6 +32,21 @@ public class ProductServiceImpl implements ProductService {
 
     @PersistenceContext
     private EntityManager entityManager;
+
+    @Autowired
+    private ColorRepository colorRepository;
+
+    @Autowired
+    private CollarRepository collarRepository;
+
+    @Autowired
+    private SizeRepository sizeRepository;
+
+    @Autowired
+    private BrandRepository brandRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     @Autowired
     private DetailProductRepository detailProductRepository;
@@ -164,32 +181,49 @@ public class ProductServiceImpl implements ProductService {
     }
 
     @Override
-    public Object createProduct(ProductRequest request, String username) {
+    public Object createProduct(ProductRequest request, String username) throws Exception {
         // tạo product
+        String folderPath = "";
         Product product = Product.builder()
                 .code(request.getCode())
                 .name(request.getName())
                 .createdBy(username)
-                .createdBy(DateUtil.dateToString4(new Date()))
+                .createdTime(DateUtil.dateToString4(new Date()))
+                .status(Constant.ACTIVE)
                 .build();
         product = productRepository.save(product);
 
         if (product != null) {
-            // tạo detail product
             for (SizeRequest sizeRequest : request.getListSize()) {
                 for (ColorRequest colorRequest : sizeRequest.getListColor()) {
-//                    DetailProduct detailProduct = DetailProduct.builder()
-//                            .product()
-//                            .size()
-//                            .build();
-//                    detailProductRepository.save(detailProduct);
+                    DetailProduct detailProduct = DetailProduct.builder()
+                            .product(product)
+                            .size(sizeRepository.findById(sizeRequest.getId()).get())
+                            .collar(Collar.builder().id(request.getIdCollar()).build())
+                            .brand(Brand.builder().id(request.getIdBrand()).build())
+                            .category(Category.builder().id(request.getIdBrand()).build())
+                            .material(Material.builder().id(request.getIdMaterial()).build())
+                            .color(Color.builder().id(colorRequest.getId()).build())
+                            .createdBy(username)
+                            .createdTime(DateUtil.dateToString4(new Date()))
+                            .quantity(colorRequest.getQuantity())
+                            .status(Constant.ACTIVE)
+                            .build();
+                    detailProductRepository.save(detailProduct);
                 }
             }
+            folderPath = Constant.ROOT_FOLDER + "/" + Constant.PRODUCT_FOLDER + "/" + product.getCode();
+            cloudinary.api().createFolder(folderPath, ObjectUtils.emptyMap());
+
+            for (MultipartFile multipartFile : request.getListImage()) {
+                HashMap folder = new HashMap();
+                folder.put("folder", folderPath);
+                cloudinary.uploader().upload(multipartFile.getBytes(), folder);
+            }
+            return Constant.SUCCESS;
         }
 
-        // tạo folder lưu trữ ảnh theo code
-        // lưu ảnh vào folder đó
-        return null;
+        return new ValidationException(Constant.API001, "");
     }
 
 }

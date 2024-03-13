@@ -9,6 +9,8 @@ import lombok.*;
 @Builder
 public class BrandRequest {
 
+    private Long id;
+
     private Long page;
 
     private Long pageSize;

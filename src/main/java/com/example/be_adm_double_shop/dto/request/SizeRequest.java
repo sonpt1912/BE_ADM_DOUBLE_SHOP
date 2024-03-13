@@ -11,6 +11,8 @@ import java.util.List;
 @Builder
 public class SizeRequest {
 
+    private Long id;
+
     private Long page;
 
     private Long pageSize;

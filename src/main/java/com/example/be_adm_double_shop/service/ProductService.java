@@ -10,6 +10,6 @@ public interface ProductService {
 
     Product getProductById(Long productId);
 
-    Object createProduct(ProductRequest request, String token);
+    Object createProduct(ProductRequest request, String token) throws Exception;
 
 }
