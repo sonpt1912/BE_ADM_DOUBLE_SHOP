@@ -21,9 +21,6 @@ public class Product {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "images")
-    private String images;
-
     @Column(name = "code")
     private String code;
 
