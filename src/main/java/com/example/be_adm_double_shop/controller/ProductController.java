@@ -50,9 +50,16 @@ public class ProductController {
     }
 
     @PostMapping("/create-product")
-    public ResponseEntity createProduct(@RequestBody ProductRequest productRequest, @RequestHeader("Authorization") String token) {
+    public ResponseEntity createProduct(@RequestBody ProductRequest productRequest, @RequestHeader("Authorization") String token) throws Exception {
         String username = jwtProvider.getUsernameFromToken(token);
         return new ResponseEntity(productService.createProduct(productRequest, username), HttpStatus.OK);
     }
+
+    @PostMapping("/update-product")
+    public ResponseEntity updateProduct(@RequestBody ProductRequest productRequest, @RequestHeader("Authorization") String token) {
+        String username = jwtProvider.getUsernameFromToken(token);
+        return new ResponseEntity(productService.updateProduct(productRequest, username), HttpStatus.OK);
+    }
+
 
 }

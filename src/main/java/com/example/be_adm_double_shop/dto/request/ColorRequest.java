@@ -8,6 +8,8 @@ import lombok.*;
 @Setter
 @Builder
 public class ColorRequest {
+
+    private Long id;
     private Long page;
 
     private Long pageSize;
@@ -17,5 +19,7 @@ public class ColorRequest {
     private Long status;
 
     private String code;
+
+    private Long quantity;
 
 }

@@ -8,8 +8,8 @@ public interface ProductService {
 
     Object getAllProduct(ProductRequest request) throws Exception;
 
-    Product getProductById(Long productId);
+    Object createProduct(ProductRequest request, String token) throws Exception;
 
-    Object createProduct(ProductRequest request, String token);
+    Object updateProduct(ProductRequest request, String username);
 
 }
