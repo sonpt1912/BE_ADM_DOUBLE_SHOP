@@ -1,5 +1,6 @@
 package com.example.be_adm_double_shop.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -21,6 +22,7 @@ public class DetailPromotion {
     @JoinColumn(name = "id_detail_product")
     private DetailProduct detailProduct;
 
+    @JsonIgnore
     @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_promotion")
     private Promotion promotion;

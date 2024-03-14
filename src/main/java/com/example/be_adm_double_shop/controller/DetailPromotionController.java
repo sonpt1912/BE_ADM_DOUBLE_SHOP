@@ -20,7 +20,7 @@ import java.util.List;
 
 @RestController
 @EnableWrapResponse
-@CrossOrigin(origins = { "http://localhost:3000"}, allowCredentials = "true")
+@CrossOrigin(origins = {"http://localhost:3000"}, allowCredentials = "true")
 public class DetailPromotionController {
     @Autowired
     private DetailPromotionServicelmpl detailPromotionServicelmpl;

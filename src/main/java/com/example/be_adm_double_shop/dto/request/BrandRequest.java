@@ -2,14 +2,12 @@ package com.example.be_adm_double_shop.dto.request;
 
 import lombok.*;
 
-import java.util.List;
-
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
 @Builder
-public class SizeRequest {
+public class BrandRequest {
 
     private Long page;
 
@@ -24,8 +22,5 @@ public class SizeRequest {
     private String createdBy;
 
     private String createdTime;
-
-    // cho luồng sản phẩm
-    private List<ColorRequest> listColor;
 
 }

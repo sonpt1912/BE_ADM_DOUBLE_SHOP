@@ -108,10 +108,6 @@ public class PromotionSer {
     }
 
     public Promotion add(Promotion p, String username) {
-//        p.setCreatedTime(LocalDateTime.now().toString());
-//        p.setCreatedBy("TranTung");
-//        p.setStatus(Constant.ACTIVE);
-//        return promotionRepository.save(p);
         if (StringUtil.stringIsNullOrEmty(p.getCode())) {
             int i = 1;
             while (true) {
@@ -140,10 +136,6 @@ public class PromotionSer {
     }
 
     public Promotion update(Promotion p, String username) {
-//        Promotion pro = promotionRepository.getOneById(p.getId());
-//        p.setCreatedTime(pro.getCreatedTime());
-//        p.setUpdatedTime(LocalDateTime.now().toString());
-//        return promotionRepository.save(p);
         if (StringUtil.stringIsNullOrEmty(p.getCode())) {
             int i = 1;
             while (true) {

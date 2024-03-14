@@ -240,6 +240,8 @@ CREATE TABLE `double_shop`.`address`
 CREATE TABLE `double_shop`.`product`
 (
     `id`           BIGINT      NOT NULL AUTO_INCREMENT,
+    `code`         VARCHAR(45) NOT NULL,
+    `images`       VARCHAR(255),
     `name`         VARCHAR(45) NOT NULL,
     `status`       INT         NOT NULL,
     `created_by`   VARCHAR(45) NOT NULL,
@@ -282,7 +284,7 @@ CREATE TABLE `double_shop`.`detail_product`
     `id_color`     BIGINT      NOT NULL,
     `id_product`   BIGINT      NOT NULL,
     `id_size`      BIGINT      NOT NULL,
-    `id_branch`    BIGINT      NOT NULL,
+    `id_brand`    BIGINT      NOT NULL,
     `id_collar`    BIGINT      NOT NULL,
     `id_category`  BIGINT      NOT NULL,
     `id_material`  BIGINT      NOT NULL,
@@ -299,6 +301,7 @@ CREATE TABLE `double_shop`.`detail_product`
     INDEX          `FK_DT_BRAND_idx` (`id_branch` ASC) VISIBLE,
     INDEX          `FK_DT_CATE_idx` (`id_category` ASC) VISIBLE,
     INDEX          `FK_DT_COLLAR_idx` (`id_collar` ASC) VISIBLE,
+    INDEX          `FK_DT_MT_idx` (`id_collar` ASC) VISIBLE,
     CONSTRAINT `FK_DT_COLOR`
         FOREIGN KEY (`id_color`)
             REFERENCES `double_shop`.`color` (`id`)
@@ -330,28 +333,6 @@ CREATE TABLE `double_shop`.`detail_product`
             ON DELETE NO ACTION
             ON UPDATE NO ACTION,
     CONSTRAINT `FK_DT_MATERIAL`
-        FOREIGN KEY (`id_category`)
-            REFERENCES `double_shop`.`material` (`id`)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION
-);
-
-
-CREATE TABLE `double_shop`.`detail_material`
-(
-    `id`                BIGINT NOT NULL AUTO_INCREMENT,
-    `id_detail_product` BIGINT NOT NULL,
-    `id_material`       BIGINT NOT NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-    UNIQUE INDEX `id_product_UNIQUE` (`id_detail_product` ASC) VISIBLE,
-    UNIQUE INDEX `id_material_UNIQUE` (`id_material` ASC) VISIBLE,
-    CONSTRAINT `FK_DM_DP`
-        FOREIGN KEY (`id_detail_product`)
-            REFERENCES `double_shop`.`detail_product` (`id`)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION,
-    CONSTRAINT `FK_DM_M`
         FOREIGN KEY (`id_material`)
             REFERENCES `double_shop`.`material` (`id`)
             ON DELETE NO ACTION

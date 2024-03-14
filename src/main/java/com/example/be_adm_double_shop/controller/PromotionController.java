@@ -3,6 +3,9 @@ package com.example.be_adm_double_shop.controller;
 
 import com.example.be_adm_double_shop.config.EnableWrapResponse;
 import com.example.be_adm_double_shop.dto.request.PromotionRequest;
+import com.example.be_adm_double_shop.entity.Address;
+import com.example.be_adm_double_shop.entity.Customer;
+import com.example.be_adm_double_shop.entity.DetailPromotion;
 import com.example.be_adm_double_shop.entity.Promotion;
 import com.example.be_adm_double_shop.security.JwtProvider;
 import com.example.be_adm_double_shop.service.impl.PromotionSer;
@@ -33,9 +36,24 @@ public class PromotionController {
         return promotionSer.getAll();
     }
 
-    @GetMapping("/promotion/hien-thi/{id}")
+    @RequestMapping("/promotion/hien-thi/{id}")
     public ResponseEntity getOneById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(promotionSer.getOneById(id));
+    }
+
+    @RequestMapping("/promotion/show/{idPromotion}/{idDetailPromotion}")
+    public ResponseEntity getOne(@PathVariable("idPromotion") Long idPromotion, @PathVariable("idDetailPromotion") Long idDetailPromotion) {
+        Promotion promotion = promotionSer.getOneById(idPromotion);
+        if (promotion != null) {
+            for (DetailPromotion i : promotion.getDetailPromotions()) {
+                if (i.getId().equals(idDetailPromotion)) {
+                    return ResponseEntity.ok(i);
+                }
+            }
+            return ResponseEntity.notFound().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @RequestMapping("/promotion/add")
