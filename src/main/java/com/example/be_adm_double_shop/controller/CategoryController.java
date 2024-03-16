@@ -21,7 +21,7 @@ public class CategoryController {
     @Autowired
     private JwtProvider jwtProvider;
 
-    @PostMapping("/get-size-by-condition")
+    @PostMapping("/get-category-by-condition")
     public ResponseEntity getAllSize(@RequestBody CategoryRequest request) {
         return new ResponseEntity(categoryService.getAllByConditon(request), HttpStatus.OK);
     }
