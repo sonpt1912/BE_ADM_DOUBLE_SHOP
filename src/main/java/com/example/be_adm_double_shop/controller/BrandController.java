@@ -19,8 +19,8 @@ public class BrandController {
     @Autowired
     private JwtProvider jwtProvider;
 
-    @PostMapping("/get-size-by-condition")
-    public ResponseEntity getAllSize(@RequestBody BrandRequest request) {
+    @PostMapping("/get-barnd-by-condition")
+    public ResponseEntity getAllBrand(@RequestBody BrandRequest request) {
         return new ResponseEntity(brandService.getAllByConditon(request), HttpStatus.OK);
     }
 
