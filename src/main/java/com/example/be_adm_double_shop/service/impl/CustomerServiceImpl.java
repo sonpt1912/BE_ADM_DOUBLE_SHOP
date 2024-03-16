@@ -19,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 @Service
 public class CustomerServiceImpl implements CustomerService {
@@ -50,6 +51,18 @@ public class CustomerServiceImpl implements CustomerService {
         if (!StringUtil.stringIsNullOrEmty(request.getStatus())) {
             sql.append(" AND status = :status ");
             params.put("status", request.getStatus());
+        }
+        if (!StringUtil.stringIsNullOrEmty(request.getUsername())) {
+            sql.append(" AND username LIKE CONCAT('%', :username ,'%') ");
+            params.put("username", request.getUsername());
+        }
+        if (!StringUtil.stringIsNullOrEmty(request.getEmail())) {
+            sql.append(" AND email LIKE CONCAT('%', :email ,'%')");
+            params.put("email", request.getEmail());
+        }
+        if (!StringUtil.stringIsNullOrEmty(request.getName())) {
+            sql.append(" AND name LIKE CONCAT('%',  :name , '%')");
+            params.put("name", request.getName());
         }
 
 
@@ -84,6 +97,18 @@ public class CustomerServiceImpl implements CustomerService {
             sql.append(" AND status = :status ");
             params.put("status", request.getStatus());
         }
+        if (!StringUtil.stringIsNullOrEmty(request.getUsername())) {
+            sql.append(" AND username LIKE CONCAT('%', :username ,'%') ");
+            params.put("username", request.getUsername());
+        }
+        if (!StringUtil.stringIsNullOrEmty(request.getEmail())) {
+            sql.append(" AND email LIKE CONCAT('%', :email ,'%')");
+            params.put("email", request.getEmail());
+        }
+        if (!StringUtil.stringIsNullOrEmty(request.getName())) {
+            sql.append(" AND name LIKE CONCAT('%',  :name , '%')");
+            params.put("name", request.getName());
+        }
 
 
         Query queryCount = entityManager1.createNativeQuery(sql.toString());
@@ -108,6 +133,13 @@ public class CustomerServiceImpl implements CustomerService {
         Pageable p = PageRequest.of(page, pageSize);
         return repository.findAll(p);
     }
+
+    @Override
+    public List<Customer> findByPhone(String phone) {
+        return repository.findByPhone(phone);
+    }
+
+
     public Customer delete(Long id) {
         System.out.println(id);
         Customer cl1 = repository.findById(id).get();

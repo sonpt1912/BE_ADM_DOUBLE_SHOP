@@ -13,6 +13,10 @@ public class CustomerRequest {
 //    private Long page;
     private String phone;
     private Integer status;
+    private String username;
+    private String email;
+    private String name;
+
 //    private Long pageSize;
 
 }

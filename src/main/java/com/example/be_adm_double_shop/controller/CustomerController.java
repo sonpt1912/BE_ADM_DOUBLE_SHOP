@@ -26,53 +26,58 @@ import java.util.*;
 //@EnableWrapResponse
 public class CustomerController {
 
-  @Autowired
-  private CustomerService customerService;
     @Autowired
-    private CustomerRepository a;
+    private CustomerService customerService;
+    @Autowired
+    private CustomerRepository customerRepository;
     @Autowired
     private AdressRepository adressRepository;
+
     @PostMapping("/get-all")
     public ResponseEntity getAll(@RequestBody CustomerRequest request) {
-
         return new ResponseEntity(customerService.getAll(request), HttpStatus.OK);
     }
+
     @GetMapping("/get-one-by-id/{id}")
     public ResponseEntity getOneById(@PathVariable("id") Long id) {
-
         return ResponseEntity.ok(customerService.getOneId(id));
     }
+
     @PostMapping("/delete/{id}")
-    public Customer delete(@PathVariable("id") Long id){
-        return  customerService.delete(id);
+    public Customer delete(@PathVariable("id") Long id) {
+        return customerService.delete(id);
     }
-@PostMapping("/save")
-public ResponseEntity save(@Valid @RequestBody Customer customerRequest) {
-    customerRequest.setCreatedBy("huong");
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateUtil.FORMAT_DATE_TIME4);
-    String date = simpleDateFormat.format(new Date());
-    customerRequest.setCreatedTime(date);
 
-    List<Address> addresses = customerRequest.getAddress();
-    for (Address address : addresses) {
-        address.setCreatedBy("huong");
-        address.setCreatedTime(date);
-        address.setDefaul(1);
-        address.setCustomer(customerRequest);
+    @PostMapping("/save")
+    public ResponseEntity save(@Valid @RequestBody Customer customerRequest) {
+        customerRequest.setCreatedBy("huong");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateUtil.FORMAT_DATE_TIME4);
+        String date = simpleDateFormat.format(new Date());
+        customerRequest.setCreatedTime(date);
+        List<Address> addresses = customerRequest.getAddress();
+        for (Address address : addresses) {
+            address.setCreatedBy("huong");
+            address.setCreatedTime(date);
+            address.setDefaul(1);
+            address.setCustomer(customerRequest);
+        }
+        customerRequest.setAddress(addresses);
+        Customer savedCustomer = customerService.save(customerRequest);
+        return ResponseEntity.ok(savedCustomer);
 
     }
-    customerRequest.setAddress(addresses);
-    Customer savedCustomer = customerService.save(customerRequest);
-    return ResponseEntity.ok(savedCustomer);
+    @GetMapping("/get-one-by-phone/{phone}")
+        public ResponseEntity<List<Customer>> getPhone(@PathVariable("phone") String phone){
 
-}
+            return new ResponseEntity(customerService.findByPhone(phone), HttpStatus.OK);
+        }
     @PostMapping("/update/{id}")
     public ResponseEntity update(@RequestBody Customer color, @PathVariable("id") Long id) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateUtil.FORMAT_DATE_TIME4);
 
         String date = simpleDateFormat.format(new Date());
         color.setCreatedTime(date);
-                return ResponseEntity.ok(customerService.update(color, id));
+        return ResponseEntity.ok(customerService.update(color, id));
 
     }
 
@@ -101,6 +106,7 @@ public ResponseEntity save(@Valid @RequestBody Customer customerRequest) {
             return ResponseEntity.notFound().build();
         }
     }
+
     @GetMapping("/get-address-by-id/{id_customer}/{id}")
     public ResponseEntity getAddressById(@PathVariable("id_customer") Long customerId, @PathVariable("id") Long addressId) {
         Customer customer = customerService.getOneId(customerId);
@@ -115,14 +121,6 @@ public ResponseEntity save(@Valid @RequestBody Customer customerRequest) {
             return ResponseEntity.notFound().build();
         }
     }
-    private Address findAddressById(List<Address> addresses, Long id) {
-        for (Address address : addresses) {
-            if (address.getId().equals(id)) {
-                return address;
-            }
-        }
-        return null;
-    }
     @PostMapping("/update-address/{customerId}/{addressId}")
     public ResponseEntity updateAddress(@PathVariable("customerId") Long customerId,
                                         @PathVariable("addressId") Long addressId,
@@ -131,28 +129,25 @@ public ResponseEntity save(@Valid @RequestBody Customer customerRequest) {
         Customer customer = customerService.getOneId(customerId);
 
 
+        for (Address address : customer.getAddress()) {
+            if (address.getId().equals(addressId)) {
 
-            for (Address address : customer.getAddress()) {
-                if (address.getId().equals(addressId)) {
-
-                    address.setCity(updatedAddress.getCity());
-                    address.setDistrict(updatedAddress.getDistrict());
-                    address.setProvince(updatedAddress.getProvince());
-                    address.setDescription(updatedAddress.getDescription());
+                address.setCity(updatedAddress.getCity());
+                address.setDistrict(updatedAddress.getDistrict());
+                address.setProvince(updatedAddress.getProvince());
+                address.setDescription(updatedAddress.getDescription());
 
 
-                    address.setDefaul(1);
+                address.setDefaul(1);
 
-                } else {
+            } else {
 
-                    address.setDefaul(0);
-                }
+                address.setDefaul(0);
             }
+        }
 
 
-
-
-            return ResponseEntity.ok(customerService.save(customer));
+        return ResponseEntity.ok(customerService.save(customer));
 
     }
 
