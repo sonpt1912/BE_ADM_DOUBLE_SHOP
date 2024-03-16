@@ -86,7 +86,7 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Object getAllProduct(ProductRequest request) throws Exception {
         ListResponse<Product> listResponse = (ListResponse<Product>) getAllProductByCondition(request);
-        for (int i = 0; i < listResponse.getTotalRecord(); i++) {
+        for (int i = 0; i < request.getPageSize(); i++) {
             listResponse.getListData().get(i).setListImages(cloudinary.search().expression("folder:samples/animals/*").maxResults(500).execute());
         }
         return listResponse;
