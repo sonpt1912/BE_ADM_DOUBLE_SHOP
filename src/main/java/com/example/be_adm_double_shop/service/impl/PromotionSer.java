@@ -2,9 +2,12 @@ package com.example.be_adm_double_shop.service.impl;
 
 import com.example.be_adm_double_shop.dto.request.PromotionRequest;
 import com.example.be_adm_double_shop.dto.response.ListResponse;
+import com.example.be_adm_double_shop.entity.DetailPromotion;
 import com.example.be_adm_double_shop.entity.Material;
 import com.example.be_adm_double_shop.entity.Promotion;
 import com.example.be_adm_double_shop.entity.Size;
+import com.example.be_adm_double_shop.repository.DetailProductRepository;
+import com.example.be_adm_double_shop.repository.DetailPromotionRepository;
 import com.example.be_adm_double_shop.repository.PromotionRepository;
 import com.example.be_adm_double_shop.security.JwtProvider;
 import com.example.be_adm_double_shop.util.Constant;
@@ -14,6 +17,8 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -22,10 +27,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@EnableScheduling
 @Service
 public class PromotionSer {
     @Autowired
     private PromotionRepository promotionRepository;
+
+    @Autowired
+    private DetailPromotionRepository detailPromotionRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
@@ -43,7 +52,7 @@ public class PromotionSer {
             params.put("code", request.getCode());
         }
 
-        if(!StringUtil.stringIsNullOrEmty(request.getName())) {
+        if (!StringUtil.stringIsNullOrEmty(request.getName())) {
             sql.append((" and name like concat('%', :name, '%')"));
             params.put("name", request.getName());
         }
@@ -103,11 +112,13 @@ public class PromotionSer {
         return listResponse;
     }
 
-    public List<Promotion> getAll(){
+    public List<Promotion> getAll() {
         return promotionRepository.getAll();
     }
 
     public Promotion add(Promotion p, String username) {
+        DetailPromotion detailPromotion = detailPromotionRepository.findById(5L).get();
+        System.out.println("xxx: " + detailPromotion);
         if (StringUtil.stringIsNullOrEmty(p.getCode())) {
             int i = 1;
             while (true) {
@@ -119,9 +130,15 @@ public class PromotionSer {
                 i++;
             }
         }
-        p.setStatus(Constant.ACTIVE);
+        if (DateUtil.stringToDate(p.getStartDate(), "yyyy-MM-dd").after(new Date()))
+            p.setStatus(2);
+        else if (DateUtil.stringToDate(p.getStartDate(), "yyyy-MM-dd").before(new Date()))
+            p.setStatus(1);
+        else if (DateUtil.stringToDate(p.getEndDate(), "yyyy-MM-dd").before(new Date()))
+            p.setStatus(0);
         p.setCreatedBy(username);
         p.setCreatedTime(DateUtil.dateToString4(new Date()));
+//        p.getDetailPromotions().add(detailPromotion);
         try {
             return promotionRepository.save(p);
 
@@ -150,7 +167,12 @@ public class PromotionSer {
         Promotion pro = promotionRepository.getOneById(p.getId());
         p.setCreatedTime(pro.getCreatedTime());
         p.setCreatedBy(pro.getCreatedBy());
-        p.setStatus(Constant.ACTIVE);
+        if (DateUtil.stringToDate(p.getStartDate(), "yyyy-MM-dd").after(new Date()))
+            p.setStatus(2);
+        else if (DateUtil.stringToDate(p.getStartDate(), "yyyy-MM-dd").before(new Date()))
+            p.setStatus(1);
+        else if (DateUtil.stringToDate(p.getEndDate(), "yyyy-MM-dd").before(new Date()))
+            p.setStatus(0);
         p.setUpdatedBy(username);
         p.setUpdatedTime(DateUtil.dateToString4(new Date()));
         try {
@@ -165,5 +187,30 @@ public class PromotionSer {
         Promotion promotion = promotionRepository.getOneById(id);
         promotion.setStatus(0);
         return promotionRepository.save(promotion);
+    }
+
+    @Scheduled(cron = "0 0 0 * * ?")
+    public void ChuaHoatDongToHoatDong() {
+        promotionRepository.findAllByStatus(2).stream()
+                .filter(i -> !DateUtil.stringToDate(i.getStartDate(), "yyyy-MM-dd").before(new Date()))
+                .forEach(j -> {
+                    j.setStatus(1);
+                    promotionRepository.save(j);
+                });
+    }
+
+    @Scheduled(cron = "0 0 0 * * ?")
+    public void DangHoatDongToKhongHoatDong() {
+        promotionRepository.findAllByStatus(1).stream()
+                .filter(i -> DateUtil.stringToDate(i.getEndDate(), "yyyy-MM-dd").after(new Date()))
+                .forEach(j -> {
+                    j.setStatus(0);
+                    promotionRepository.save(j);
+                });
+    }
+
+    public static void main(String[] args) {
+//        System.out.println(DateUtil.stringToDate("2024-03-16", "yyyy-MM-dd").before(new Date()));
+        System.out.println(new Date().getTime());
     }
 }

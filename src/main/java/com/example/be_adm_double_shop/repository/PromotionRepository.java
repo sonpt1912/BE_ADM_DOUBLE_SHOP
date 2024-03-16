@@ -22,4 +22,6 @@ public interface PromotionRepository extends JpaRepository<Promotion, Long> {
 
     @Query(value = "SELECT * FROM Promotion WHERE code = :code", nativeQuery = true)
     Size getSizeByCode(@Param("code") String code);
+
+    List<Promotion> findAllByStatus(int tt);
 }
