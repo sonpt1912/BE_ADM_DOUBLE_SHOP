@@ -22,7 +22,7 @@ public class CategoryController {
     private JwtProvider jwtProvider;
 
     @PostMapping("/get-category-by-condition")
-    public ResponseEntity getAllSize(@RequestBody CategoryRequest request) {
+    public ResponseEntity getAllCategory(@RequestBody CategoryRequest request) {
         return new ResponseEntity(categoryService.getAllByConditon(request), HttpStatus.OK);
     }
 
