@@ -439,7 +439,7 @@ CREATE TABLE promotion
 
 CREATE TABLE `double_shop`.`bill_history`
 (
-    `id_bill_history` BIGINT       NOT NULL AUTO_INCREMENT,
+    `id` BIGINT       NOT NULL AUTO_INCREMENT,
     `id_bill`         BIGINT       NOT NULL,
     `description`     VARCHAR(245) NOT NULL,
     `created_by`      VARCHAR(45)  NOT NULL,
