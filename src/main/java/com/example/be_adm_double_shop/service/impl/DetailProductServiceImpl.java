@@ -19,7 +19,7 @@ public class DetailProductServiceImpl implements DetailProductService {
 
     @Override
     public Object getListDetailProductByProductId(Long id) {
-        return null;
+        return detailProductRepository.getAllDetailProduct(id);
     }
 
     @Override
