@@ -1,5 +1,6 @@
 package com.example.be_adm_double_shop.dto.request;
 
+import jakarta.persistence.Column;
 import lombok.Data;
 
 import java.util.List;
@@ -14,13 +15,15 @@ public class PromotionRequest {
 
     private String name;
 
-    private Long status;
+    private Integer status;
 
     private String code;
 
     private String createdBy;
 
     private String createdTime;
+
+
 
     private Long discountAmount;
 

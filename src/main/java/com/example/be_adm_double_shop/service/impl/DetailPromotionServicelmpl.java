@@ -1,6 +1,7 @@
 package com.example.be_adm_double_shop.service.impl;
 
 import com.example.be_adm_double_shop.dto.request.DetailPromotionRequest;
+import com.example.be_adm_double_shop.dto.request.PromotionRequest;
 import com.example.be_adm_double_shop.dto.response.ListResponse;
 import com.example.be_adm_double_shop.entity.DetailPromotion;
 import com.example.be_adm_double_shop.entity.Promotion;
@@ -111,11 +112,10 @@ public class DetailPromotionServicelmpl {
         return detailPromotionRepository.findAll();
     }
 
-//    public List<DetailPromotion> add(PromotionDTO p, String username) {
+//    public List<DetailPromotion> add(PromotionRequest p, String username) {
 //        List<DetailPromotion> detailPromotions = new ArrayList<>();
-//        if (p.getDetailProduct() != null)
 //            p.getDetailProduct().stream().map(i -> detailPromotionRepository.save(DetailPromotion.builder()
-//                    .detailProduct(detailProductRepository.findById(i).get())
+//                    .detailProduct(detailProductRepository.findById(21L).get())
 //                    .promotion(promotionRepository.save(Promotion.builder()
 //                            .name(p.getName())
 //                            .code(p.getCode())
@@ -127,17 +127,35 @@ public class DetailPromotionServicelmpl {
 //                            .createdBy(username)
 //                            .createdTime(DateUtil.dateToString4(new Date()))
 //                            .build())).build()
-//            )).toList();
-//        else System.out.println("DetailPromotion is Null");
+////            )).toList();
 //        return detailPromotions;
 //    }
 
-    public DetailPromotion add(Promotion pp, DetailPromotion p, String username) {
-        pp.setUpdatedBy(username);
-        p.setDetailProduct(detailProductRepository.findById(21L).orElse(null));
-        p.setPromotion(promotionRepository.save(pp));
-        return detailPromotionRepository.save(p);
+    public DetailPromotion add(PromotionRequest p, String username) {
+        return detailPromotionRepository.save(DetailPromotion.builder()
+                .detailProduct(detailProductRepository.findById(21L).get())
+                .promotion(promotionRepository.save(Promotion.builder()
+                        .name(p.getName())
+                        .code(p.getCode())
+                        .discountAmount(p.getDiscountAmount())
+                        .discountPercent(p.getDiscountPercent())
+                        .startDate(p.getStartDate())
+                        .endDate(p.getEndDate())
+                        .status(p.getStatus())
+                        .createdBy("username")
+                        .createdTime(DateUtil.dateToString4(new Date()))
+                        .build()))
+                .build());
+//            )).toList();
+
     }
+
+//    public DetailPromotion add(Promotion pp, DetailPromotion p, String username) {
+//        pp.setUpdatedBy(username);
+//        p.setDetailProduct(detailProductRepository.findById(21L).orElse(null));
+//        p.setPromotion(promotionRepository.save(pp));
+//        return detailPromotionRepository.save(p);
+//    }
 
     public DetailPromotion getOneById(long id) {
         return detailPromotionRepository.findById(id).get();

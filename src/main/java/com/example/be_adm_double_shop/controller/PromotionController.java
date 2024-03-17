@@ -24,7 +24,7 @@ public class PromotionController {
     @Autowired
     private JwtProvider jwtProvider;
 
-    @GetMapping("/promotion/show/condition")
+    @RequestMapping("/promotion/show/condition")
     private ResponseEntity show(@RequestBody PromotionRequest request) {
         return new ResponseEntity(promotionSer.getAllByCondition(request), HttpStatus.OK);
     }
