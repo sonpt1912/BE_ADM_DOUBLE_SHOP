@@ -117,8 +117,6 @@ public class PromotionSer {
     }
 
     public Promotion add(Promotion p, String username) {
-        DetailPromotion detailPromotion = detailPromotionRepository.findById(5L).get();
-        System.out.println("xxx: " + detailPromotion);
         if (StringUtil.stringIsNullOrEmty(p.getCode())) {
             int i = 1;
             while (true) {
@@ -138,7 +136,6 @@ public class PromotionSer {
             p.setStatus(0);
         p.setCreatedBy(username);
         p.setCreatedTime(DateUtil.dateToString4(new Date()));
-//        p.getDetailPromotions().add(detailPromotion);
         try {
             return promotionRepository.save(p);
 

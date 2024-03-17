@@ -1,5 +1,6 @@
 package com.example.be_adm_double_shop.service.impl;
 
+import com.example.be_adm_double_shop.dto.PromotionDTO;
 import com.example.be_adm_double_shop.dto.request.DetailPromotionRequest;
 import com.example.be_adm_double_shop.dto.response.ListResponse;
 import com.example.be_adm_double_shop.entity.DetailProduct;
@@ -18,10 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class DetailPromotionServicelmpl {
@@ -53,7 +51,7 @@ public class DetailPromotionServicelmpl {
             params.put("code", request.getCode());
         }
 
-        if(!StringUtil.stringIsNullOrEmty(request.getName())) {
+        if (!StringUtil.stringIsNullOrEmty(request.getName())) {
             sql.append((" and promotion.name like concat('%', :name, '%')"));
             params.put("name", request.getName());
         }
@@ -113,22 +111,36 @@ public class DetailPromotionServicelmpl {
         return listResponse;
     }
 
-    public List<DetailPromotion> getAll(){
+    public List<DetailPromotion> getAll() {
         return detailPromotionRepository.findAll();
     }
 
-    public DetailPromotion add(DetailPromotion p, String username) {
-        p.getPromotion().setStatus(Constant.ACTIVE);
-        p.getPromotion().setCreatedBy(username);
-        p.getPromotion().setCreatedTime(DateUtil.dateToString4(new Date()));
-        p.getDetailProduct().setId(5L);
-        try {
-            return detailPromotionRepository.save(p);
+//    public List<DetailPromotion> add(PromotionDTO p, String username) {
+//        List<DetailPromotion> detailPromotions = new ArrayList<>();
+//        if (p.getDetailProduct() != null)
+//            p.getDetailProduct().stream().map(i -> detailPromotionRepository.save(DetailPromotion.builder()
+//                    .detailProduct(detailProductRepository.findById(i).get())
+//                    .promotion(promotionRepository.save(Promotion.builder()
+//                            .name(p.getName())
+//                            .code(p.getCode())
+//                            .discountAmount(p.getDiscountAmount())
+//                            .discountPercent(p.getDiscountPercent())
+//                            .startDate(p.getStartDate())
+//                            .endDate(p.getEndDate())
+//                            .status(p.getStatus())
+//                            .createdBy(username)
+//                            .createdTime(DateUtil.dateToString4(new Date()))
+//                            .build())).build()
+//            )).toList();
+//        else System.out.println("DetailPromotion is Null");
+//        return detailPromotions;
+//    }
 
-        } catch (Exception e) {
-            e.getMessage();
-            return p;
-        }
+    public DetailPromotion add(Promotion pp, DetailPromotion p, String username) {
+        pp.setUpdatedBy(username);
+        p.setDetailProduct(detailProductRepository.findById(21L).orElse(null));
+        p.setPromotion(promotionRepository.save(pp));
+        return detailPromotionRepository.save(p);
     }
 
     public DetailPromotion getOneById(long id) {
