@@ -29,7 +29,7 @@ import java.util.Map;
 
 @EnableScheduling
 @Service
-public class PromotionSer {
+public class PromotionServicelmpl {
     @Autowired
     private PromotionRepository promotionRepository;
 

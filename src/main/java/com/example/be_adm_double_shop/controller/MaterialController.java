@@ -3,11 +3,10 @@ package com.example.be_adm_double_shop.controller;
 import com.example.be_adm_double_shop.config.EnableWrapResponse;
 import com.example.be_adm_double_shop.dto.request.MaterialRequest;
 import com.example.be_adm_double_shop.entity.Material;
-import com.example.be_adm_double_shop.service.impl.MaterialSer;
+import com.example.be_adm_double_shop.service.impl.MaterialServicelmpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,7 +17,7 @@ import java.util.List;
 @EnableWrapResponse
 public class MaterialController {
     @Autowired
-    private MaterialSer materialSer;
+    private MaterialServicelmpl materialSer;
 
     @RequestMapping("/Material/get-all/condition")
     private ResponseEntity show(@RequestBody MaterialRequest request) {

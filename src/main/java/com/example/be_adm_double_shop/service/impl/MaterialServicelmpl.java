@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class MaterialSer {
+public class MaterialServicelmpl {
     @Autowired
     private MaterialRepository materialRepository;
 

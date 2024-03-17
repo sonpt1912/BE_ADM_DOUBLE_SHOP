@@ -3,12 +3,10 @@ package com.example.be_adm_double_shop.controller;
 
 import com.example.be_adm_double_shop.config.EnableWrapResponse;
 import com.example.be_adm_double_shop.dto.request.PromotionRequest;
-import com.example.be_adm_double_shop.entity.Address;
-import com.example.be_adm_double_shop.entity.Customer;
 import com.example.be_adm_double_shop.entity.DetailPromotion;
 import com.example.be_adm_double_shop.entity.Promotion;
 import com.example.be_adm_double_shop.security.JwtProvider;
-import com.example.be_adm_double_shop.service.impl.PromotionSer;
+import com.example.be_adm_double_shop.service.impl.PromotionServicelmpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,7 +19,7 @@ import java.util.List;
 @CrossOrigin(origins = { "http://localhost:3000"}, allowCredentials = "true")
 public class PromotionController {
     @Autowired
-    private PromotionSer promotionSer;
+    private PromotionServicelmpl promotionSer;
 
     @Autowired
     private JwtProvider jwtProvider;
