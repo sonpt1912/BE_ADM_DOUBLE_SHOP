@@ -2,16 +2,13 @@ package com.example.be_adm_double_shop.controller;
 
 
 import com.example.be_adm_double_shop.config.EnableWrapResponse;
-import com.example.be_adm_double_shop.dto.PromotionDTO;
 import com.example.be_adm_double_shop.dto.request.DetailPromotionRequest;
-import com.example.be_adm_double_shop.dto.request.PromotionRequest;
 import com.example.be_adm_double_shop.entity.DetailProduct;
 import com.example.be_adm_double_shop.entity.DetailPromotion;
 import com.example.be_adm_double_shop.entity.Promotion;
 import com.example.be_adm_double_shop.repository.DetailProductRepository;
 import com.example.be_adm_double_shop.security.JwtProvider;
 import com.example.be_adm_double_shop.service.impl.DetailPromotionServicelmpl;
-import com.example.be_adm_double_shop.service.impl.PromotionSer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

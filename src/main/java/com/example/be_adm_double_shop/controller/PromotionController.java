@@ -26,17 +26,17 @@ public class PromotionController {
     @Autowired
     private JwtProvider jwtProvider;
 
-    @RequestMapping("/promotion/show/condition")
+    @GetMapping("/promotion/show/condition")
     private ResponseEntity show(@RequestBody PromotionRequest request) {
         return new ResponseEntity(promotionSer.getAllByCondition(request), HttpStatus.OK);
     }
 
-    @RequestMapping("/promotion/show")
+    @GetMapping("/promotion/show")
     private List<Promotion> hienThi() {
         return promotionSer.getAll();
     }
 
-    @RequestMapping("/promotion/show/{id}")
+    @RequestMapping(value = "/promotion/show/{id}")
     public ResponseEntity getOneById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(promotionSer.getOneById(id));
     }

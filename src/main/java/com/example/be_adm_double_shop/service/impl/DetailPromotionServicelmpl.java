@@ -1,15 +1,12 @@
 package com.example.be_adm_double_shop.service.impl;
 
-import com.example.be_adm_double_shop.dto.PromotionDTO;
 import com.example.be_adm_double_shop.dto.request.DetailPromotionRequest;
 import com.example.be_adm_double_shop.dto.response.ListResponse;
-import com.example.be_adm_double_shop.entity.DetailProduct;
 import com.example.be_adm_double_shop.entity.DetailPromotion;
 import com.example.be_adm_double_shop.entity.Promotion;
 import com.example.be_adm_double_shop.repository.DetailProductRepository;
 import com.example.be_adm_double_shop.repository.DetailPromotionRepository;
 import com.example.be_adm_double_shop.repository.PromotionRepository;
-import com.example.be_adm_double_shop.util.Constant;
 import com.example.be_adm_double_shop.util.DateUtil;
 import com.example.be_adm_double_shop.util.StringUtil;
 import jakarta.persistence.EntityManager;
@@ -18,7 +15,6 @@ import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
