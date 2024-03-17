@@ -1,6 +1,7 @@
 package com.example.be_adm_double_shop.dto.request;
 
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -37,5 +38,6 @@ public class ProductRequest {
 
     private List<SizeRequest> listSize;
 
+    private List<MultipartFile> listImage;
 
 }

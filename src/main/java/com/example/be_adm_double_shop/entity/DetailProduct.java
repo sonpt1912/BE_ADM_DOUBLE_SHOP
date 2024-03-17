@@ -21,30 +21,35 @@ public class DetailProduct {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "id_color", referencedColumnName = "id")
+    @JoinColumn(name = "id_color")
     private Color color;
 
     @ManyToOne
-    @JoinColumn(name = "id_product", referencedColumnName = "id")
+    @JoinColumn(name = "id_product")
     private Product product;
 
     @ManyToOne
-    @JoinColumn(name = "id_size", referencedColumnName = "id")
+    @JoinColumn(name = "id_size")
     private Size size;
 
     @ManyToOne
-    @JoinColumn(name = "id_brand", referencedColumnName = "id")
+    @JoinColumn(name = "id_brand")
     private Brand brand;
 
     @ManyToOne
-    @JoinColumn(name = "id_collar", referencedColumnName = "id")
+    @JoinColumn(name = "id_collar")
     private Collar collar;
 
     @ManyToOne
-    @JoinColumn(name = "id_category", referencedColumnName = "id")
+    @JoinColumn(name = "id_category")
     private Category category;
 
-    @Column(name = "quantity", nullable = false)
+
+    @ManyToOne
+    @JoinColumn(name = "id_material")
+    private Material material;
+
+    @Column(name = "quantity")
     private Long quantity;
 
     @Column(name = "status", nullable = false)

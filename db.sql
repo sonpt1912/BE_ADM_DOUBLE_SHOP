@@ -173,18 +173,20 @@ CREATE TABLE `double_shop`.`customer`
 
 CREATE TABLE `double_shop`.`voucher`
 (
-    `id`               BIGINT      NOT NULL AUTO_INCREMENT,
-    `code`             VARCHAR(45) NOT NULL,
+    `id`               BIGINT       NOT NULL AUTO_INCREMENT,
+    `code`             VARCHAR(45)  NOT NULL,
     `discount_amount`  BIGINT NULL,
     `discount_percent` INT NULL,
-    `quantity`         INT         NOT NULL,
-    `start_date`       VARCHAR(45) NOT NULL,
-    `end_date`         VARCHAR(45) NOT NULL,
-    `created_by`       VARCHAR(45) NOT NULL,
-    `created_time`     VARCHAR(45) NOT NULL,
+    `quantity`         INT          NOT NULL,
+    `start_date`       VARCHAR(45)  NOT NULL,
+    `end_date`         VARCHAR(45)  NOT NULL,
+    `created_by`       VARCHAR(45)  NOT NULL,
+    `created_time`     VARCHAR(45)  NOT NULL,
     `updated_time`     VARCHAR(45) NULL,
     `updated_by`       VARCHAR(45) NULL,
-    `minimum_order`    bigint      not null,
+    `minimum_order`    bigint       not null,
+    `name`             varchar(100) not null,
+
     `status`           INT NULL,
     PRIMARY KEY (`id`)
 );
@@ -284,7 +286,7 @@ CREATE TABLE `double_shop`.`detail_product`
     `id_color`     BIGINT      NOT NULL,
     `id_product`   BIGINT      NOT NULL,
     `id_size`      BIGINT      NOT NULL,
-    `id_brand`    BIGINT      NOT NULL,
+    `id_brand`     BIGINT      NOT NULL,
     `id_collar`    BIGINT      NOT NULL,
     `id_category`  BIGINT      NOT NULL,
     `id_material`  BIGINT      NOT NULL,
@@ -356,11 +358,7 @@ CREATE TABLE `double_shop`.`bill`
     `note`           VARCHAR(45) NULL,
     `payment`        VARCHAR(45) NULL,
     `money_ship`     BIGINT NULL,
-    `status`         INT         NOT NULL,
-    `created_by`     VARCHAR(45) NOT NULL,
-    `created_time`   VARCHAR(45) NOT NULL,
-    `updated_by`     VARCHAR(45) NULL,
-    `updated_time`   VARCHAR(45) NULL,
+    `status`         INT         NOT NULL
     PRIMARY KEY (`id`),
     UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
     INDEX            `FK_BILL_customer_idx` (`id_customer` ASC) VISIBLE,
@@ -463,3 +461,18 @@ CREATE TABLE `double_shop`.`detail_promotion`
 ALTER TABLE `double_shop`.`detail_promotion`
     CHANGE COLUMN `id` `id` BIGINT NOT NULL AUTO_INCREMENT;
 
+CREATE TABLE `double_shop`.`bill_history`
+(
+    `id` BIGINT       NOT NULL AUTO_INCREMENT,
+    `id_bill`         BIGINT       NOT NULL,
+    `description`     VARCHAR(245) NOT NULL,
+    `created_by`      VARCHAR(45)  NOT NULL,
+    `created_time`    VARCHAR(45)  NOT NULL,
+    PRIMARY KEY (`id_bill_history`),
+    INDEX             `FK_HIS_BILL_idx` (`id_bill` ASC) VISIBLE,
+    CONSTRAINT `FK_HIS_BILL`
+        FOREIGN KEY (`id_bill`)
+            REFERENCES `double_shop`.`bill` (`id`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION
+);

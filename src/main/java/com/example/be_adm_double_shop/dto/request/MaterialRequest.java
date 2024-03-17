@@ -6,6 +6,8 @@ import lombok.Data;
 
 public class MaterialRequest {
 
+    private Long id;
+
     private Long page;
 
     private Long pageSize;

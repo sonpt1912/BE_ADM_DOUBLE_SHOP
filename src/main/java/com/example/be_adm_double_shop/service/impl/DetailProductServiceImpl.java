@@ -1,19 +1,30 @@
 package com.example.be_adm_double_shop.service.impl;
 
+import com.example.be_adm_double_shop.entity.DetailProduct;
+import com.example.be_adm_double_shop.repository.DetailProductRepository;
 import com.example.be_adm_double_shop.service.DetailProductService;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
 public class DetailProductServiceImpl implements DetailProductService {
 
-    // save or saveAll
+    @Autowired
+    private DetailProductRepository detailProductRepository;
 
-    // update or updateAll
+    @PersistenceContext
+    private EntityManager entityManager;
 
-    // change status
+    @Override
+    public Object getListDetailProductByProductId(Long id) {
+        return detailProductRepository.getAllDetailProduct(id);
+    }
 
-    // get detail product
-
-    // get all detail product
+    @Override
+    public Object updateDetailProduct(DetailProduct detailProduct) {
+        return null;
+    }
 
 }

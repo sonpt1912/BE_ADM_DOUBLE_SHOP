@@ -4,6 +4,7 @@ import com.example.be_adm_double_shop.dto.request.ProductRequest;
 import com.example.be_adm_double_shop.repository.DetailProductRepository;
 import com.example.be_adm_double_shop.security.JwtProvider;
 import com.example.be_adm_double_shop.service.CloudinaryService;
+import com.example.be_adm_double_shop.service.DetailProductService;
 import com.example.be_adm_double_shop.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,7 @@ public class ProductController {
     private CloudinaryService cloudinaryService;
 
     @Autowired
-    private DetailProductRepository detailProductRepository;
+    private DetailProductService detailProductService;
 
     @PostMapping("/get-all-product")
     public ResponseEntity getAllProduct(@RequestBody ProductRequest request) throws Exception {
@@ -45,14 +46,21 @@ public class ProductController {
     }
 
     @PostMapping("/get-detail-product")
-    public ResponseEntity getDetailProduct() {
-        return new ResponseEntity(null, HttpStatus.OK);
+    public ResponseEntity getDetailProduct(@RequestBody ProductRequest productRequest) {
+        return new ResponseEntity(detailProductService.getListDetailProductByProductId(productRequest.getIdProduct()), HttpStatus.OK);
     }
 
     @PostMapping("/create-product")
-    public ResponseEntity createProduct(@RequestBody ProductRequest productRequest, @RequestHeader("Authorization") String token) {
+    public ResponseEntity createProduct(@RequestBody ProductRequest productRequest, @RequestHeader("Authorization") String token) throws Exception {
         String username = jwtProvider.getUsernameFromToken(token);
         return new ResponseEntity(productService.createProduct(productRequest, username), HttpStatus.OK);
     }
+
+    @PostMapping("/update-product")
+    public ResponseEntity updateProduct(@RequestBody ProductRequest productRequest, @RequestHeader("Authorization") String token) {
+        String username = jwtProvider.getUsernameFromToken(token);
+        return new ResponseEntity(productService.updateProduct(productRequest, username), HttpStatus.OK);
+    }
+
 
 }
