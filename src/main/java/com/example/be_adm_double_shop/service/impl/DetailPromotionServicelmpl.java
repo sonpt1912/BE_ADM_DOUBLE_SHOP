@@ -149,7 +149,7 @@ public class DetailPromotionServicelmpl {
                         .startDate(p.getStartDate())
                         .endDate(p.getEndDate())
                         .status(p.getStatus())
-                        .createdBy("username")
+                        .createdBy(username)
                         .createdTime(DateUtil.dateToString4(new Date()))
                         .build()))
                 .build());
@@ -168,15 +168,21 @@ public class DetailPromotionServicelmpl {
         return detailPromotionRepository.findById(id).get();
     }
 
-    public DetailPromotion update(DetailPromotion p, String username) {
-        p.getPromotion().setUpdatedBy(username);
-        p.getPromotion().setUpdatedTime(DateUtil.dateToString4(new Date()));
-        try {
-            return detailPromotionRepository.save(p);
-        } catch (Exception e) {
-            e.getMessage();
-            return p;
-        }
+    public DetailPromotion update(PromotionRequest p, String username) {
+        return detailPromotionRepository.save(DetailPromotion.builder()
+                .detailProduct(detailProductRepository.findById(21L).get())
+                .promotion(promotionRepository.save(Promotion.builder()
+                        .name(p.getName())
+                        .code(p.getCode())
+                        .discountAmount(p.getDiscountAmount())
+                        .discountPercent(p.getDiscountPercent())
+                        .startDate(p.getStartDate())
+                        .endDate(p.getEndDate())
+                        .status(p.getStatus())
+                        .updatedBy(username)
+                        .updatedTime(DateUtil.dateToString4(new Date()))
+                        .build()))
+                .build());
     }
 
     public DetailPromotion delete(Long idDetailPromotion) {

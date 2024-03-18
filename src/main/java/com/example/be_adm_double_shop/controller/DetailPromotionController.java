@@ -63,7 +63,7 @@ public class DetailPromotionController {
 //    }
 
     @RequestMapping("/detail-promotion/update/{id}")
-    private ResponseEntity update(@RequestHeader("Authorization") String token, @RequestBody DetailPromotion p) {
+    private ResponseEntity update(@RequestHeader("Authorization") String token, @RequestBody PromotionRequest p) {
         String username = jwtProvider.getUsernameFromToken(token);
         return new ResponseEntity(detailPromotionServicelmpl.update(p, username), HttpStatus.OK);
     }
