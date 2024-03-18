@@ -53,7 +53,6 @@ public class DetailPromotionController {
     @RequestMapping("/detail-promotion/add")
     private ResponseEntity add(@RequestHeader("Authorization") String token, @RequestBody PromotionRequest m) {
         String username = jwtProvider.getUsernameFromToken(token);
-        System.out.println("xxxxx"+ m);
         return new ResponseEntity(detailPromotionServicelmpl.add(m, username), HttpStatus.OK);
     }
 

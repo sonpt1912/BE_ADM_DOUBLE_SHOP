@@ -132,6 +132,13 @@ public class DetailPromotionServicelmpl {
 //    }
 
     public DetailPromotion add(PromotionRequest p, String username) {
+
+        if (DateUtil.stringToDate(p.getStartDate(), "yyyy-MM-dd").after(new Date()))
+            p.setStatus(2);
+        else if (DateUtil.stringToDate(p.getStartDate(), "yyyy-MM-dd").before(new Date()))
+            p.setStatus(1);
+        else if (DateUtil.stringToDate(p.getEndDate(), "yyyy-MM-dd").before(new Date()))
+            p.setStatus(0);
         return detailPromotionRepository.save(DetailPromotion.builder()
                 .detailProduct(detailProductRepository.findById(21L).get())
                 .promotion(promotionRepository.save(Promotion.builder()
