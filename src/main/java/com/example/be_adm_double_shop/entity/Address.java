@@ -50,6 +50,4 @@ public class Address {
     @Column(name = "is_defaul", length = 45)
     private Integer defaul;
 
-
-
 }
