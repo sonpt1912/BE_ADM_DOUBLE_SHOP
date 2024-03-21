@@ -1,41 +1,43 @@
 package com.example.be_adm_double_shop.service.impl;
 
-import com.example.be_adm_double_shop.dto.request.PromotionRequest;
+import com.example.be_adm_double_shop.dto.request.MaterialRequest;
 import com.example.be_adm_double_shop.dto.response.ListResponse;
 import com.example.be_adm_double_shop.entity.Material;
-import com.example.be_adm_double_shop.entity.Promotion;
-import com.example.be_adm_double_shop.repository.PromotionRepository;
-import com.example.be_adm_double_shop.security.JwtProvider;
+import com.example.be_adm_double_shop.repository.MaterialRepository;
 import com.example.be_adm_double_shop.util.Constant;
-import com.example.be_adm_double_shop.util.DateUtil;
 import com.example.be_adm_double_shop.util.StringUtil;
+import io.swagger.models.auth.In;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Service
-public class PromotionSer {
+public class MaterialServicelmpl {
     @Autowired
-    private PromotionRepository promotionRepository;
+    private MaterialRepository materialRepository;
+
 
     @PersistenceContext
     private EntityManager entityManager;
 
-    public ListResponse<Promotion> getAllByCondition(PromotionRequest request) {
+    public ListResponse<Material> getAllByCondition(MaterialRequest request) {
         ListResponse listResponse = new ListResponse();
 
         StringBuilder sql = new StringBuilder();
         Map<String, Object> params = new HashMap<>();
 
-        sql.append("select * from promotion where 1 = 1");
+        sql.append("select * from material where 1 = 1");
 
-        if (!StringUtil.stringIsNullOrEmty(request.getCode())) {
+        if(!StringUtil.stringIsNullOrEmty(request.getCode())) {
             sql.append((" and code like concat('%', :code, '%')"));
             params.put("code", request.getCode());
         }
@@ -62,7 +64,7 @@ public class PromotionSer {
             params.put("size", request.getPageSize());
         }
 
-        Query query = entityManager.createNativeQuery(sql.toString(), Promotion.class);
+        Query query = entityManager.createNativeQuery(sql.toString(), Material.class);
         params.forEach(query::setParameter);
 
         listResponse.setListData(query.getResultList());
@@ -72,7 +74,7 @@ public class PromotionSer {
         params = new HashMap<>();
 
 
-        sql.append(" select count(*) from promotion where 1 = 1 ");
+        sql.append(" select count(*) from material where 1 = 1 ");
 
         if (!StringUtil.stringIsNullOrEmty(request.getCode())) {
             sql.append((" and code like concat('%', :code, '%')"));
@@ -100,26 +102,36 @@ public class PromotionSer {
         return listResponse;
     }
 
-    public List<Promotion> getAll(){
-        return promotionRepository.getAll();
+    public List<Material> getAll() {
+        return materialRepository.findAll();
     }
 
-    public Promotion add(Promotion p) {
-        p.setStatus(Constant.ACTIVE);
-        return promotionRepository.save(p);
+    public List<Material> phanTrang(Integer viTri) {
+        Pageable p = PageRequest.of(viTri, 5);
+        return materialRepository.findAll(p).toList();
     }
 
-    public Promotion getOneById(long id) {
-        return promotionRepository.getOneById(id);
+    public Material chiTiet(Long id) {
+        return materialRepository.findById(id).get();
+
     }
 
-    public Promotion update(Promotion p) {
-        return promotionRepository.save(p);
+    public Material add(Material m){
+        m.setCreatedTime(LocalDateTime.now().toString());
+        m.setCreatedBy("TranTung");
+        m.setStatus(Constant.ACTIVE);
+        return materialRepository.save(m);
     }
 
-    public Promotion delete(Long id) {
-        Promotion promotion = promotionRepository.getOneById(id);
-        promotion.setStatus(0);
-        return promotionRepository.save(promotion);
+    public Material update(Material m, Long id) {
+        m.setId(id);
+        m.setCreatedTime(LocalDateTime.now().toString());
+        return materialRepository.save(m);
+    }
+
+    public Material delete(Long id) {
+        Material material = materialRepository.findById(id).get();
+        material.setStatus(0);
+        return materialRepository.save(material);
     }
 }

@@ -1,11 +1,13 @@
 package com.example.be_adm_double_shop.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Random;
 
 @Entity
@@ -54,4 +56,9 @@ public class Promotion {
 
     @Column(name = "updated_time")
     private String updatedTime;
+
+    @OneToMany(mappedBy = "promotion", cascade = CascadeType.ALL)
+    private List<DetailPromotion> detailPromotions;
+
+
 }

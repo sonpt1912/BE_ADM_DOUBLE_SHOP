@@ -437,6 +437,30 @@ CREATE TABLE promotion
     updated_time     VARCHAR(255)
 );
 
+CREATE TABLE `double_shop`.`detail_promotion`
+(
+    `id`                BIGINT NOT NULL,
+    `id_detail_product` BIGINT NULL,
+    `id_promotion`      BIGINT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `iddetail_promotion_UNIQUE` (`id` ASC) VISIBLE,
+    INDEX               `id_promotion_idx` (`id_promotion` ASC) VISIBLE,
+    INDEX               `id_detail_product_idx` (`id_detail_product` ASC) VISIBLE,
+    CONSTRAINT `id_promotion`
+        FOREIGN KEY (`id_promotion`)
+            REFERENCES `double_shop`.`promotion` (`id`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION,
+    CONSTRAINT `id_detail_product`
+        FOREIGN KEY (`id_detail_product`)
+            REFERENCES `double_shop`.`detail_product` (`id`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION
+);
+
+ALTER TABLE `double_shop`.`detail_promotion`
+    CHANGE COLUMN `id` `id` BIGINT NOT NULL AUTO_INCREMENT;
+
 CREATE TABLE `double_shop`.`bill_history`
 (
     `id` BIGINT       NOT NULL AUTO_INCREMENT,
