@@ -31,6 +31,6 @@ public class BillController {
     public ResponseEntity updateBill(@RequestBody BillRequest billRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         String username = jwtProvider.getUsernameFromToken(token);
         return new ResponseEntity(billService.updateBill(billRequest, username), HttpStatus.OK);
-    }
+    }   
 
 }

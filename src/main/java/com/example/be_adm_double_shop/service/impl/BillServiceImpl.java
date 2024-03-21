@@ -17,8 +17,6 @@ public class BillServiceImpl implements BillService {
     @Autowired
     private DetailProductService detailProductService;
 
-
-
     @Override
     public Object createBill(BillRequest billRequest, String creator) {
         return null;
