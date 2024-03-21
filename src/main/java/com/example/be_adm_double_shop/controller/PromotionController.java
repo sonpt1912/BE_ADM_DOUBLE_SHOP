@@ -5,6 +5,7 @@ import com.example.be_adm_double_shop.config.EnableWrapResponse;
 import com.example.be_adm_double_shop.dto.request.PromotionRequest;
 import com.example.be_adm_double_shop.entity.DetailPromotion;
 import com.example.be_adm_double_shop.entity.Promotion;
+import com.example.be_adm_double_shop.repository.ProductRepository;
 import com.example.be_adm_double_shop.security.JwtProvider;
 import com.example.be_adm_double_shop.service.impl.PromotionServicelmpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,12 @@ public class PromotionController {
     private PromotionServicelmpl promotionSer;
 
     @Autowired
+    private ProductRepository productRepository;
+
+    @Autowired
     private JwtProvider jwtProvider;
 
-    @RequestMapping("/promotion/show/condition")
+    @PostMapping("/promotion/show/condition")
     private ResponseEntity show(@RequestBody PromotionRequest request) {
         return new ResponseEntity(promotionSer.getAllByCondition(request), HttpStatus.OK);
     }
@@ -34,12 +38,17 @@ public class PromotionController {
         return promotionSer.getAll();
     }
 
-    @RequestMapping(value = "/promotion/show/{id}")
+    @GetMapping("/tree/product/show")
+    private ResponseEntity hienThiProduct() {
+        return ResponseEntity.ok(productRepository.findAll());
+    }
+
+    @GetMapping(value = "/promotion/show/{id}")
     public ResponseEntity getOneById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(promotionSer.getOneById(id));
     }
 
-    @RequestMapping("/promotion/show/{idPromotion}/{idDetailPromotion}")
+    @GetMapping("/promotion/show/{idPromotion}/{idDetailPromotion}")
     public ResponseEntity getOne(@PathVariable("idPromotion") Long idPromotion, @PathVariable("idDetailPromotion") Long idDetailPromotion) {
         Promotion promotion = promotionSer.getOneById(idPromotion);
         if (promotion != null) {
@@ -54,19 +63,19 @@ public class PromotionController {
         }
     }
 
-    @RequestMapping("/promotion/add")
+    @PostMapping("/promotion/add")
     private ResponseEntity add(@RequestHeader("Authorization") String token, @RequestBody Promotion m) {
         String username = jwtProvider.getUsernameFromToken(token);
         return new ResponseEntity(promotionSer.add(m, username), HttpStatus.OK);
     }
 
-    @RequestMapping("/promotion/update/{id}")
+    @PostMapping("/promotion/update/{id}")
     private ResponseEntity update(@RequestHeader("Authorization") String token, @RequestBody Promotion m) {
         String username = jwtProvider.getUsernameFromToken(token);
         return new ResponseEntity(promotionSer.update(m, username), HttpStatus.OK);
     }
 
-    @RequestMapping("/promotion/delete/{id}")
+    @PostMapping("/promotion/delete/{id}")
     private Promotion delete(@PathVariable Long id) {
         return promotionSer.delete(id);
     }

@@ -1,6 +1,7 @@
 package com.example.be_adm_double_shop.entity;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
