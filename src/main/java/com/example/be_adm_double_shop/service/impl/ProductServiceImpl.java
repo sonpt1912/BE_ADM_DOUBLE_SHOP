@@ -147,4 +147,13 @@ public class ProductServiceImpl implements ProductService {
         return null;
     }
 
+    @Override
+    public Object getAllTreeData() {
+        List<Product> list = productRepository.findAll();
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).setListDetailProduct(detailProductRepository.getAllDetailProduct(list.get(i).getId()));
+        }
+        return list;
+    }
+
 }
