@@ -137,8 +137,8 @@ CREATE TABLE `double_shop`.`employee`
     `password`     VARCHAR(145) NULL,
     `created_time` VARCHAR(45) NOT NULL,
     `updated_time` VARCHAR(45) NULL,
-    `updated_by`   VARCHAR(45) NOT NULL,
-    `created_by`   VARCHAR(45) NULL,
+    `updated_by`   VARCHAR(45) NULL,
+    `created_by`   VARCHAR(45) NOT NULL,
     PRIMARY KEY (`id`),
     UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE
 );
@@ -300,10 +300,10 @@ CREATE TABLE `double_shop`.`detail_product`
     INDEX          `FK_DT_COLOR_idx` (`id_color` ASC) VISIBLE,
     INDEX          `FK_DT_PRO_idx` (`id_product` ASC) VISIBLE,
     INDEX          `FK_DT_SIZE_idx` (`id_size` ASC) VISIBLE,
-    INDEX          `FK_DT_BRAND_idx` (`id_branch` ASC) VISIBLE,
+    INDEX          `FK_DT_BRAND_idx` (`id_brand` ASC) VISIBLE,
     INDEX          `FK_DT_CATE_idx` (`id_category` ASC) VISIBLE,
     INDEX          `FK_DT_COLLAR_idx` (`id_collar` ASC) VISIBLE,
-    INDEX          `FK_DT_MT_idx` (`id_collar` ASC) VISIBLE,
+    INDEX          `FK_DT_MT_GT_idx` (`id_collar` ASC) VISIBLE,
     CONSTRAINT `FK_DT_COLOR`
         FOREIGN KEY (`id_color`)
             REFERENCES `double_shop`.`color` (`id`)
@@ -320,7 +320,7 @@ CREATE TABLE `double_shop`.`detail_product`
             ON DELETE NO ACTION
             ON UPDATE NO ACTION,
     CONSTRAINT `FK_DT_BRAND`
-        FOREIGN KEY (`id_branch`)
+        FOREIGN KEY (`id_brand`)
             REFERENCES `double_shop`.`brand` (`id`)
             ON DELETE NO ACTION
             ON UPDATE NO ACTION,
@@ -358,7 +358,7 @@ CREATE TABLE `double_shop`.`bill`
     `note`           VARCHAR(45) NULL,
     `payment`        VARCHAR(45) NULL,
     `money_ship`     BIGINT NULL,
-    `status`         INT         NOT NULL
+    `status`         INT NOT NULL,
     PRIMARY KEY (`id`),
     UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
     INDEX            `FK_BILL_customer_idx` (`id_customer` ASC) VISIBLE,
@@ -421,21 +421,46 @@ CREATE TABLE `double_shop`.`detail_bill`
             ON UPDATE NO ACTION
 );
 
-CREATE TABLE promotion
+CREATE TABLE `double_shop`.`promotion`
 (
-    id               BIGINT AUTO_INCREMENT PRIMARY KEY,
-    code             VARCHAR(255),
-    name             VARCHAR(255),
-    discount_amount  BIGINT,
-    discount_percent INT,
-    status           INT,
-    start_date       DATE,
-    end_date         DATE,
-    created_by       VARCHAR(255) NOT NULL,
-    updated_by       VARCHAR(255),
-    created_time     VARCHAR(255) NOT NULL,
-    updated_time     VARCHAR(255)
+    `id`               BIGINT AUTO_INCREMENT PRIMARY KEY,
+    `code`             VARCHAR(255),
+    `name`             VARCHAR(255),
+    `discount_amount` BIGINT,
+    `discount_percent` INT,
+    `status`           INT,
+    `start_date`       DATE,
+    `end_date`         DATE,
+    `created_by`       VARCHAR(255) NOT NULL,
+    `updated_by`       VARCHAR(255),
+    `created_time`     VARCHAR(255) NOT NULL,
+    `updated_time`     VARCHAR(255),
+    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE
 );
+
+CREATE TABLE `double_shop`.`detail_promotion`
+(
+    `id`                BIGINT NOT NULL,
+    `id_detail_product` BIGINT NULL,
+    `id_promotion`      BIGINT NULL,
+    PRIMARY KEY (`id`),
+    UNIQUE INDEX `iddetail_promotion_UNIQUE` (`id` ASC) VISIBLE,
+    INDEX               `id_promotion_idx` (`id_promotion` ASC) VISIBLE,
+    INDEX               `id_detail_product_idx` (`id_detail_product` ASC) VISIBLE,
+    CONSTRAINT `id_promotion`
+        FOREIGN KEY (`id_promotion`)
+            REFERENCES `double_shop`.`promotion` (`id`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION,
+    CONSTRAINT `id_detail_product`
+        FOREIGN KEY (`id_detail_product`)
+            REFERENCES `double_shop`.`detail_product` (`id`)
+            ON DELETE NO ACTION
+            ON UPDATE NO ACTION
+);
+
+ALTER TABLE `double_shop`.`detail_promotion`
+    CHANGE COLUMN `id` `id` BIGINT NOT NULL AUTO_INCREMENT;
 
 CREATE TABLE `double_shop`.`bill_history`
 (
@@ -444,7 +469,7 @@ CREATE TABLE `double_shop`.`bill_history`
     `description`     VARCHAR(245) NOT NULL,
     `created_by`      VARCHAR(45)  NOT NULL,
     `created_time`    VARCHAR(45)  NOT NULL,
-    PRIMARY KEY (`id_bill_history`),
+    PRIMARY KEY (`id`),
     INDEX             `FK_HIS_BILL_idx` (`id_bill` ASC) VISIBLE,
     CONSTRAINT `FK_HIS_BILL`
         FOREIGN KEY (`id_bill`)

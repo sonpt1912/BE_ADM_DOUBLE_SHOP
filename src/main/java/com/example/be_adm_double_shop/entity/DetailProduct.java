@@ -44,6 +44,7 @@ public class DetailProduct {
     @JoinColumn(name = "id_category")
     private Category category;
 
+
     @ManyToOne
     @JoinColumn(name = "id_material")
     private Material material;
@@ -51,19 +52,19 @@ public class DetailProduct {
     @Column(name = "quantity")
     private Long quantity;
 
-    @Column(name = "status")
+    @Column(name = "status", nullable = false)
     private Integer status;
 
-    @Column(name = "created_by")
+    @Column(name = "created_by", nullable = false, length = 45)
     private String createdBy;
 
-    @Column(name = "created_time")
+    @Column(name = "created_time", nullable = false, length = 45)
     private String createdTime;
 
-    @Column(name = "updated_by")
+    @Column(name = "updated_by", length = 45)
     private String updatedBy;
 
-    @Column(name = "updated_time")
+    @Column(name = "updated_time", length = 45)
     private String updatedTime;
 
 }

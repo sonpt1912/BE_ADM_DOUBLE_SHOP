@@ -2,10 +2,10 @@ server:
   port: 8072
 spring:
   datasource:
-    url: jdbc:mysql://mysql-server.chayqw2ywd4x.ap-southeast-1.rds.amazonaws.com:3306/double_shop?useSSL=true
+    url: jdbc:mysql://localhost:3306/double_shop?useSSL=true
     # admin only
-    username: admin
-    password: KlNvbjE5MTIwMw==
+    username: root
+    password: Son191203
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
