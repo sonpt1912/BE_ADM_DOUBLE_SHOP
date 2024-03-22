@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface DetailProductRepository extends JpaRepository<DetailProduct, Long> {
 
-    @Query(value = "SELECT * from DetailProduct WHERE id_product = :id", nativeQuery = true)
+    @Query(value = "SELECT * from detail_product WHERE id_product = :id", nativeQuery = true)
     List<DetailProduct> getAllDetailProduct(@Param("id") Long id);
 
 }

@@ -45,4 +45,7 @@ public class Product {
     @Transient
     private Map listImages;
 
+    @Transient
+    private List<DetailProduct> listDetailProduct;
+
 }
