@@ -87,7 +87,7 @@ public class ProductServiceImpl implements ProductService {
     public Object getAllProduct(ProductRequest request) throws Exception {
         ListResponse<Product> listResponse = (ListResponse<Product>) getAllProductByCondition(request);
         for (int i = 0; i < request.getPageSize(); i++) {
-            listResponse.getListData().get(i).setListImages(cloudinary.search().expression("folder:double_shop/product/" + request.getCode() + "/*").maxResults(500).execute());
+            listResponse.getListData().get(i).setListImages(cloudinary.search().expression("folder:double_shop/product/" + listResponse.getListData().get(i).getCode() + "/*").maxResults(500).execute());
         }
         return listResponse;
     }
@@ -145,6 +145,15 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Object updateProduct(ProductRequest request, String username) {
         return null;
+    }
+
+    @Override
+    public Object getAllTreeData() {
+        List<Product> list = productRepository.findAll();
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).setListDetailProduct(detailProductRepository.getAllDetailProduct(list.get(i).getId()));
+        }
+        return list;
     }
 
 }

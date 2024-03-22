@@ -62,5 +62,10 @@ public class ProductController {
         return new ResponseEntity(productService.updateProduct(productRequest, username), HttpStatus.OK);
     }
 
+    @GetMapping("/get-tree-product")
+    public ResponseEntity getTreeProduct() {
+        return new ResponseEntity(productService.getAllTreeData(), HttpStatus.OK);
+    }
+
 
 }
