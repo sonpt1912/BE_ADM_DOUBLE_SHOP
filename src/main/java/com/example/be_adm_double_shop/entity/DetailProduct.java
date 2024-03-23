@@ -51,9 +51,9 @@ public class DetailProduct {
 
     @Column(name = "quantity")
     private Long quantity;
-
-    @Column(name = "price")
-    private Long price;
+//
+//    @Column(name = "price")
+//    private Long price;
 
     @Column(name = "status", nullable = false)
     private Integer status;
