@@ -29,8 +29,12 @@ public class Constant {
     public static final String DEFAULT_PASSWORD = "hello";
 
     public interface DETAIL_PRODUCT {
+
+        String CATEGORY = "CATEGORY";
         String SIZE = "SIZE";
         String COLLAR = "COLLAR";
+
+        String BRAND = "BRAND";
 
     }
 
