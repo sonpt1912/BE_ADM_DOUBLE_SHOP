@@ -31,12 +31,7 @@ public class MaterialController {
 
     @GetMapping("/Material/get-all/{id}")
     public ResponseEntity getOneById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(materialSer.chiTiet(id));
-    }
-
-    @GetMapping("/Material/get-all/{viTri}")
-    private List<Material> phanTrang(@PathVariable("viTri") Integer viTri ) {
-        return materialSer.phanTrang(viTri);
+        return ResponseEntity.ok(materialSer.getOnebyid(id));
     }
 
     @PostMapping("/Material/add")

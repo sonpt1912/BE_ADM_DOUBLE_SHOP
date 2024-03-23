@@ -113,8 +113,14 @@ public class DetailPromotionServicelmpl {
     }
 
 //    public List<DetailPromotion> add(PromotionRequest p, String username) {
+//        if (DateUtil.stringToDate(p.getStartDate(), "yyyy-MM-dd").after(new Date()))
+//            p.setStatus(2);
+//        else if (DateUtil.stringToDate(p.getStartDate(), "yyyy-MM-dd").before(new Date()))
+//            p.setStatus(1);
+//        else if (DateUtil.stringToDate(p.getEndDate(), "yyyy-MM-dd").before(new Date()))
+//            p.setStatus(0);
 //        List<DetailPromotion> detailPromotions = new ArrayList<>();
-//            p.getDetailProduct().stream().map(i -> detailPromotionRepository.save(DetailPromotion.builder()
+//             return p.getDetailProduct().stream().map(i -> detailPromotionRepository.save(DetailPromotion.builder()
 //                    .detailProduct(detailProductRepository.findById(21L).get())
 //                    .promotion(promotionRepository.save(Promotion.builder()
 //                            .name(p.getName())
@@ -126,9 +132,8 @@ public class DetailPromotionServicelmpl {
 //                            .status(p.getStatus())
 //                            .createdBy(username)
 //                            .createdTime(DateUtil.dateToString4(new Date()))
-//                            .build())).build()
-////            )).toList();
-//        return detailPromotions;
+//                            .build())).build())).toList();
+////        return detailPromotions;
 //    }
 
     public DetailPromotion add(PromotionRequest p, String username) {
@@ -140,7 +145,7 @@ public class DetailPromotionServicelmpl {
         else if (DateUtil.stringToDate(p.getEndDate(), "yyyy-MM-dd").before(new Date()))
             p.setStatus(0);
         return detailPromotionRepository.save(DetailPromotion.builder()
-                .detailProduct(detailProductRepository.findById(21L).get())
+                .detailProduct(detailProductRepository.findById(1L).get())
                 .promotion(promotionRepository.save(Promotion.builder()
                         .name(p.getName())
                         .code(p.getCode())

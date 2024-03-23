@@ -106,14 +106,8 @@ public class MaterialServicelmpl {
         return materialRepository.findAll();
     }
 
-    public List<Material> phanTrang(Integer viTri) {
-        Pageable p = PageRequest.of(viTri, 5);
-        return materialRepository.findAll(p).toList();
-    }
-
-    public Material chiTiet(Long id) {
+    public Material getOnebyid(Long id) {
         return materialRepository.findById(id).get();
-
     }
 
     public Material add(Material m){
