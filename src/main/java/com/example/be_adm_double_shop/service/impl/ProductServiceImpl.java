@@ -122,6 +122,7 @@ public class ProductServiceImpl implements ProductService {
                             .createdTime(DateUtil.dateToString4(new Date()))
                             .quantity(colorRequest.getQuantity())
                             .status(Constant.ACTIVE)
+                            .price(colorRequest.getPrice())
                             .build();
                     listDetailProduct.add(detailProduct);
                 }
