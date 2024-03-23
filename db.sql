@@ -137,8 +137,8 @@ CREATE TABLE `double_shop`.`employee`
     `password`     VARCHAR(145) NULL,
     `created_time` VARCHAR(45) NOT NULL,
     `updated_time` VARCHAR(45) NULL,
-    `updated_by`   VARCHAR(45) NOT NULL,
-    `created_by`   VARCHAR(45) NULL,
+    `updated_by`   VARCHAR(45) NULL,
+    `created_by`   VARCHAR(45) NOT NULL,
     PRIMARY KEY (`id`),
     UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE
 );
@@ -291,6 +291,7 @@ CREATE TABLE `double_shop`.`detail_product`
     `id_category`  BIGINT      NOT NULL,
     `id_material`  BIGINT      NOT NULL,
     `quantity`     BIGINT      NOT NULL,
+    `price`        BIGINT      NOT NULL,
     `status`       INT         NOT NULL,
     `created_by`   VARCHAR(45) NOT NULL,
     `created_time` VARCHAR(45) NOT NULL,

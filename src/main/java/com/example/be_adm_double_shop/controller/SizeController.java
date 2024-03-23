@@ -29,7 +29,7 @@ public class SizeController {
     @PostMapping("/save")
     public ResponseEntity save(@RequestHeader("Authorization") String token, @RequestBody Size size) {
         String username = jwtProvider.getUsernameFromToken(token);
-        return new ResponseEntity(sizeService.save(size, "username"), HttpStatus.OK);
+        return new ResponseEntity(sizeService.save(size, username), HttpStatus.OK);
     }
 
     @PostMapping("/update")
