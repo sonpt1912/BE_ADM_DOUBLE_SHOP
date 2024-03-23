@@ -44,13 +44,15 @@ public class DetailProduct {
     @JoinColumn(name = "id_category")
     private Category category;
 
-
     @ManyToOne
     @JoinColumn(name = "id_material")
     private Material material;
 
     @Column(name = "quantity")
     private Long quantity;
+
+    @Column(name = "price")
+    private Long price;
 
     @Column(name = "status", nullable = false)
     private Integer status;

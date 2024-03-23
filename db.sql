@@ -291,6 +291,7 @@ CREATE TABLE `double_shop`.`detail_product`
     `id_category`  BIGINT      NOT NULL,
     `id_material`  BIGINT      NOT NULL,
     `quantity`     BIGINT      NOT NULL,
+    `price`        BIGINT      NOT NULL,
     `status`       INT         NOT NULL,
     `created_by`   VARCHAR(45) NOT NULL,
     `created_time` VARCHAR(45) NOT NULL,

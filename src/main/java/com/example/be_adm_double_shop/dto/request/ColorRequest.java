@@ -22,4 +22,6 @@ public class ColorRequest {
 
     private Long quantity;
 
+    private Long price;
+
 }

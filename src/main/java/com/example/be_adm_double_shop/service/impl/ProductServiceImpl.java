@@ -122,6 +122,7 @@ public class ProductServiceImpl implements ProductService {
                             .createdTime(DateUtil.dateToString4(new Date()))
                             .quantity(colorRequest.getQuantity())
                             .status(Constant.ACTIVE)
+                            .price(colorRequest.getPrice())
                             .build();
                     listDetailProduct.add(detailProduct);
                 }
@@ -151,7 +152,7 @@ public class ProductServiceImpl implements ProductService {
     public Object getAllTreeData() {
         List<Product> list = productRepository.findAll();
         for (int i = 0; i < list.size(); i++) {
-            list.get(i).setListDetailProduct(detailProductRepository.getAllDetailProduct(list.get(i).getId()));
+            list.get(i).setListDetailProduct(detailProductRepository.getActiveDetailProduct(list.get(i).getId()));
         }
         return list;
     }
