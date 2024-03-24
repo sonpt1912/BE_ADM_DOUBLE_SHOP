@@ -6,6 +6,7 @@ import com.example.be_adm_double_shop.dto.request.PromotionRequest;
 import com.example.be_adm_double_shop.entity.DetailPromotion;
 import com.example.be_adm_double_shop.entity.Promotion;
 import com.example.be_adm_double_shop.repository.ProductRepository;
+import com.example.be_adm_double_shop.repository.ProductViewRepository;
 import com.example.be_adm_double_shop.security.JwtProvider;
 import com.example.be_adm_double_shop.service.impl.PromotionServicelmpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +24,7 @@ public class PromotionController {
     private PromotionServicelmpl promotionSer;
 
     @Autowired
-    private ProductRepository productRepository;
+    private ProductViewRepository productRepository;
 
     @Autowired
     private JwtProvider jwtProvider;

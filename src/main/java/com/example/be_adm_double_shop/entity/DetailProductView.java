@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Timestamp;
-
 @Entity
 @Table(name = "detail_product")
 @AllArgsConstructor
@@ -14,7 +12,7 @@ import java.sql.Timestamp;
 @Getter
 @Setter
 @Builder
-public class DetailProduct {
+public class DetailProductView {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,7 +25,8 @@ public class DetailProduct {
 
     @ManyToOne
     @JoinColumn(name = "id_product")
-    private Product product;
+    @JsonIgnore
+    private ProductView productView;
 
     @ManyToOne
     @JoinColumn(name = "id_size")
@@ -51,9 +50,9 @@ public class DetailProduct {
 
     @Column(name = "quantity")
     private Long quantity;
-
-    @Column(name = "price")
-    private Long price;
+//
+//    @Column(name = "price")
+//    private Long price;
 
     @Column(name = "status", nullable = false)
     private Integer status;
