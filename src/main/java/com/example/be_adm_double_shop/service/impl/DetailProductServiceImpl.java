@@ -8,6 +8,8 @@ import jakarta.persistence.PersistenceContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class DetailProductServiceImpl implements DetailProductService {
 
@@ -25,6 +27,16 @@ public class DetailProductServiceImpl implements DetailProductService {
     @Override
     public Object updateDetailProduct(DetailProduct detailProduct) {
         return null;
+    }
+
+    @Override
+    public DetailProduct getOneById(Long id) {
+        return detailProductRepository.findById(id).get();
+    }
+
+    @Override
+    public Object updateAllDetailPro(List<DetailProduct> list) {
+        return detailProductRepository.saveAll(list);
     }
 
 }

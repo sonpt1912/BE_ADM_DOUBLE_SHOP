@@ -38,5 +38,28 @@ public class Constant {
 
     }
 
+    public interface PRODUCT {
+        Long ACTIVE = 0L;
+
+        Long INACTIVE = 1L;
+
+        Long PAUSE = 2L;
+    }
+
+    public interface BILL {
+
+        // cho xac nhan, huy, thanh toan, chua thanh toan,
+
+        Long WAIT_CONFIRM = 0L;
+
+        Long CANCELLATION = 1L;
+
+        Long PAYMENT = 2L;
+
+        Long NOT_PAYMENT = 3L;
+
+
+    }
+
 
 }
