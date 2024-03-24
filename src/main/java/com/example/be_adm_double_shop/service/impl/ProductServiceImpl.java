@@ -85,8 +85,12 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Object getAllProduct(ProductRequest request) throws Exception {
+        int totalRecord = request.getPageSize();
         ListResponse<Product> listResponse = (ListResponse<Product>) getAllProductByCondition(request);
-        for (int i = 0; i < request.getPageSize(); i++) {
+        if (listResponse.getTotalRecord() < request.getPageSize()) {
+            totalRecord = listResponse.getTotalRecord();
+        }
+        for (int i = 0; i < totalRecord; i++) {
             listResponse.getListData().get(i).setListImages(cloudinary.search().expression("folder:double_shop/product/" + listResponse.getListData().get(i).getCode() + "/*").maxResults(500).execute());
         }
         return listResponse;
