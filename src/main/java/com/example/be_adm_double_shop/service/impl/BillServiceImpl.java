@@ -42,6 +42,8 @@ public class BillServiceImpl implements BillService {
                 .employee(Employee.builder().build())
                 .status(Constant.ACTIVE)
                 .build();
+
+        billRepository.save(bill);
         if (bill != null) {
             // add cac san pham vao bill
             List<DetailBill> dbl = detailBillService.createDetailBill(bill, billRequest.getListDetailProduct());

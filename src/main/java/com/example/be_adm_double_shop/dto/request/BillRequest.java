@@ -12,21 +12,17 @@ import java.util.List;
 @NoArgsConstructor
 public class BillRequest {
 
-    private Long employee;
-
     private Long idCustomer;
 
     private Long idVoucher;
 
     private String code;
 
-    private Long totalAmount;
+    private Long totalAmout;
 
     private String note;
 
     private Long status;
-
-    private String phone;
 
     private List<DetailProduct>listDetailProduct;
 
