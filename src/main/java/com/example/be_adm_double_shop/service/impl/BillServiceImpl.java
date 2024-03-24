@@ -35,16 +35,15 @@ public class BillServiceImpl implements BillService {
             code = UUID.randomUUID().toString();
             check = billRepository.existsByCode(code);
         }
-        Bill bill = Bill.builder()
+
+        Bill bill = billRepository.save(Bill.builder()
                 .code(code)
                 .totalAmount(billRequest.getTotalAmout())
-                .customer(Customer.builder().id(billRequest.getIdCustomer()).build())
-                .voucher(Voucher.builder().id(billRequest.getIdVoucher()).build())
-                .employee(Employee.builder().build())
+//                .customer(Customer.builder().id(billRequest.getIdCustomer()).build())
+//                .voucher(Voucher.builder().id(billRequest.getIdVoucher()).build())
+//                .employee(Employee.builder().build())
                 .status(Constant.ACTIVE)
-                .build();
-
-        billRepository.save(bill);
+                .build());
         if (bill != null) {
             // add cac san pham vao bill
             List<DetailBill> dbl = detailBillService.createDetailBill(bill, billRequest.getListDetailProduct());
@@ -58,9 +57,8 @@ public class BillServiceImpl implements BillService {
                             .build();
                     listDP.add(dt);
                 }
-
-
             }
+            return Constant.SUCCESS;
         }
         throw new ValidationException(Constant.API001, "");
     }
