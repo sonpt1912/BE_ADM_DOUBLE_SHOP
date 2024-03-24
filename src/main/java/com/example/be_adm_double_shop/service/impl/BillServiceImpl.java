@@ -37,6 +37,7 @@ public class BillServiceImpl implements BillService {
         }
         Bill bill = Bill.builder()
                 .code(code)
+                .totalAmount(billRequest.getTotalAmout())
                 .customer(Customer.builder().id(billRequest.getIdCustomer()).build())
                 .voucher(Voucher.builder().id(billRequest.getIdVoucher()).build())
                 .employee(Employee.builder().build())
