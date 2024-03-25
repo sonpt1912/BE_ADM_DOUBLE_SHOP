@@ -19,37 +19,32 @@ public class MaterialController {
     @Autowired
     private MaterialServicelmpl materialSer;
 
-    @RequestMapping("/Material/get-all/condition")
+    @PostMapping("/Material/get-all/condition")
     private ResponseEntity show(@RequestBody MaterialRequest request) {
         return new ResponseEntity(materialSer.getAllByCondition(request), HttpStatus.OK);
     }
 
-    @RequestMapping("/Material/get-all")
+    @GetMapping("/Material/get-all")
     private List<Material> hienThi() {
         return materialSer.getAll();
     }
 
     @GetMapping("/Material/get-all/{id}")
     public ResponseEntity getOneById(@PathVariable("id") Long id) {
-        return ResponseEntity.ok(materialSer.chiTiet(id));
+        return ResponseEntity.ok(materialSer.getOnebyid(id));
     }
 
-    @RequestMapping("/Material/get-all/{viTri}")
-    private List<Material> phanTrang(@PathVariable("viTri") Integer viTri ) {
-        return materialSer.phanTrang(viTri);
-    }
-
-    @RequestMapping("/Material/add")
+    @PostMapping("/Material/add")
     private Material add(@RequestBody Material m) {
         return materialSer.add(m);
     }
 
-    @RequestMapping("/Material/update/{id}")
+    @PostMapping("/Material/update/{id}")
     private Material update(@RequestBody Material m, @PathVariable("id") Long id) {
         return materialSer.update(m,id);
     }
 
-    @RequestMapping("/Material/delete/{id}")
+    @PostMapping("/Material/delete/{id}")
     private Material delete(@PathVariable Long id) {
         return materialSer.delete(id);
     }

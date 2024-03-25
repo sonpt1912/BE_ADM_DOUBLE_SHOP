@@ -30,45 +30,45 @@ public class DetailPromotionController {
     @Autowired
     private JwtProvider jwtProvider;
 
-    @RequestMapping("/detail-promotion/hien-thi/condition")
+    @PostMapping("/detail-promotion/hien-thi/condition")
     private ResponseEntity show(@RequestBody DetailPromotionRequest request) {
         return new ResponseEntity(detailPromotionServicelmpl.getAllByCondition(request), HttpStatus.OK);
     }
 
-    @RequestMapping("/detail-product/show")
+    @GetMapping("/detail-product/show")
     private List<DetailProduct> showProduct() {
         return detailProductRepository.findAll();
     }
 
-    @RequestMapping("/detail-promotion/hien-thi")
+    @GetMapping("/detail-promotion/hien-thi")
     private List<DetailPromotion> hienThi() {
         return detailPromotionServicelmpl.getAll();
     }
 
-    @RequestMapping("/detail-promotion/hien-thi/{id}")
+    @GetMapping("/detail-promotion/hien-thi/{id}")
     public ResponseEntity getOneById(@PathVariable("id") Long id) {
         return ResponseEntity.ok(detailPromotionServicelmpl.getOneById(id));
     }
 
-    @RequestMapping("/detail-promotion/add")
+    @PostMapping("/detail-promotion/add")
     private ResponseEntity add(@RequestHeader("Authorization") String token, @RequestBody PromotionRequest m) {
         String username = jwtProvider.getUsernameFromToken(token);
         return new ResponseEntity(detailPromotionServicelmpl.add(m, username), HttpStatus.OK);
     }
 
-//    @RequestMapping("/detail-promotion/add")
+//    @PostMapping("/detail-promotion/add")
 //    private ResponseEntity add(@RequestHeader("Authorization") String token, @RequestBody Promotion m, @RequestBody DetailPromotion p) {
 //        String username = jwtProvider.getUsernameFromToken(token);
 //        return new ResponseEntity(detailPromotionServicelmpl.add(m, p, username), HttpStatus.OK);
 //    }
 
-    @RequestMapping("/detail-promotion/update/{id}")
+    @PostMapping("/detail-promotion/update/{id}")
     private ResponseEntity update(@RequestHeader("Authorization") String token, @RequestBody PromotionRequest p) {
         String username = jwtProvider.getUsernameFromToken(token);
         return new ResponseEntity(detailPromotionServicelmpl.update(p, username), HttpStatus.OK);
     }
 
-    @RequestMapping("/detail-promotion/delete/{id}")
+    @PostMapping("/detail-promotion/delete/{id}")
     private DetailPromotion delete(@PathVariable Long id) {
         return detailPromotionServicelmpl.delete(id);
     }
