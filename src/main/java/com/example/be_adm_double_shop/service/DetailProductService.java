@@ -8,7 +8,7 @@ public interface DetailProductService {
 
     Object getListDetailProductByProductId(Long id);
 
-    Object updateDetailProduct(DetailProduct detailProduct);
+    Object updateDetailProduct(DetailProduct detailProduct, String username);
 
     DetailProduct getOneById(Long id);
 

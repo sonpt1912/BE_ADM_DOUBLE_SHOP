@@ -1,7 +1,7 @@
 package com.example.be_adm_double_shop.controller;
 
 import com.example.be_adm_double_shop.dto.request.ProductRequest;
-import com.example.be_adm_double_shop.repository.DetailProductRepository;
+import com.example.be_adm_double_shop.entity.DetailProduct;
 import com.example.be_adm_double_shop.security.JwtProvider;
 import com.example.be_adm_double_shop.service.CloudinaryService;
 import com.example.be_adm_double_shop.service.DetailProductService;
@@ -56,10 +56,10 @@ public class ProductController {
         return new ResponseEntity(productService.createProduct(productRequest, username), HttpStatus.OK);
     }
 
-    @PostMapping("/update-product")
-    public ResponseEntity updateProduct(@RequestBody ProductRequest productRequest, @RequestHeader("Authorization") String token) {
+    @PostMapping("/update-detail-product")
+    public ResponseEntity updateProduct(@RequestBody DetailProduct detailProduct, @RequestHeader("Authorization") String token) {
         String username = jwtProvider.getUsernameFromToken(token);
-        return new ResponseEntity(productService.updateProduct(productRequest, username), HttpStatus.OK);
+        return new ResponseEntity(detailProductService.updateDetailProduct(detailProduct, username), HttpStatus.OK);
     }
 
     @GetMapping("/get-tree-product")
