@@ -90,6 +90,8 @@ public class ProductServiceImpl implements ProductService {
             params.put("id", request.getIdMaterial());
         }
 
+        sql.append(" ORDER BY p.created_time DESC ");
+
         if (!StringUtil.stringIsNullOrEmty(request.getPage())) {
             sql.append(" LIMIT :page, :pageSize");
             if (request.getPage() == 0) {
@@ -99,6 +101,7 @@ public class ProductServiceImpl implements ProductService {
             }
             params.put("pageSize", request.getPageSize());
         }
+
 
         Query query = entityManager.createNativeQuery(sql.toString(), Product.class);
         params.forEach(query::setParameter);

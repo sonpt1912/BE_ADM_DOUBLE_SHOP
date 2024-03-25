@@ -22,7 +22,7 @@ public class EmployeeController {
     private JwtProvider jwtProvider;
 
     @PostMapping("/create")
-    public ResponseEntity create(@RequestHeader("Authorization") String token, @RequestBody Employee employee) {
+    public ResponseEntity createEmployee(@RequestHeader("Authorization") String token, @RequestBody Employee employee) {
         String username = jwtProvider.getUsernameFromToken(token);
         return new ResponseEntity(employeeService.createEmployee(employee, username), HttpStatus.OK);
     }
