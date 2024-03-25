@@ -50,8 +50,45 @@ public class ProductServiceImpl implements ProductService {
 
         ListResponse<Product> listProductResponse = new ListResponse<>();
 
-        sql.append(" SELECT p.*");
-        sql.append(" FROM product p ");
+        sql.append(" SELECT p.* FROM product p ");
+        sql.append(" INNER JOIN detail_product dp ON p.id = dp.id_product ");
+        sql.append(" INNER JOIN color c ON dp.id_color = c.id ");
+        sql.append(" INNER JOIN collar cl ON dp.id_collar = cl.id ");
+        sql.append(" INNER JOIN size s ON dp.id_size = s.id ");
+        sql.append(" INNER JOIN brand b ON dp.id_brand = b.id ");
+        sql.append(" INNER JOIN category ct ON dp.id_category =  ct.id");
+        sql.append(" INNER JOIN material mt ON dp.id_material = mt.id ");
+        sql.append(" WHERE 1 = 1 ");
+
+        if (!StringUtil.stringIsNullOrEmty(request.getIdSize())) {
+            sql.append(" AND c.id = :id ");
+            params.put("id", request.getIdSize());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getIdCollar())) {
+            sql.append(" AND cl.id = :id ");
+            params.put("id", request.getIdCollar());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getIdSize())) {
+            sql.append(" AND s.id = :id ");
+            params.put("id", request.getIdSize());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getIdBrand())) {
+            sql.append(" AND b.id = :id ");
+            params.put("id", request.getIdBrand());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getIdCategory())) {
+            sql.append(" AND ct.id = :id ");
+            params.put("id", request.getIdCategory());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getIdMaterial())) {
+            sql.append(" AND mt.id = :id ");
+            params.put("id", request.getIdMaterial());
+        }
 
         if (!StringUtil.stringIsNullOrEmty(request.getPage())) {
             sql.append(" LIMIT :page, :pageSize");
@@ -71,8 +108,44 @@ public class ProductServiceImpl implements ProductService {
         sql.setLength(0);
         params.clear();
 
-        sql.append(" SELECT COUNT(*)");
-        sql.append(" FROM product p ");
+        sql.append(" SELECT COUNT(*) FROM product p ");
+        sql.append(" INNER JOIN detail_product dp ON p.id = dp.id_product ");
+        sql.append(" INNER JOIN color c ON dp.id_color = c.id ");
+        sql.append(" INNER JOIN collar cl ON dp.id_collar = cl.id ");
+        sql.append(" INNER JOIN brand b ON dp.id_brand = b.id ");
+        sql.append(" INNER JOIN category ct ON dp.id_category = ct.id  ");
+        sql.append(" INNER JOIN material mt ON dp.id_material = mt.id ");
+        sql.append(" WHERE 1 = 1 ");
+
+        if (!StringUtil.stringIsNullOrEmty(request.getIdSize())) {
+            sql.append(" AND c.id = :id ");
+            params.put("id", request.getIdSize());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getIdCollar())) {
+            sql.append(" AND cl.id = :id ");
+            params.put("id", request.getIdCollar());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getIdSize())) {
+            sql.append(" AND s.id = :id ");
+            params.put("id", request.getIdSize());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getIdBrand())) {
+            sql.append(" AND b.id = :id ");
+            params.put("id", request.getIdBrand());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getIdCategory())) {
+            sql.append(" AND ct.id = :id ");
+            params.put("id", request.getIdCategory());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getIdMaterial())) {
+            sql.append(" AND mt.id = :id ");
+            params.put("id", request.getIdMaterial());
+        }
 
         Query totalQuery = entityManager.createNativeQuery(sql.toString());
         params.forEach(totalQuery::setParameter);
@@ -141,7 +214,7 @@ public class ProductServiceImpl implements ProductService {
                 folder.put("folder", folderPath);
                 cloudinary.uploader().upload(multipartFile.getBytes(), folder);
             }
-            return Constant.SUCCESS;
+            return product;
         }
 
         return new ValidationException(Constant.API001, "");
