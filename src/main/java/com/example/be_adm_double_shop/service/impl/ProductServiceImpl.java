@@ -171,10 +171,18 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Object createProduct(ProductRequest request, String username) throws Exception {
+
+        String code = Constant.PRODUCT.PRODUCT;
+        while (true) {
+            code += UUID.randomUUID();
+            if (productRepository.existsByCode(code) == null) {
+                break;
+            }
+        }
         // tạo product
         String folderPath = "";
         Product product = Product.builder()
-                .code(request.getCode())
+                .code(code)
                 .name(request.getName())
                 .createdBy(username)
                 .createdTime(DateUtil.dateToString4(new Date()))
