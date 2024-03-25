@@ -155,6 +155,11 @@ public class ProductServiceImpl implements ProductService {
             params.put("id", request.getIdMaterial());
         }
 
+        if (!StringUtil.stringIsNullOrEmty(request.getName())) {
+            sql.append(" AND p.name like like CONCAT('%', :name ,'%') ");
+            params.put("name", request.getName());
+        }
+
         Query totalQuery = entityManager.createNativeQuery(sql.toString());
         params.forEach(totalQuery::setParameter);
 
