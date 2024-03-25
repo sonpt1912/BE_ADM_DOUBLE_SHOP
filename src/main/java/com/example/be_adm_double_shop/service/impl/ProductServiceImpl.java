@@ -66,7 +66,7 @@ public class ProductServiceImpl implements ProductService {
         }
 
         if (!StringUtil.stringIsNullOrEmty(request.getName())) {
-            sql.append(" AND p.name like like CONCAT('%', :name ,'%') ");
+            sql.append(" AND p.name like CONCAT('%', :name ,'%') ");
             params.put("name", request.getName());
         }
 
@@ -156,7 +156,7 @@ public class ProductServiceImpl implements ProductService {
         }
 
         if (!StringUtil.stringIsNullOrEmty(request.getName())) {
-            sql.append(" AND p.name like like CONCAT('%', :name ,'%') ");
+            sql.append(" AND p.name like CONCAT('%', :name ,'%') ");
             params.put("name", request.getName());
         }
 
