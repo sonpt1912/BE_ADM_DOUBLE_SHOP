@@ -49,3 +49,5 @@ cloudiary:
   api_key: 463632651578279
   api_secret: CEQdGRFAMKw29flEN7UELfTm-Wg
   secure: true
+ghn:
+  token: 81e2108c-e9c6-11ee-b1d4-92b443b7a897
