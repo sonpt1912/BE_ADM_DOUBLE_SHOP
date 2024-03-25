@@ -29,22 +29,22 @@ public class Bill {
     @JoinColumn(name = "id_voucher", referencedColumnName = "id")
     private Voucher voucher;
 
-    @Column(name = "code", unique = true, nullable = false, length = 45)
+    @Column(name = "code", unique = true, length = 45)
     private String code;
 
-    @Column(name = "phone", nullable = false, length = 45)
+    @Column(name = "phone", length = 45)
     private String phone;
 
-    @Column(name = "order_date", nullable = false, length = 45)
+    @Column(name = "order_date", length = 45)
     private String orderDate;
 
-    @Column(name = "discount_amount")
+    @Column(name = "discount_amout")
     private Long discountAmount;
 
-    @Column(name = "total_amount", nullable = false)
+    @Column(name = "total_amount" )
     private Long totalAmount;
 
-    @Column(name = "confirm_date", nullable = false, length = 45)
+    @Column(name = "confirm_date", length = 45)
     private String confirmDate;
 
     @Column(name = "ship_date", length = 45)
@@ -62,7 +62,7 @@ public class Bill {
     @Column(name = "money_ship")
     private Long moneyShip;
 
-    @Column(name = "status", nullable = false)
+    @Column(name = "status")
     private Integer status;
 
 
