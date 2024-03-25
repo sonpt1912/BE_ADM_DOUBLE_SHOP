@@ -121,10 +121,10 @@ public class DetailPromotionServicelmpl {
             p.setStatus(1);
         else if (DateUtil.stringToDate(p.getEndDate(), "yyyy-MM-dd").before(new Date()))
             p.setStatus(0);
-        List<DetailPromotion> detailPromotions = new ArrayList<>();
+        String xxx = UUID.randomUUID().toString();
         Promotion promotion = promotionRepository.save(Promotion.builder()
                 .name(p.getName())
-                .code(p.getCode())
+                .code(UUID.randomUUID().toString())
                 .discountAmount(p.getDiscountAmount())
                 .discountPercent(p.getDiscountPercent())
                 .startDate(p.getStartDate())
@@ -177,6 +177,22 @@ public class DetailPromotionServicelmpl {
         return detailPromotionRepository.findById(id).get();
     }
 
+//    public List<DetailPromotion> update(PromotionRequest p, String username) {
+//        if (DateUtil.stringToDate(p.getStartDate(), "yyyy-MM-dd").after(new Date()))
+//            p.setStatus(2);
+//        else if (DateUtil.stringToDate(p.getStartDate(), "yyyy-MM-dd").before(new Date()))
+//            p.setStatus(1);
+//        else if (DateUtil.stringToDate(p.getEndDate(), "yyyy-MM-dd").before(new Date()))
+//            p.setStatus(0);
+//
+//        Promotion promotion = promotionRepository.getOneById(p.getId());
+//        promotion.setUpdatedBy(username);
+//        promotion.setUpdatedTime(DateUtil.dateToString4(new Date()));
+//        return p.getDetailProduct().stream().map(i -> detailPromotionRepository.save(DetailPromotion.builder()
+//                .detailProduct(detailProductRepository.findById(i).get())
+//                .promotion(promotion).build())).toList();
+//    }
+
     public DetailPromotion update(PromotionRequest p, String username) {
         if (DateUtil.stringToDate(p.getStartDate(), "yyyy-MM-dd").after(new Date()))
             p.setStatus(2);
@@ -200,10 +216,8 @@ public class DetailPromotionServicelmpl {
                 .build());
     }
 
-    public DetailPromotion delete(Long idDetailPromotion) {
-        DetailPromotion detailPromotion = detailPromotionRepository.findById(idDetailPromotion).get();
-        detailPromotion.getPromotion().setStatus(0);
-        return detailPromotionRepository.save(detailPromotion);
+    public void delete(Long id) {
+        detailPromotionRepository.deleteById(id);
     }
 
 }

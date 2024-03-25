@@ -22,10 +22,7 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @EnableScheduling
 @Service
@@ -60,6 +57,21 @@ public class PromotionServicelmpl {
         if (!StringUtil.stringIsNullOrEmty(request.getStatus())) {
             sql.append(" and status = :status ");
             params.put("status", request.getStatus());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getDiscountPercent())) {
+            sql.append(" and discount_percent = :discountPercent");
+            params.put("discountPercent", request.getDiscountPercent());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getStartDate())) {
+            sql.append(" AND start_date like CONCAT('%', :startDate ,'%') ");
+            params.put("startDate", request.getStartDate());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getEndDate())) {
+            sql.append(" AND end_date like CONCAT('%', :endDate ,'%') ");
+            params.put("endDate", request.getEndDate());
         }
 
         sql.append(" ORDER BY id DESC");
@@ -101,6 +113,21 @@ public class PromotionServicelmpl {
             params.put("status", request.getStatus());
         }
 
+        if (!StringUtil.stringIsNullOrEmty(request.getDiscountPercent())) {
+            sql.append(" and discount_percent = :discountPercent");
+            params.put("discountPercent", request.getDiscountPercent());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getStartDate())) {
+            sql.append(" AND start_date like CONCAT('%', :startDate ,'%') ");
+            params.put("startDate", request.getStartDate());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getEndDate())) {
+            sql.append(" AND end_date like CONCAT('%', :endDate ,'%') ");
+            params.put("endDate", request.getEndDate());
+        }
+
 
         Query queryCount = entityManager.createNativeQuery(sql.toString());
         params.forEach(queryCount::setParameter);
@@ -134,6 +161,7 @@ public class PromotionServicelmpl {
             p.setStatus(1);
         else if (DateUtil.stringToDate(p.getEndDate(), "yyyy-MM-dd").before(new Date()))
             p.setStatus(0);
+        p.setCode(UUID.randomUUID().toString());
         p.setCreatedBy(username);
         p.setCreatedTime(DateUtil.dateToString4(new Date()));
         try {
@@ -166,7 +194,8 @@ public class PromotionServicelmpl {
         p.setCreatedBy(pro.getCreatedBy());
         if (DateUtil.stringToDate(p.getStartDate(), "yyyy-MM-dd").after(new Date()))
             p.setStatus(2);
-        else if (DateUtil.stringToDate(p.getStartDate(), "yyyy-MM-dd").before(new Date()))
+        else if (DateUtil.stringToDate(p.getStartDate(), "yyyy-MM-dd").before(new Date())
+                && DateUtil.stringToDate(p.getEndDate(), "yyyy-MM-dd").after(new Date()))
             p.setStatus(1);
         else if (DateUtil.stringToDate(p.getEndDate(), "yyyy-MM-dd").before(new Date()))
             p.setStatus(0);

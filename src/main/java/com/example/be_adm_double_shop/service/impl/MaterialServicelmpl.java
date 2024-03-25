@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class MaterialServicelmpl {
@@ -111,6 +112,7 @@ public class MaterialServicelmpl {
     }
 
     public Material add(Material m){
+        m.setCode(UUID.randomUUID().toString());
         m.setCreatedTime(LocalDateTime.now().toString());
         m.setCreatedBy("TranTung");
         m.setStatus(Constant.ACTIVE);

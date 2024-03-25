@@ -68,8 +68,8 @@ public class DetailPromotionController {
         return new ResponseEntity(detailPromotionServicelmpl.update(p, username), HttpStatus.OK);
     }
 
-    @PostMapping("/detail-promotion/delete/{id}")
-    private DetailPromotion delete(@PathVariable Long id) {
-        return detailPromotionServicelmpl.delete(id);
+    @RequestMapping("/detail-promotion/delete/{id}")
+    private void delete(@PathVariable Long id) {
+        detailPromotionServicelmpl.delete(id);
     }
 }
