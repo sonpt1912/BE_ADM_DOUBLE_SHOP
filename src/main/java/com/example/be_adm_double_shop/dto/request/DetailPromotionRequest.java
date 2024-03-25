@@ -1,15 +1,11 @@
 package com.example.be_adm_double_shop.dto.request;
 
-import lombok.*;
+import lombok.Data;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
-@Builder
-public class ColorRequest {
+@Data
 
-    private Long id;
+public class DetailPromotionRequest {
+
     private Long page;
 
     private Long pageSize;
@@ -20,8 +16,7 @@ public class ColorRequest {
 
     private String code;
 
-    private Long quantity;
+    private String createdBy;
 
-    private Long price;
-
+    private String createdTime;
 }

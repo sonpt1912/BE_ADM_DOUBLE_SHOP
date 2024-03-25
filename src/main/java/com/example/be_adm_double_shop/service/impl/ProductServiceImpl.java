@@ -50,8 +50,45 @@ public class ProductServiceImpl implements ProductService {
 
         ListResponse<Product> listProductResponse = new ListResponse<>();
 
-        sql.append(" SELECT p.*");
-        sql.append(" FROM product p ");
+        sql.append(" SELECT p.* FROM product p ");
+        sql.append(" INNER JOIN detail_product dp ON p.id = dp.id_product ");
+        sql.append(" INNER JOIN color c ON dp.id_color = c.id ");
+        sql.append(" INNER JOIN collar cl ON dp.id_collar = cl.id ");
+        sql.append(" INNER JOIN size s ON dp.id_size = s.id ");
+        sql.append(" INNER JOIN brand b ON dp.id_brand = b.id ");
+        sql.append(" INNER JOIN category ct ON dp.id_category =  ct.id");
+        sql.append(" INNER JOIN material mt ON dp.id_material = mt.id ");
+        sql.append(" WHERE 1 = 1 ");
+
+        if (!StringUtil.stringIsNullOrEmty(request.getIdSize())) {
+            sql.append(" AND c.id = :id ");
+            params.put("id", request.getIdSize());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getIdCollar())) {
+            sql.append(" AND cl.id = :id ");
+            params.put("id", request.getIdCollar());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getIdSize())) {
+            sql.append(" AND s.id = :id ");
+            params.put("id", request.getIdSize());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getIdBrand())) {
+            sql.append(" AND b.id = :id ");
+            params.put("id", request.getIdBrand());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getIdCategory())) {
+            sql.append(" AND ct.id = :id ");
+            params.put("id", request.getIdCategory());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getIdMaterial())) {
+            sql.append(" AND mt.id = :id ");
+            params.put("id", request.getIdMaterial());
+        }
 
         if (!StringUtil.stringIsNullOrEmty(request.getPage())) {
             sql.append(" LIMIT :page, :pageSize");
@@ -71,8 +108,44 @@ public class ProductServiceImpl implements ProductService {
         sql.setLength(0);
         params.clear();
 
-        sql.append(" SELECT COUNT(*)");
-        sql.append(" FROM product p ");
+        sql.append(" SELECT COUNT(*) FROM product p ");
+        sql.append(" INNER JOIN detail_product dp ON p.id = dp.id_product ");
+        sql.append(" INNER JOIN color c ON dp.id_color = c.id ");
+        sql.append(" INNER JOIN collar cl ON dp.id_collar = cl.id ");
+        sql.append(" INNER JOIN brand b ON dp.id_brand = b.id ");
+        sql.append(" INNER JOIN category ct ON dp.id_category = ct.id  ");
+        sql.append(" INNER JOIN material mt ON dp.id_material = mt.id ");
+        sql.append(" WHERE 1 = 1 ");
+
+        if (!StringUtil.stringIsNullOrEmty(request.getIdSize())) {
+            sql.append(" AND c.id = :id ");
+            params.put("id", request.getIdSize());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getIdCollar())) {
+            sql.append(" AND cl.id = :id ");
+            params.put("id", request.getIdCollar());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getIdSize())) {
+            sql.append(" AND s.id = :id ");
+            params.put("id", request.getIdSize());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getIdBrand())) {
+            sql.append(" AND b.id = :id ");
+            params.put("id", request.getIdBrand());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getIdCategory())) {
+            sql.append(" AND ct.id = :id ");
+            params.put("id", request.getIdCategory());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getIdMaterial())) {
+            sql.append(" AND mt.id = :id ");
+            params.put("id", request.getIdMaterial());
+        }
 
         Query totalQuery = entityManager.createNativeQuery(sql.toString());
         params.forEach(totalQuery::setParameter);
@@ -85,9 +158,13 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Object getAllProduct(ProductRequest request) throws Exception {
+        int totalRecord = request.getPageSize();
         ListResponse<Product> listResponse = (ListResponse<Product>) getAllProductByCondition(request);
-        for (int i = 0; i < request.getPageSize(); i++) {
-            listResponse.getListData().get(i).setListImages(cloudinary.search().expression("folder:samples/animals/*").maxResults(500).execute());
+        if (listResponse.getTotalRecord() < request.getPageSize()) {
+            totalRecord = listResponse.getTotalRecord();
+        }
+        for (int i = 0; i < totalRecord; i++) {
+            listResponse.getListData().get(i).setListImages(cloudinary.search().expression("folder:double_shop/product/" + listResponse.getListData().get(i).getCode() + "/*").maxResults(500).execute());
         }
         return listResponse;
     }
@@ -122,6 +199,7 @@ public class ProductServiceImpl implements ProductService {
                             .createdTime(DateUtil.dateToString4(new Date()))
                             .quantity(colorRequest.getQuantity())
                             .status(Constant.ACTIVE)
+                            .price(colorRequest.getPrice())
                             .build();
                     listDetailProduct.add(detailProduct);
                 }
@@ -136,7 +214,7 @@ public class ProductServiceImpl implements ProductService {
                 folder.put("folder", folderPath);
                 cloudinary.uploader().upload(multipartFile.getBytes(), folder);
             }
-            return Constant.SUCCESS;
+            return product;
         }
 
         return new ValidationException(Constant.API001, "");
@@ -145,6 +223,15 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public Object updateProduct(ProductRequest request, String username) {
         return null;
+    }
+
+    @Override
+    public Object getAllTreeData() {
+        List<Product> list = productRepository.findAll();
+        for (int i = 0; i < list.size(); i++) {
+            list.get(i).setListDetailProduct(detailProductRepository.getActiveDetailProduct(list.get(i).getId()));
+        }
+        return list;
     }
 
 }

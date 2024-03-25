@@ -29,7 +29,7 @@ public class CategoryController {
     @PostMapping("/save")
     public ResponseEntity save(@RequestHeader("Authorization") String token, @RequestBody Category category) {
         String username = jwtProvider.getUsernameFromToken(token);
-        return new ResponseEntity(categoryService.save(category, "username"), HttpStatus.OK);
+        return new ResponseEntity(categoryService.save(category, username), HttpStatus.OK);
     }
 
     @PostMapping("/update")

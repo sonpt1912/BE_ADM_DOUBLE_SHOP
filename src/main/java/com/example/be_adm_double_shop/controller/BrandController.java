@@ -27,7 +27,7 @@ public class BrandController {
     @PostMapping("/save")
     public ResponseEntity save(@RequestHeader("Authorization") String token, @RequestBody Brand brand) {
         String username = jwtProvider.getUsernameFromToken(token);
-        return new ResponseEntity(brandService.save(brand, "username"), HttpStatus.OK);
+        return new ResponseEntity(brandService.save(brand, username), HttpStatus.OK);
     }
 
     @PostMapping("/update")

@@ -113,7 +113,7 @@ public class BrandServiceImpl implements BrandService {
         if (StringUtil.stringIsNullOrEmty(brand.getCode())) {
             int i = 1;
             while (true) {
-                String codeGen = Constant.DETAIL_PRODUCT.SIZE + i;
+                String codeGen = Constant.DETAIL_PRODUCT.BRAND + i;
                 if (StringUtil.stringIsNullOrEmty(brandRepository.checkCodeExits(codeGen))) {
                     brand.setCode(codeGen);
                     break;
