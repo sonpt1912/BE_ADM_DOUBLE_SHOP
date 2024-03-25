@@ -96,6 +96,8 @@ public class EmployeeServiceImpl implements EmployeeService {
             params.put("size", employeeRequest.getPageSize());
         }
 
+        str.append(" ORDER BY e.created_time ");
+
         Query queryList = entityManager.createNativeQuery(str.toString(), Employee.class);
         params.forEach(queryList::setParameter);
 
@@ -151,23 +153,22 @@ public class EmployeeServiceImpl implements EmployeeService {
         List<String> fullName = Arrays.stream(employee.getName().split(" ")).toList();
         String username = fullName.get(fullName.size() - 1);
         for (int i = 0; i < fullName.size(); i++) {
-            if (fullName.get(i).equals(fullName.get(fullName.size()))) {
+            if (fullName.get(i).equals(fullName.get(fullName.size() - 1))) {
                 break;
             }
             username += fullName.get(i).charAt(0);
         }
         while (true) {
-            username += (Math.random() * 10) + 1;
-            if (!StringUtil.stringIsNullOrEmty(userRepository.findEmployeeByUsername(employee.getUsername()))) {
+            username += (int) (Math.random() * 10);
+            if (StringUtil.stringIsNullOrEmty(userRepository.findEmployeeByUsername(employee.getUsername()))) {
                 break;
             }
         }
         employee.setCreatedBy(creator);
         employee.setStatus(Constant.ACTIVE);
-        employee.setUsername(username);
+        employee.setUsername(username.toLowerCase(Locale.ROOT));
         employee.setCreatedTime(DateUtil.dateToString(new Date(), DateUtil.FORMAT_DATE_TIME4));
         employee.setRole(Constant.IS_EMPLOYEE);
-        employee.setUsername(employee.getUsername());
         String password = Constant.DEFAULT_PASSWORD;
         if (!StringUtil.stringIsNullOrEmty(employee.getPassword())) {
             password = employee.getPassword();

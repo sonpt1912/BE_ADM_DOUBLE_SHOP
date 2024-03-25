@@ -90,6 +90,8 @@ public class ProductServiceImpl implements ProductService {
             params.put("id", request.getIdMaterial());
         }
 
+        sql.append(" ORDER BY p.created_time DESC ");
+
         if (!StringUtil.stringIsNullOrEmty(request.getPage())) {
             sql.append(" LIMIT :page, :pageSize");
             if (request.getPage() == 0) {
@@ -99,6 +101,7 @@ public class ProductServiceImpl implements ProductService {
             }
             params.put("pageSize", request.getPageSize());
         }
+
 
         Query query = entityManager.createNativeQuery(sql.toString(), Product.class);
         params.forEach(query::setParameter);
@@ -171,10 +174,18 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Object createProduct(ProductRequest request, String username) throws Exception {
+
+        String code = Constant.PRODUCT.PRODUCT;
+        while (true) {
+            code += UUID.randomUUID();
+            if (productRepository.existsByCode(code) == false) {
+                break;
+            }
+        }
         // tạo product
         String folderPath = "";
         Product product = Product.builder()
-                .code(request.getCode())
+                .code(code)
                 .name(request.getName())
                 .createdBy(username)
                 .createdTime(DateUtil.dateToString4(new Date()))

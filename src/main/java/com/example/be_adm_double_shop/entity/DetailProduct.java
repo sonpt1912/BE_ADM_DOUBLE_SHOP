@@ -5,8 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.sql.Timestamp;
-
 @Entity
 @Table(name = "detail_product")
 @AllArgsConstructor
@@ -69,5 +67,8 @@ public class DetailProduct {
 
     @Column(name = "updated_time", length = 45)
     private String updatedTime;
+
+    @Transient
+    private Long discoutAmout;
 
 }

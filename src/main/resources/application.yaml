@@ -2,9 +2,9 @@ server:
   port: 8072
 spring:
   datasource:
-    url: jdbc:mysql://127.0.0.1:3307/double_shop?createDatabaseIfNotExist=true&useSSL=false&allowPublicKeyRetrieval=true
-    username: TranTung
-    password: 2132411
+    url: jdbc:mysql://localhost:3306/double_shop?useSSL=true
+    username: root
+    password: Son191203
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     hibernate:
@@ -36,3 +36,17 @@ cloudiary:
   api_key: 463632651578279
   api_secret: CEQdGRFAMKw29flEN7UELfTm-Wg
   secure: true
+  #  cache:
+  #    type: redis
+  #    redis:
+  #      cache-null-values: false
+  #      use-key-prefix: true
+  #      time-to-live: 3000
+  #  data:
+  #    redis:
+  #      host: redis-14442.c1.ap-southeast-1-1.ec2.cloud.redislabs.com
+  #      port: 14442
+  #      username: default
+  #      password: N7YhN4jXP6ASKBHRR9iLYJun9bXCRfAL
+ghn:
+  token: 81e2108c-e9c6-11ee-b1d4-92b443b7a897
