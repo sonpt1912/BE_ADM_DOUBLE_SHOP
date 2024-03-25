@@ -175,7 +175,7 @@ public class ProductServiceImpl implements ProductService {
         String code = Constant.PRODUCT.PRODUCT;
         while (true) {
             code += UUID.randomUUID();
-            if (productRepository.existsByCode(code) == null) {
+            if (productRepository.existsByCode(code) == false) {
                 break;
             }
         }
