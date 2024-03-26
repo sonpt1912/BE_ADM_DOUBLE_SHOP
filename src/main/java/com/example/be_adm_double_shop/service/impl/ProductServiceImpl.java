@@ -65,6 +65,11 @@ public class ProductServiceImpl implements ProductService {
             params.put("id", request.getIdSize());
         }
 
+        if (!StringUtil.stringIsNullOrEmty(request.getName())) {
+            sql.append(" AND p.name like CONCAT('%', :name ,'%') ");
+            params.put("name", request.getName());
+        }
+
         if (!StringUtil.stringIsNullOrEmty(request.getIdCollar())) {
             sql.append(" AND cl.id = :id ");
             params.put("id", request.getIdCollar());
@@ -148,6 +153,11 @@ public class ProductServiceImpl implements ProductService {
         if (!StringUtil.stringIsNullOrEmty(request.getIdMaterial())) {
             sql.append(" AND mt.id = :id ");
             params.put("id", request.getIdMaterial());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getName())) {
+            sql.append(" AND p.name like CONCAT('%', :name ,'%') ");
+            params.put("name", request.getName());
         }
 
         Query totalQuery = entityManager.createNativeQuery(sql.toString());
