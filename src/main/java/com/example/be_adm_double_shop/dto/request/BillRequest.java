@@ -26,6 +26,8 @@ public class BillRequest {
 
     private Long status;
 
+    private Long payment;
+
     private List<DetailProduct>listDetailProduct;
 
 //    private String

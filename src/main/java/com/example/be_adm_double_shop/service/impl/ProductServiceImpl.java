@@ -50,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
 
         ListResponse<Product> listProductResponse = new ListResponse<>();
 
-        sql.append(" SELECT p.* FROM product p ");
+        sql.append(" SELECT p.id, p.code, p.images, p.name, p.status, p.created_by, p.created_time, p.updated_time, p.updated_by FROM product p ");
         sql.append(" INNER JOIN detail_product dp ON p.id = dp.id_product ");
         sql.append(" INNER JOIN color c ON dp.id_color = c.id ");
         sql.append(" INNER JOIN collar cl ON dp.id_collar = cl.id ");
@@ -107,6 +107,8 @@ public class ProductServiceImpl implements ProductService {
             params.put("pageSize", request.getPageSize());
         }
 
+        sql.append(" GROUP BY  p.id, p.code, p.images, p.name, p.status, p.created_by, p.created_time, p.updated_time, p.updated_by ");
+
 
         Query query = entityManager.createNativeQuery(sql.toString(), Product.class);
         params.forEach(query::setParameter);
@@ -159,6 +161,8 @@ public class ProductServiceImpl implements ProductService {
             sql.append(" AND p.name like CONCAT('%', :name ,'%') ");
             params.put("name", request.getName());
         }
+
+        sql.append(" GROUP BY  p.id, p.code, p.images, p.name, p.status, p.created_by, p.created_time, p.updated_time, p.updated_by ");
 
         Query totalQuery = entityManager.createNativeQuery(sql.toString());
         params.forEach(totalQuery::setParameter);
