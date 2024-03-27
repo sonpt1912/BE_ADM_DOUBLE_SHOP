@@ -57,7 +57,7 @@ public class Bill {
     private String note;
 
     @Column(name = "payment", length = 45)
-    private String payment;
+    private Long payment;
 
     @Column(name = "money_ship")
     private Long moneyShip;
