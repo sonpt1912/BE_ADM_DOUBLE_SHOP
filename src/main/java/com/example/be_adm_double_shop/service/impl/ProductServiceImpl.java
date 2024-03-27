@@ -230,11 +230,11 @@ public class ProductServiceImpl implements ProductService {
             folderPath = Constant.ROOT_FOLDER + "/" + Constant.PRODUCT_FOLDER + "/" + product.getCode();
             cloudinary.api().createFolder(folderPath, ObjectUtils.emptyMap());
 
-            for (MultipartFile multipartFile : request.getListImage()) {
-                HashMap folder = new HashMap();
-                folder.put("folder", folderPath);
-                cloudinary.uploader().upload(multipartFile.getBytes(), folder);
-            }
+//            for (MultipartFile multipartFile : request.getListImage()) {
+//                HashMap folder = new HashMap();
+//                folder.put("folder", folderPath);
+//                cloudinary.uploader().upload(multipartFile.getBytes(), folder);
+//            }
             return product;
         }
 

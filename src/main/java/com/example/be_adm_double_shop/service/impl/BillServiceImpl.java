@@ -58,10 +58,12 @@ public class BillServiceImpl implements BillService {
                 List<DetailProduct> listDP = new ArrayList<>();
                 for (DetailProduct dt : billRequest.getListDetailProduct()) {
                     DetailProduct currentProduct = detailProductService.getOneById(dt.getId());
-                    dt = DetailProduct.builder()
-                            .quantity(currentProduct.getQuantity() - dt.getQuantity())
-                            .build();
-                    detailProductService.updateDetailProduct(dt, creator);
+                    long quantity = currentProduct.getQuantity() - dt.getQuantity();
+                    currentProduct.setQuantity(quantity);
+                    if(quantity == 0){
+                        currentProduct.setStatus(Constant.IN_ACTIVE);
+                    }
+                    detailProductService.updateDetailProduct(currentProduct, creator);
                 }
 
 
