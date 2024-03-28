@@ -11,14 +11,14 @@ public class Constant {
 
     public static final String PRODUCT_FOLDER = "product";
 
-    public static final Integer ACTIVE = 1;
+    public static final Integer ACTIVE = 0;
 
 
     public static final String UNAUTHORIZED = "401";
 
     public static final String USERNAME_OR_PASSWORD = "Tài khoản hoặc mật khẩu không chính xác";
 
-    public static final Integer IN_ACTIVE = 0;
+    public static final Integer IN_ACTIVE = 1;
 
     public static final Integer IS_ADMIN = 0;
 
