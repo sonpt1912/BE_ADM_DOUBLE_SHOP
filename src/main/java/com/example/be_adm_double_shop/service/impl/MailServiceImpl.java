@@ -81,4 +81,29 @@ public class MailServiceImpl implements MailService {
         }
     }
 
+    @Override
+    public String sendMailCreateAccountCustomer(MailRequest mailRequest) {
+        try {
+            MimeMessage message = javaMailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+            helper.setFrom(sender,"DOUBLE_SHOP");
+            helper.setTo(mailRequest.getReciver());
+            helper.setSubject("TÀI KHOẢN ĐƯỢC TẠO THÀNH CONG");
+
+            Context context = new Context();
+            context.setVariable("account", mailRequest.getSubContent());
+            context.setVariable("password", mailRequest.getContent());
+
+            String processContent = templateEngine.process("create-account-customer", context);
+
+            helper.setText(processContent, true);
+            javaMailSender.send(message);
+            return Constant.SUCCESS;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return e.getMessage();
+        }
+    }
+
 }

@@ -1,35 +1,23 @@
 package com.example.be_adm_double_shop.service.impl;
 
 import com.example.be_adm_double_shop.dto.request.AddressRequest;
-import com.example.be_adm_double_shop.dto.request.CustomerRequest;
-import com.example.be_adm_double_shop.dto.response.ListResponse;
 import com.example.be_adm_double_shop.entity.Address;
-import com.example.be_adm_double_shop.entity.Customer;
 import com.example.be_adm_double_shop.repository.AdressRepository;
-import com.example.be_adm_double_shop.repository.CustomerRepository;
-import com.example.be_adm_double_shop.repository.RankRepository;
 import com.example.be_adm_double_shop.service.AddressService;
-import com.example.be_adm_double_shop.service.CustomerService;
-import com.example.be_adm_double_shop.util.StringUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
-import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class AddressServiceImpl implements AddressService {
     @Autowired
     private AdressRepository repository;
-    @Autowired
-    private RankRepository rankRepository;
 
     @PersistenceContext
     private EntityManager entityManager;
