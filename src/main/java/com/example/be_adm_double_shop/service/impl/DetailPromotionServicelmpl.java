@@ -121,7 +121,12 @@ public class DetailPromotionServicelmpl {
             p.setStatus(1);
         else if (DateUtil.stringToDate(p.getEndDate(), "yyyy-MM-dd").before(new Date()))
             p.setStatus(0);
-        String xxx = UUID.randomUUID().toString();
+        if(StringUtil.stringIsNullOrEmty(p.getDiscountPercent())){
+            p.setDiscountPercent(0);
+        }
+        if(StringUtil.stringIsNullOrEmty(p.getDiscountAmount())){
+            p.setDiscountAmount(0L);
+        }
         Promotion promotion = promotionRepository.save(Promotion.builder()
                 .name(p.getName())
                 .code(UUID.randomUUID().toString())
