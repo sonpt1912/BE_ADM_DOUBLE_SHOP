@@ -20,9 +20,13 @@ public class BillRequest {
 
     private Long totalAmout;
 
+    private Long discoutAmout;
+
     private String note;
 
     private Long status;
+
+    private Long payment;
 
     private List<DetailProduct>listDetailProduct;
 

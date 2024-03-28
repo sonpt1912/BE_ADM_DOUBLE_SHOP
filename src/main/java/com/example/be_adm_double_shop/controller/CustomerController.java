@@ -8,6 +8,7 @@ import com.example.be_adm_double_shop.entity.Address;
 import com.example.be_adm_double_shop.entity.Customer;
 import com.example.be_adm_double_shop.repository.AdressRepository;
 import com.example.be_adm_double_shop.repository.CustomerRepository;
+import com.example.be_adm_double_shop.security.JwtProvider;
 import com.example.be_adm_double_shop.service.CustomerService;
 import com.example.be_adm_double_shop.util.DateUtil;
 import jakarta.validation.Valid;
@@ -32,7 +33,8 @@ public class CustomerController {
     private CustomerRepository customerRepository;
     @Autowired
     private AdressRepository adressRepository;
-
+    @Autowired
+    private JwtProvider jwtProvider;
     @PostMapping("/get-all")
     public ResponseEntity getAll(@RequestBody CustomerRequest request) {
         return new ResponseEntity(customerService.getAll(request), HttpStatus.OK);
@@ -49,28 +51,19 @@ public class CustomerController {
     }
 
     @PostMapping("/save")
-    public ResponseEntity save(@Valid @RequestBody Customer customerRequest) {
-        customerRequest.setCreatedBy("huong");
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateUtil.FORMAT_DATE_TIME4);
-        String date = simpleDateFormat.format(new Date());
-        customerRequest.setCreatedTime(date);
-        List<Address> addresses = customerRequest.getAddress();
-        for (Address address : addresses) {
-            address.setCreatedBy("huong");
-            address.setCreatedTime(date);
-            address.setDefaul(1);
-            address.setCustomer(customerRequest);
-        }
-        customerRequest.setAddress(addresses);
-        Customer savedCustomer = customerService.save(customerRequest);
-        return ResponseEntity.ok(savedCustomer);
+    public ResponseEntity save(@Valid @RequestBody Customer customerRequest,@RequestHeader("Authorization") String token) {
+        String username = jwtProvider.getUsernameFromToken(token);
+        return new ResponseEntity(customerService.createCustomer(customerRequest, username), HttpStatus.OK);
+
 
     }
-    @GetMapping("/get-one-by-phone/{phone}")
-        public ResponseEntity<List<Customer>> getPhone(@PathVariable("phone") String phone){
 
-            return new ResponseEntity(customerService.findByPhone(phone), HttpStatus.OK);
-        }
+    @GetMapping("/get-one-by-phone/{phone}")
+    public ResponseEntity<List<Customer>> getPhone(@PathVariable("phone") String phone) {
+
+        return new ResponseEntity(customerService.findByPhone(phone), HttpStatus.OK);
+    }
+
     @PostMapping("/update/{id}")
     public ResponseEntity update(@RequestBody Customer color, @PathVariable("id") Long id) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateUtil.FORMAT_DATE_TIME4);
@@ -84,20 +77,30 @@ public class CustomerController {
     @PostMapping("/add-address/{id}")
     public ResponseEntity addAddressToCustomer(
             @PathVariable("id") Long id,
-            @RequestBody Address address
+            @RequestBody Address address,@RequestHeader("Authorization") String token
     ) {
         Customer customer = customerService.getOneId(id);
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateUtil.FORMAT_DATE_TIME4);
-
+        String username = jwtProvider.getUsernameFromToken(token);
         String date = simpleDateFormat.format(new Date());
         if (customer != null) {
-            System.out.println(customer.getId());
+
+            Address defaultAddress = customer.getAddress().stream()
+                    .filter(a -> a.getDefaul() == 1)
+                    .findFirst().orElse(null);
+
+            if (defaultAddress != null) {
+                address.setDefaul(0);
+            } else {
+                address.setDefaul(1);
+            }
+
             if (address.getCity() != null) {
                 address.setCustomer(customer);
                 address.setCreatedTime(date);
                 address.setId(null);
                 customer.getAddress().add(address);
-                customerService.save(customer);
+                customerService.createCustomer(customer, username);
                 return ResponseEntity.ok(customer);
             } else {
                 return ResponseEntity.badRequest().build();
@@ -106,6 +109,7 @@ public class CustomerController {
             return ResponseEntity.notFound().build();
         }
     }
+
 
     @GetMapping("/get-address-by-id/{id_customer}/{id}")
     public ResponseEntity getAddressById(@PathVariable("id_customer") Long customerId, @PathVariable("id") Long addressId) {
@@ -121,11 +125,12 @@ public class CustomerController {
             return ResponseEntity.notFound().build();
         }
     }
+
     @PostMapping("/update-address/{customerId}/{addressId}")
     public ResponseEntity updateAddress(@PathVariable("customerId") Long customerId,
                                         @PathVariable("addressId") Long addressId,
-                                        @RequestBody Address updatedAddress) {
-
+                                        @RequestBody Address updatedAddress,@RequestHeader("Authorization") String token) {
+        String username = jwtProvider.getUsernameFromToken(token);
         Customer customer = customerService.getOneId(customerId);
 
 
@@ -147,7 +152,7 @@ public class CustomerController {
         }
 
 
-        return ResponseEntity.ok(customerService.save(customer));
+        return ResponseEntity.ok(customerService.createCustomer(customer, username));
 
     }
 

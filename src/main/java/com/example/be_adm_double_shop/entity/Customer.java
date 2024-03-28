@@ -26,9 +26,6 @@ public class Customer {
     @Column(name = "id")
     private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "id_rank", referencedColumnName = "id")
-    private Rank rank;
 
     @Column(name = "username", length = 45)
     private String username;

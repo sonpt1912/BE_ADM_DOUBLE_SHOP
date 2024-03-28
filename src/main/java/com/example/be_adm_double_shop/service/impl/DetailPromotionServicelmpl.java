@@ -3,9 +3,11 @@ package com.example.be_adm_double_shop.service.impl;
 import com.example.be_adm_double_shop.dto.request.DetailPromotionRequest;
 import com.example.be_adm_double_shop.dto.request.PromotionRequest;
 import com.example.be_adm_double_shop.dto.response.ListResponse;
+import com.example.be_adm_double_shop.entity.DetailProductView;
 import com.example.be_adm_double_shop.entity.DetailPromotion;
 import com.example.be_adm_double_shop.entity.Promotion;
 import com.example.be_adm_double_shop.repository.DetailProductRepository;
+import com.example.be_adm_double_shop.repository.DetailProductViewRepository;
 import com.example.be_adm_double_shop.repository.DetailPromotionRepository;
 import com.example.be_adm_double_shop.repository.PromotionRepository;
 import com.example.be_adm_double_shop.util.DateUtil;
@@ -112,27 +114,86 @@ public class DetailPromotionServicelmpl {
         return detailPromotionRepository.findAll();
     }
 
-//    public List<DetailPromotion> add(PromotionRequest p, String username) {
-//        List<DetailPromotion> detailPromotions = new ArrayList<>();
-//            p.getDetailProduct().stream().map(i -> detailPromotionRepository.save(DetailPromotion.builder()
-//                    .detailProduct(detailProductRepository.findById(21L).get())
-//                    .promotion(promotionRepository.save(Promotion.builder()
-//                            .name(p.getName())
-//                            .code(p.getCode())
-//                            .discountAmount(p.getDiscountAmount())
-//                            .discountPercent(p.getDiscountPercent())
-//                            .startDate(p.getStartDate())
-//                            .endDate(p.getEndDate())
-//                            .status(p.getStatus())
-//                            .createdBy(username)
-//                            .createdTime(DateUtil.dateToString4(new Date()))
-//                            .build())).build()
-////            )).toList();
+    public List<DetailPromotion> add(PromotionRequest p, String username) {
+        if (DateUtil.stringToDate(p.getStartDate(), "yyyy-MM-dd").after(new Date()))
+            p.setStatus(2);
+        else if (DateUtil.stringToDate(p.getStartDate(), "yyyy-MM-dd").before(new Date()))
+            p.setStatus(1);
+        else if (DateUtil.stringToDate(p.getEndDate(), "yyyy-MM-dd").before(new Date()))
+            p.setStatus(0);
+        String xxx = UUID.randomUUID().toString();
+        Promotion promotion = promotionRepository.save(Promotion.builder()
+                .name(p.getName())
+                .code(UUID.randomUUID().toString())
+                .discountAmount(p.getDiscountAmount())
+                .discountPercent(p.getDiscountPercent())
+                .startDate(p.getStartDate())
+                .endDate(p.getEndDate())
+                .status(p.getStatus())
+                .createdBy(username)
+                .createdTime(DateUtil.dateToString4(new Date()))
+                .build());
+        return p.getDetailProduct().stream().map(i -> detailPromotionRepository.save(DetailPromotion.builder()
+                .detailProduct(detailProductRepository.findById(i).get())
+                .promotion(promotion).build())).toList();
+
 //        return detailPromotions;
+    }
+
+//    public DetailPromotion add(PromotionRequest p, String username) {
+//
+//        if (DateUtil.stringToDate(p.getStartDate(), "yyyy-MM-dd").after(new Date()))
+//            p.setStatus(2);
+//        else if (DateUtil.stringToDate(p.getStartDate(), "yyyy-MM-dd").before(new Date()))
+//            p.setStatus(1);
+//        else if (DateUtil.stringToDate(p.getEndDate(), "yyyy-MM-dd").before(new Date()))
+//            p.setStatus(0);
+//        return detailPromotionRepository.save(DetailPromotion.builder()
+//                .detailProduct(detailProductRepository.findById(1L).get())
+//                .promotion(promotionRepository.save(Promotion.builder()
+//                        .name(p.getName())
+//                        .code(p.getCode())
+//                        .discountAmount(p.getDiscountAmount())
+//                        .discountPercent(p.getDiscountPercent())
+//                        .startDate(p.getStartDate())
+//                        .endDate(p.getEndDate())
+//                        .status(p.getStatus())
+//                        .createdBy(username)
+//                        .createdTime(DateUtil.dateToString4(new Date()))
+//                        .build()))
+//                .build());
+////            )).toList();
+//
 //    }
 
-    public DetailPromotion add(PromotionRequest p, String username) {
+//    public DetailPromotion add(Promotion pp, DetailPromotion p, String username) {
+//        pp.setUpdatedBy(username);
+//        p.setDetailProduct(detailProductRepository.findById(21L).orElse(null));
+//        p.setPromotion(promotionRepository.save(pp));
+//        return detailPromotionRepository.save(p);
+//    }
 
+    public DetailPromotion getOneById(long id) {
+        return detailPromotionRepository.findById(id).get();
+    }
+
+//    public List<DetailPromotion> update(PromotionRequest p, String username) {
+//        if (DateUtil.stringToDate(p.getStartDate(), "yyyy-MM-dd").after(new Date()))
+//            p.setStatus(2);
+//        else if (DateUtil.stringToDate(p.getStartDate(), "yyyy-MM-dd").before(new Date()))
+//            p.setStatus(1);
+//        else if (DateUtil.stringToDate(p.getEndDate(), "yyyy-MM-dd").before(new Date()))
+//            p.setStatus(0);
+//
+//        Promotion promotion = promotionRepository.getOneById(p.getId());
+//        promotion.setUpdatedBy(username);
+//        promotion.setUpdatedTime(DateUtil.dateToString4(new Date()));
+//        return p.getDetailProduct().stream().map(i -> detailPromotionRepository.save(DetailPromotion.builder()
+//                .detailProduct(detailProductRepository.findById(i).get())
+//                .promotion(promotion).build())).toList();
+//    }
+
+    public DetailPromotion update(PromotionRequest p, String username) {
         if (DateUtil.stringToDate(p.getStartDate(), "yyyy-MM-dd").after(new Date()))
             p.setStatus(2);
         else if (DateUtil.stringToDate(p.getStartDate(), "yyyy-MM-dd").before(new Date()))
@@ -149,46 +210,14 @@ public class DetailPromotionServicelmpl {
                         .startDate(p.getStartDate())
                         .endDate(p.getEndDate())
                         .status(p.getStatus())
-                        .createdBy(username)
-                        .createdTime(DateUtil.dateToString4(new Date()))
-                        .build()))
-                .build());
-//            )).toList();
-
-    }
-
-//    public DetailPromotion add(Promotion pp, DetailPromotion p, String username) {
-//        pp.setUpdatedBy(username);
-//        p.setDetailProduct(detailProductRepository.findById(21L).orElse(null));
-//        p.setPromotion(promotionRepository.save(pp));
-//        return detailPromotionRepository.save(p);
-//    }
-
-    public DetailPromotion getOneById(long id) {
-        return detailPromotionRepository.findById(id).get();
-    }
-
-    public DetailPromotion update(PromotionRequest p, String username) {
-        return detailPromotionRepository.save(DetailPromotion.builder()
-                .detailProduct(detailProductRepository.findById(21L).get())
-                .promotion(promotionRepository.save(Promotion.builder()
-                        .name(p.getName())
-                        .code(p.getCode())
-                        .discountAmount(p.getDiscountAmount())
-                        .discountPercent(p.getDiscountPercent())
-                        .startDate(p.getStartDate())
-                        .endDate(p.getEndDate())
-                        .status(p.getStatus())
                         .updatedBy(username)
                         .updatedTime(DateUtil.dateToString4(new Date()))
                         .build()))
                 .build());
     }
 
-    public DetailPromotion delete(Long idDetailPromotion) {
-        DetailPromotion detailPromotion = detailPromotionRepository.findById(idDetailPromotion).get();
-        detailPromotion.getPromotion().setStatus(0);
-        return detailPromotionRepository.save(detailPromotion);
+    public void delete(Long id) {
+        detailPromotionRepository.deleteById(id);
     }
 
 }

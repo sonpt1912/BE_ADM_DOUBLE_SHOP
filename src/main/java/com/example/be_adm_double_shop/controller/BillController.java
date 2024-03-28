@@ -31,6 +31,11 @@ public class BillController {
     public ResponseEntity updateBill(@RequestBody BillRequest billRequest, @RequestHeader(HttpHeaders.AUTHORIZATION) String token) {
         String username = jwtProvider.getUsernameFromToken(token);
         return new ResponseEntity(billService.updateBill(billRequest, username), HttpStatus.OK);
-    }   
+    }
+
+    @PostMapping("/get-bill-by-condition")
+    public ResponseEntity getBillByCondition(@RequestBody BillRequest billRequest) {
+        return new ResponseEntity(billService.getAllByCondition(billRequest), HttpStatus.OK);
+    }
 
 }

@@ -2,6 +2,7 @@ package com.example.be_adm_double_shop.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class BillHistory {
 
     @Id
@@ -25,9 +27,5 @@ public class BillHistory {
 
     @Column(name = "created_by")
     private String createdBy;
-
-    @Column(name = "updated_by")
-    private String updatedBy;
-
 
 }

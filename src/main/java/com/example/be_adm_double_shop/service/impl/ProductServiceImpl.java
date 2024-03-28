@@ -50,7 +50,7 @@ public class ProductServiceImpl implements ProductService {
 
         ListResponse<Product> listProductResponse = new ListResponse<>();
 
-        sql.append(" SELECT p.* FROM product p ");
+        sql.append(" SELECT p.id, p.code, p.images, p.name, p.status, p.created_by, p.created_time, p.updated_time, p.updated_by FROM product p ");
         sql.append(" INNER JOIN detail_product dp ON p.id = dp.id_product ");
         sql.append(" INNER JOIN color c ON dp.id_color = c.id ");
         sql.append(" INNER JOIN collar cl ON dp.id_collar = cl.id ");
@@ -63,6 +63,11 @@ public class ProductServiceImpl implements ProductService {
         if (!StringUtil.stringIsNullOrEmty(request.getIdSize())) {
             sql.append(" AND c.id = :id ");
             params.put("id", request.getIdSize());
+        }
+
+        if (!StringUtil.stringIsNullOrEmty(request.getName())) {
+            sql.append(" AND p.name like CONCAT('%', :name ,'%') ");
+            params.put("name", request.getName());
         }
 
         if (!StringUtil.stringIsNullOrEmty(request.getIdCollar())) {
@@ -90,6 +95,9 @@ public class ProductServiceImpl implements ProductService {
             params.put("id", request.getIdMaterial());
         }
 
+        sql.append(" GROUP BY p.id, p.code, p.images, p.name, p.status, p.created_by, p.created_time, p.updated_time, p.updated_by ");
+        sql.append(" ORDER BY p.created_time DESC ");
+
         if (!StringUtil.stringIsNullOrEmty(request.getPage())) {
             sql.append(" LIMIT :page, :pageSize");
             if (request.getPage() == 0) {
@@ -100,6 +108,7 @@ public class ProductServiceImpl implements ProductService {
             params.put("pageSize", request.getPageSize());
         }
 
+
         Query query = entityManager.createNativeQuery(sql.toString(), Product.class);
         params.forEach(query::setParameter);
 
@@ -108,7 +117,7 @@ public class ProductServiceImpl implements ProductService {
         sql.setLength(0);
         params.clear();
 
-        sql.append(" SELECT COUNT(*) FROM product p ");
+        sql.append(" SELECT count(distinct p.id) FROM product p ");
         sql.append(" INNER JOIN detail_product dp ON p.id = dp.id_product ");
         sql.append(" INNER JOIN color c ON dp.id_color = c.id ");
         sql.append(" INNER JOIN collar cl ON dp.id_collar = cl.id ");
@@ -147,6 +156,11 @@ public class ProductServiceImpl implements ProductService {
             params.put("id", request.getIdMaterial());
         }
 
+        if (!StringUtil.stringIsNullOrEmty(request.getName())) {
+            sql.append(" AND p.name like CONCAT('%', :name ,'%') ");
+            params.put("name", request.getName());
+        }
+
         Query totalQuery = entityManager.createNativeQuery(sql.toString());
         params.forEach(totalQuery::setParameter);
 
@@ -171,10 +185,18 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public Object createProduct(ProductRequest request, String username) throws Exception {
+
+        String code = Constant.PRODUCT.PRODUCT;
+        while (true) {
+            code += UUID.randomUUID();
+            if (productRepository.existsByCode(code) == false) {
+                break;
+            }
+        }
         // tạo product
         String folderPath = "";
         Product product = Product.builder()
-                .code(request.getCode())
+                .code(code)
                 .name(request.getName())
                 .createdBy(username)
                 .createdTime(DateUtil.dateToString4(new Date()))
@@ -199,7 +221,7 @@ public class ProductServiceImpl implements ProductService {
                             .createdTime(DateUtil.dateToString4(new Date()))
                             .quantity(colorRequest.getQuantity())
                             .status(Constant.ACTIVE)
-                            .price(colorRequest.getPrice())
+//                            .price(colorRequest.getPrice())
                             .build();
                     listDetailProduct.add(detailProduct);
                 }
@@ -208,12 +230,6 @@ public class ProductServiceImpl implements ProductService {
 
             folderPath = Constant.ROOT_FOLDER + "/" + Constant.PRODUCT_FOLDER + "/" + product.getCode();
             cloudinary.api().createFolder(folderPath, ObjectUtils.emptyMap());
-
-            for (MultipartFile multipartFile : request.getListImage()) {
-                HashMap folder = new HashMap();
-                folder.put("folder", folderPath);
-                cloudinary.uploader().upload(multipartFile.getBytes(), folder);
-            }
             return product;
         }
 
@@ -225,13 +241,5 @@ public class ProductServiceImpl implements ProductService {
         return null;
     }
 
-    @Override
-    public Object getAllTreeData() {
-        List<Product> list = productRepository.findAll();
-        for (int i = 0; i < list.size(); i++) {
-            list.get(i).setListDetailProduct(detailProductRepository.getActiveDetailProduct(list.get(i).getId()));
-        }
-        return list;
-    }
 
 }

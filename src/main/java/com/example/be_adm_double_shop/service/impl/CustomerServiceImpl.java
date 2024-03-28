@@ -1,13 +1,16 @@
 package com.example.be_adm_double_shop.service.impl;
 
 import com.example.be_adm_double_shop.dto.request.CustomerRequest;
+import com.example.be_adm_double_shop.dto.request.MailRequest;
 import com.example.be_adm_double_shop.dto.response.ListResponse;
+import com.example.be_adm_double_shop.entity.Address;
 import com.example.be_adm_double_shop.entity.Customer;
 import com.example.be_adm_double_shop.repository.AdressRepository;
 import com.example.be_adm_double_shop.repository.CustomerRepository;
-import com.example.be_adm_double_shop.repository.RankRepository;
 import com.example.be_adm_double_shop.service.CustomerService;
+import com.example.be_adm_double_shop.service.MailService;
 import com.example.be_adm_double_shop.util.Constant;
+import com.example.be_adm_double_shop.util.DateUtil;
 import com.example.be_adm_double_shop.util.StringUtil;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -16,23 +19,30 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 @Service
 public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private CustomerRepository repository;
-    @Autowired
-    private RankRepository rankRepository;
+
     @Autowired
     private AdressRepository a;
 
+    @Autowired
+    private MailService mailService;
+
     @PersistenceContext
     private EntityManager entityManager1;
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public ListResponse<Customer> getAll(CustomerRequest request) {
@@ -64,7 +74,6 @@ public class CustomerServiceImpl implements CustomerService {
             sql.append(" AND name LIKE CONCAT('%',  :name , '%')");
             params.put("name", request.getName());
         }
-
 
 
 //        if (!StringUtil.stringIsNullOrEmty(request.getPageSize())) {
@@ -127,7 +136,6 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
 
-
     @Override
     public Page getAllByPage(int page, int pageSize) {
         Pageable p = PageRequest.of(page, pageSize);
@@ -148,17 +156,45 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public Customer save( Customer color) {
-        color.setRank(rankRepository.findById(Long.valueOf(1)).get());
-
-        return repository.save(color);
+    public Object createCustomer(Customer color, String a) {
+//        color.setRank(rankRepository.findById(Long.valueOf(1)).get());
+        color.setCreatedBy("huong");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat(DateUtil.FORMAT_DATE_TIME4);
+        String date = simpleDateFormat.format(new Date());
+        color.setCreatedTime(date);
+        List<Address> addresses = color.getAddress();
+        for (Address address : addresses) {
+            address.setCreatedBy("huong");
+            address.setCreatedTime(date);
+            address.setDefaul(1);
+            address.setCustomer(color);
+        }
+        color.setAddress(addresses);
+        String password = Constant.DEFAULT_PASSWORD;
+        if (!StringUtil.stringIsNullOrEmty(color.getPassword())) {
+            password = color.getPassword();
+        }
+        color.setPassword(passwordEncoder.encode(password));
+        try {
+            repository.save(color);
+            MailRequest mailRequest = MailRequest.builder()
+                    .reciver(color.getEmail())
+                    .content(password)
+                    .subContent(color.getUsername())
+                    .build();
+            mailService.sendMailCreateAccount(mailRequest);
+            return Constant.SUCCESS;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return e.getMessage();
+        }
+//         repository.save(color);
     }
-
 
 
     @Override
     public Customer update(Customer customer, Long id) {
-        customer.setRank(rankRepository.findById(Long.valueOf(1)).get());
+//        customer.setRank(rankRepository.findById(Long.valueOf(1)).get());
         customer.setId(id);
         return repository.save(customer);
     }
