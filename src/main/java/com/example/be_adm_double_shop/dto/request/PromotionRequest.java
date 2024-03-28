@@ -8,6 +8,7 @@ import java.util.List;
 @Data
 
 public class PromotionRequest {
+    private Long id;
 
     private Long page;
 

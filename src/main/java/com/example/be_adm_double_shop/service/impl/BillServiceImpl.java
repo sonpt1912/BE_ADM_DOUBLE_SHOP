@@ -2,16 +2,20 @@ package com.example.be_adm_double_shop.service.impl;
 
 import com.example.be_adm_double_shop.dto.ValidationException;
 import com.example.be_adm_double_shop.dto.request.BillRequest;
-import com.example.be_adm_double_shop.entity.*;
+import com.example.be_adm_double_shop.entity.Bill;
+import com.example.be_adm_double_shop.entity.DetailBill;
+import com.example.be_adm_double_shop.entity.DetailProduct;
 import com.example.be_adm_double_shop.repository.BillRepository;
 import com.example.be_adm_double_shop.service.BillService;
 import com.example.be_adm_double_shop.service.DetailBillService;
 import com.example.be_adm_double_shop.service.DetailProductService;
 import com.example.be_adm_double_shop.util.Constant;
+import com.example.be_adm_double_shop.util.DateUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -42,6 +46,8 @@ public class BillServiceImpl implements BillService {
 //                .customer(Customer.builder().id(billRequest.getIdCustomer()).build())
 //                .voucher(Voucher.builder().id(billRequest.getIdVoucher()).build())
 //                .employee(Employee.builder().build())
+                .discountAmount(billRequest.getDiscoutAmout())
+                .orderDate(DateUtil.dateToString4(new Date()))
                 .status(Constant.ACTIVE)
                 .build());
         if (bill != null) {
@@ -52,11 +58,15 @@ public class BillServiceImpl implements BillService {
                 List<DetailProduct> listDP = new ArrayList<>();
                 for (DetailProduct dt : billRequest.getListDetailProduct()) {
                     DetailProduct currentProduct = detailProductService.getOneById(dt.getId());
-                    dt = DetailProduct.builder()
-                            .quantity(currentProduct.getQuantity() - dt.getQuantity())
-                            .build();
-                    listDP.add(dt);
+                    long quantity = currentProduct.getQuantity() - dt.getQuantity();
+                    currentProduct.setQuantity(quantity);
+                    if(quantity == 0){
+                        currentProduct.setStatus(Constant.IN_ACTIVE);
+                    }
+                    detailProductService.updateDetailProduct(currentProduct, creator);
                 }
+
+
             }
             return Constant.SUCCESS;
         }
@@ -64,7 +74,7 @@ public class BillServiceImpl implements BillService {
     }
 
     @Override
-    public Object updateBill(BillRequest billRequest, String creator) {
+    public Object updateBill(BillRequest billRequest, String username) {
         return null;
     }
 }

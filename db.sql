@@ -102,22 +102,6 @@ CREATE TABLE `double_shop`.`material`
 );
 
 
-CREATE TABLE `double_shop`.`customer_rank`
-(
-    `id`           BIGINT      NOT NULL AUTO_INCREMENT,
-    `name`         VARCHAR(45) NOT NULL,
-    `description`  VARCHAR(45) NULL,
-    `from`         BIGINT NULL,
-    `to`           BIGINT      NOT NULL,
-    `percent`      INT NULL,
-    `created_time` VARCHAR(45) NOT NULL,
-    `updated_time` VARCHAR(45) NULL,
-    `updated_by`   VARCHAR(45) NOT NULL,
-    `created_by`   VARCHAR(45) NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE
-);
-
 
 CREATE TABLE `double_shop`.`employee`
 (
@@ -147,7 +131,6 @@ CREATE TABLE `double_shop`.`employee`
 CREATE TABLE `double_shop`.`customer`
 (
     `id`           BIGINT      NOT NULL AUTO_INCREMENT,
-    `id_rank`      BIGINT NULL,
     `username`     VARCHAR(45) NULL,
     `name`         VARCHAR(45) NULL,
     `gender`       INT NULL,
@@ -162,12 +145,6 @@ CREATE TABLE `double_shop`.`customer`
     `updated_time` VARCHAR(45) NULL,
     PRIMARY KEY (`id`),
     UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-    INDEX          `FK_CUS_RANK_idx` (`id_rank` ASC) VISIBLE,
-    CONSTRAINT `FK_CUS_RANK`
-        FOREIGN KEY (`id_rank`)
-            REFERENCES `double_shop`.`rank` (`id`)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION
 );
 
 
@@ -255,30 +232,6 @@ CREATE TABLE `double_shop`.`product`
     UNIQUE INDEX `name_UNIQUE` (`name` ASC) VISIBLE
 );
 
-CREATE TABLE `double_shop`.`review`
-(
-    `id`            BIGINT      NOT NULL AUTO_INCREMENT,
-    `id_customer`   BIGINT      NOT NULL,
-    `id_product`    BIGINT      NOT NULL,
-    `product_type`  VARCHAR(45) NOT NULL,
-    `product_color` VARCHAR(45) NOT NULL,
-    `rating`        INT         NOT NULL,
-    `comment`       VARCHAR(145) NULL,
-    PRIMARY KEY (`id`),
-    UNIQUE INDEX `id_UNIQUE` (`id` ASC) VISIBLE,
-    INDEX           `FK_REVIEW_CUS_idx` (`id_customer` ASC) VISIBLE,
-    INDEX           `FK_REVIEW_PRODUCT_idx` (`id_product` ASC) VISIBLE,
-    CONSTRAINT `FK_REVIEW_CUS`
-        FOREIGN KEY (`id_customer`)
-            REFERENCES `double_shop`.`customer` (`id`)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION,
-    CONSTRAINT `FK_REVIEW_PRODUCT`
-        FOREIGN KEY (`id_product`)
-            REFERENCES `double_shop`.`product` (`id`)
-            ON DELETE NO ACTION
-            ON UPDATE NO ACTION
-);
 
 CREATE TABLE `double_shop`.`detail_product`
 (

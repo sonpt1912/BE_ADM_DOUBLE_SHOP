@@ -19,6 +19,7 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Service
 public class MaterialServicelmpl {
@@ -106,17 +107,12 @@ public class MaterialServicelmpl {
         return materialRepository.findAll();
     }
 
-    public List<Material> phanTrang(Integer viTri) {
-        Pageable p = PageRequest.of(viTri, 5);
-        return materialRepository.findAll(p).toList();
-    }
-
-    public Material chiTiet(Long id) {
+    public Material getOnebyid(Long id) {
         return materialRepository.findById(id).get();
-
     }
 
     public Material add(Material m){
+        m.setCode(UUID.randomUUID().toString());
         m.setCreatedTime(LocalDateTime.now().toString());
         m.setCreatedBy("TranTung");
         m.setStatus(Constant.ACTIVE);

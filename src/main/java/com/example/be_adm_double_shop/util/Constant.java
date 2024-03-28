@@ -39,6 +39,9 @@ public class Constant {
     }
 
     public interface PRODUCT {
+
+        String PRODUCT = "PRODUCT";
+
         Long ACTIVE = 0L;
 
         Long INACTIVE = 1L;
@@ -52,11 +55,15 @@ public class Constant {
 
         Long WAIT_CONFIRM = 0L;
 
-        Long CANCELLATION = 1L;
+        Long CONFIRM = 1L;
 
-        Long PAYMENT = 2L;
+        Long WAIT_DEVERILY = 2L;
 
-        Long NOT_PAYMENT = 3L;
+        Long DEVERELU = 3L;
+
+        Long DONE = 4L;
+
+        Long CANCELLATION = 5L;
 
 
     }
