@@ -42,4 +42,10 @@ public class VoucherController {
         return ResponseEntity.ok(voucherService.getOneId(id));
     }
 
+    @PostMapping("/save-all")
+    public ResponseEntity saveAll(@RequestHeader("Authorization") String token, @RequestBody Voucher voucher) {
+        String username = jwtProvider.getUsernameFromToken(token);
+        return new ResponseEntity(voucherService.saveAll(voucher, username), HttpStatus.OK);
+    }
+
 }
