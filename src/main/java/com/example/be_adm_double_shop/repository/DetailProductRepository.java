@@ -29,10 +29,10 @@ public interface DetailProductRepository extends JpaRepository<DetailProduct, Lo
             "           WHEN (p.discount_percent != null)" +
             "               THEN dt.price * p.discount_percent" +
             "           ELSE 0" +
-            "           END AS 'discout_amout'" +
+            "           END AS 'discout_amout' " +
             " FROM detail_product dt " +
             "         LEFT JOIN detail_promotion dp on dt.id = dp.id_detail_product " +
             "         LEFT JOIN promotion p on dp.id_promotion = p.id " +
-            " WHERE dt.id = :id AND status = 0 AND p.status = 0 ", nativeQuery = true)
+            " WHERE dt.id = :id AND dt.status = 0 ", nativeQuery = true)
     List<DetailProduct> getAllDetailProduct(@Param("id") Long id);
 }
