@@ -13,13 +13,12 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import jakarta.persistence.Query;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
@@ -164,6 +163,7 @@ public class VoucherServiceImpl implements VoucherService {
             voucher.setDiscountAmount(0L);
         }
 
+        voucher.setQuantity(1);
         voucher.setStatus(Constant.ACTIVE);
         voucher.setCreatedBy(username);
         voucher.setCreatedTime(DateUtil.dateToString4(new Date()));
@@ -206,6 +206,45 @@ public class VoucherServiceImpl implements VoucherService {
         } else {
             return "khong tim thay voucher";
         }
+    }
+
+    @Override
+    public String saveAll(Voucher voucher, String username) {
+        List<Voucher> savedVouchers = new ArrayList<>();
+
+        for (int i = 1; i <= voucher.getQuantity(); i++) {
+            Voucher newVoucher = new Voucher();
+            // Sao chép các thông tin từ voucher gốc
+
+            newVoucher.setName(voucher.getName());
+            newVoucher.setDiscountAmount(voucher.getDiscountAmount());
+            newVoucher.setDiscountPercent(voucher.getDiscountPercent());
+            newVoucher.setMinimumOrder(voucher.getMinimumOrder());
+            newVoucher.setStartDate(voucher.getStartDate());
+            newVoucher.setEndDate(voucher.getEndDate());
+            newVoucher.setStatus(Constant.ACTIVE);
+            newVoucher.setCreatedBy(username);
+            newVoucher.setCreatedTime(DateUtil.dateToString4(new Date()));
+            newVoucher.setQuantity(1);
+            if(StringUtil.stringIsNullOrEmty(voucher.getDiscountPercent())){
+                newVoucher.setDiscountPercent(0);
+            }
+            if(StringUtil.stringIsNullOrEmty(voucher.getDiscountAmount())){
+                newVoucher.setDiscountAmount(0L);
+            }
+            // Tạo mã code mới
+            String codeGen;
+            do {
+                codeGen = UUID.randomUUID().toString();
+            } while (!StringUtil.stringIsNullOrEmty(repository.checkCodeExits(codeGen)));
+            newVoucher.setCode(codeGen);
+
+            savedVouchers.add(repository.save(newVoucher));
+        }
+
+        // Trả về ResponseEntity với thông báo hoặc kết quả phù hợp
+        return Constant.SUCCESS;
+
     }
 
 }

@@ -13,5 +13,7 @@ public interface VoucherService {
 
     String save(Voucher voucher, String username);
     Object update(Voucher voucherRequest, String username) throws ParseException;
+    String saveAll(Voucher voucher,String username);
+
 
 }
