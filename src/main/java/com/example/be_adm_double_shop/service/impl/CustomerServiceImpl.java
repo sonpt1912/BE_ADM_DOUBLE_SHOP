@@ -7,7 +7,6 @@ import com.example.be_adm_double_shop.entity.Address;
 import com.example.be_adm_double_shop.entity.Customer;
 import com.example.be_adm_double_shop.repository.AdressRepository;
 import com.example.be_adm_double_shop.repository.CustomerRepository;
-import com.example.be_adm_double_shop.repository.RankRepository;
 import com.example.be_adm_double_shop.service.CustomerService;
 import com.example.be_adm_double_shop.service.MailService;
 import com.example.be_adm_double_shop.util.Constant;
@@ -28,14 +27,15 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
 @Service
 public class CustomerServiceImpl implements CustomerService {
     @Autowired
     private CustomerRepository repository;
-    @Autowired
-    private RankRepository rankRepository;
+
     @Autowired
     private AdressRepository a;
+
     @Autowired
     private MailService mailService;
 
@@ -190,8 +190,6 @@ public class CustomerServiceImpl implements CustomerService {
         }
 //         repository.save(color);
     }
-
-
 
 
     @Override
