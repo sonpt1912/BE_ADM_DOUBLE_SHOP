@@ -68,7 +68,6 @@ public class DetailProduct {
     @Column(name = "updated_time", length = 45)
     private String updatedTime;
 
-    @Transient
     private Long discoutAmout;
 
 }

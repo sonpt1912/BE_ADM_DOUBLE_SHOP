@@ -95,6 +95,7 @@ public class ProductServiceImpl implements ProductService {
             params.put("id", request.getIdMaterial());
         }
 
+        sql.append(" GROUP BY p.id, p.code, p.images, p.name, p.status, p.created_by, p.created_time, p.updated_time, p.updated_by ");
         sql.append(" ORDER BY p.created_time DESC ");
 
         if (!StringUtil.stringIsNullOrEmty(request.getPage())) {
@@ -107,8 +108,6 @@ public class ProductServiceImpl implements ProductService {
             params.put("pageSize", request.getPageSize());
         }
 
-        sql.append(" GROUP BY  p.id, p.code, p.images, p.name, p.status, p.created_by, p.created_time, p.updated_time, p.updated_by ");
-
 
         Query query = entityManager.createNativeQuery(sql.toString(), Product.class);
         params.forEach(query::setParameter);
@@ -118,7 +117,7 @@ public class ProductServiceImpl implements ProductService {
         sql.setLength(0);
         params.clear();
 
-        sql.append(" SELECT COUNT(*) FROM product p ");
+        sql.append(" SELECT count(distinct p.id) FROM product p ");
         sql.append(" INNER JOIN detail_product dp ON p.id = dp.id_product ");
         sql.append(" INNER JOIN color c ON dp.id_color = c.id ");
         sql.append(" INNER JOIN collar cl ON dp.id_collar = cl.id ");
@@ -161,8 +160,6 @@ public class ProductServiceImpl implements ProductService {
             sql.append(" AND p.name like CONCAT('%', :name ,'%') ");
             params.put("name", request.getName());
         }
-
-        sql.append(" GROUP BY  p.id, p.code, p.images, p.name, p.status, p.created_by, p.created_time, p.updated_time, p.updated_by ");
 
         Query totalQuery = entityManager.createNativeQuery(sql.toString());
         params.forEach(totalQuery::setParameter);
@@ -244,13 +241,5 @@ public class ProductServiceImpl implements ProductService {
         return null;
     }
 
-    @Override
-    public Object getAllTreeData() {
-        List<Product> list = productRepository.findAll();
-        for (int i = 0; i < list.size(); i++) {
-            list.get(i).setListDetailProduct(detailProductRepository.getActiveDetailProduct(list.get(i).getId()));
-        }
-        return list;
-    }
 
 }

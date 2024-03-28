@@ -14,6 +14,4 @@ public interface ProductService {
 
     Object updateProduct(ProductRequest request, String username);
 
-    Object getAllTreeData();
-
 }
