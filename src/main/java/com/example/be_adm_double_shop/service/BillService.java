@@ -8,4 +8,6 @@ public interface BillService {
 
     Object updateBill(BillRequest billRequest, String creator);
 
+    Object getAllByCondition(BillRequest billRequest);
+
 }
