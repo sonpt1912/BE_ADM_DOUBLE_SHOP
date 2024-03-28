@@ -33,10 +33,8 @@ public class Employee implements UserDetails {
     @Column(name = "phone")
     private String phone;
 
-
     @Column(name = "email")
     private String email;
-
 
     @Column(name = "gender")
     private Integer gender;
