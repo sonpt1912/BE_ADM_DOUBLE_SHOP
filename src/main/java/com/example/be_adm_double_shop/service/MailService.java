@@ -10,5 +10,6 @@ public interface MailService {
     void sendMailOtp();
 
     String sendMailCreateAccount(MailRequest mailRequest);
+    String sendMailCreateAccountCustomer(MailRequest mailRequest);
 
 }

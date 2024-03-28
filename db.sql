@@ -102,7 +102,7 @@ CREATE TABLE `double_shop`.`material`
 );
 
 
-CREATE TABLE `double_shop`.`rank`
+CREATE TABLE `double_shop`.`customer_rank`
 (
     `id`           BIGINT      NOT NULL AUTO_INCREMENT,
     `name`         VARCHAR(45) NOT NULL,
